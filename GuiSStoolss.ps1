@@ -140,7 +140,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-# === Install / Update Tools knop ===
+# === Install / Update Tools ===
 $InstallButton.Add_Click({
     try {
         if (!(Test-Path $dest)) {
@@ -148,7 +148,8 @@ $InstallButton.Add_Click({
             $window.FindName("ActivityBox").AppendText("`n[Install] Map aangemaakt: $dest`n")
         }
         Start-Process $dest
-        $window.FindName("ActivityBox").AppendText("`n[Install] Map geopend met alle tools.`n")
+        $window.FindName("ActivityBox").AppendText("`n[Install] Map geopend.`n")
+        $window.FindName("ActivityBox").AppendText("`n[Info] Zet al je .exe bestanden (JournalTrace, WinPrefetchView, etc.) in deze map.`n")
     }
     catch {
         $window.FindName("ActivityBox").AppendText("`n[Error] Kon de map niet openen.`n")
@@ -158,7 +159,7 @@ $InstallButton.Add_Click({
 $DeleteButton.Add_Click({
     if (Test-Path $dest) {
         Remove-Item $dest -Recurse -Force
-        $window.FindName("ActivityBox").AppendText("`n[Remove] Map verwijderd: $dest`n")
+        $window.FindName("ActivityBox").AppendText("`n[Remove] Map verwijderd.`n")
     }
 })
 
@@ -166,7 +167,7 @@ $OpenFolderButton.Add_Click({
     if (Test-Path $dest) {
         Start-Process $dest
     } else {
-        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet.`n")
+        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet. Klik eerst op 'Install / Update Tools'.`n")
     }
 })
 
