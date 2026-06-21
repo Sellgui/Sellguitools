@@ -3,32 +3,27 @@ Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName System.Xaml
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-$dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
-
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Guiss Launcher" Width="1320" Height="830"
+        Title="Guiss Command Center" Width="1100" Height="700"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
     <Window.Resources>
-        <!-- Button Style -->
         <Style x:Key="ActionButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Height" Value="52"/>
-            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="#182332"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="14" BorderBrush="#203040" BorderThickness="1">
+                        <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="12" BorderBrush="#203040" BorderThickness="1">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -42,100 +37,61 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
         </Style>
     </Window.Resources>
 
-    <Border x:Name="MainBorder" CornerRadius="24" Background="#0A120F" BorderBrush="#1A2E24" BorderThickness="1">
+    <Border x:Name="MainBorder" CornerRadius="22" Background="#0A120F" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.45"/>
         </Border.Effect>
 
         <Grid>
             <!-- Top Bar -->
-            <Border Height="64" Background="#08100D" CornerRadius="24,24,0,0">
-                <Grid Margin="20,0">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                            <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border Height="58" Background="#08100D" CornerRadius="22,22,0,0">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                        <Border Width="36" Height="36" CornerRadius="10" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                            <TextBlock Text="⚡" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <StackPanel Margin="14,0,0,0">
-                            <TextBlock Text="Guiss Launcher" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
-                            <TextBlock Text="Guiss Tools • Professional Edition" FontSize="11" Foreground="#7E92A6"/>
+                        <StackPanel Margin="12,0,0,0">
+                            <TextBlock Text="Guiss Command Center" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="All your tools in one place" FontSize="11" Foreground="#7E92A6"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="MinButton" Content="—" Width="40" Height="34" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="18"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="34" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="16"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Button x:Name="MinButton" Content="—" Width="36" Height="30" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="16"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="36" Height="30" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="15"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- Main Content -->
-            <Grid Margin="0,70,0,20">
+            <!-- Content -->
+            <Grid Margin="0,65,0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="280"/>
                     <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left Content -->
-                <Grid Grid.Column="0" Margin="25,0,0,0">
+                <!-- Sidebar -->
+                <Border Grid.Column="0" Background="#0B1118" CornerRadius="16" BorderBrush="#1A2E24" BorderThickness="1" Padding="18">
                     <StackPanel>
-                        <TextBlock x:Name="StatusText" Text="Ready" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
-                        <TextBlock x:Name="SubStatusText" Text="Everything is ready. Select an action on the right." FontSize="14" Foreground="#9DB1C4" Margin="0,8,0,30"/>
-
-                        <!-- Mini Stats -->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Border Grid.Column="0" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="Current Step" FontSize="12" Foreground="#7C93A8"/>
-                                    <TextBlock x:Name="StepText" Text="Waiting" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="Progress" FontSize="12" Foreground="#7C93A8"/>
-                                    <TextBlock x:Name="ProgressLabel" Text="0%" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Grid.Column="4" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="Tools Detected" FontSize="12" Foreground="#7C93A8"/>
-                                    <TextBlock x:Name="ToolCountText" Text="0" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-
-                        <!-- Activity Console -->
-                        <Border Margin="0,30,0,0" Background="#0F1A16" CornerRadius="16" Padding="16" BorderBrush="#2A4738" BorderThickness="1">
-                            <StackPanel>
-                                <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="White"/>
-                                <TextBox x:Name="ActivityBox" Height="150" Background="#08100D" Foreground="#D8E8F5" 
-                                         FontFamily="Consolas" FontSize="12" IsReadOnly="True" 
-                                         VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
-                            </StackPanel>
-                        </Border>
+                        <TextBlock Text="Categories" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,15"/>
+                        <Button Content="🔍 Macro Detection" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Content="🛡️ Screenshare Tools" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Content="⚡ Quick Commands" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Content="🧰 All Tools" Style="{StaticResource ActionButtonStyle}"/>
                     </StackPanel>
-                </Grid>
+                </Border>
 
-                <!-- Control Center (Right) -->
-                <Border Grid.Column="2" Background="#0B1118" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="22">
+                <!-- Commands -->
+                <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
                     <StackPanel>
-                        <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
-                        <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
+                        <TextBlock Text="Available Commands" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,15"/>
 
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Tag="&#xE898;" Style="{StaticResource ActionButtonStyle}" Background="#22C55E"/>
-                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Tag="&#xE74D;" Style="{StaticResource ActionButtonStyle}" Background="#3A2028"/>
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Tag="&#xE838;" Style="{StaticResource ActionButtonStyle}"/>
-                        <Button x:Name="ExitButton" Content="Exit Launcher" Tag="&#xE8BB;" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button x:Name="BtnMacro" Content="🟢  Prime Macro Detector" Height="48" Background="#182332" Foreground="White" FontSize="15" Margin="0,0,0,10"/>
+                        <Button x:Name="BtnGuiss" Content="🟢  Guiss Launcher" Height="48" Background="#182332" Foreground="White" FontSize="15" Margin="0,0,0,10"/>
+                        <Button x:Name="BtnCmd" Content="🟢  CMD Commands" Height="48" Background="#182332" Foreground="White" FontSize="15" Margin="0,0,0,10"/>
+                        <Button x:Name="BtnPrefetch" Content="📁  Open Prefetch Folder" Height="48" Background="#182332" Foreground="White" FontSize="15" Margin="0,0,0,10"/>
+                        <Button x:Name="BtnAnyDesk" Content="🖥️  Start AnyDesk" Height="48" Background="#182332" Foreground="White" FontSize="15"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -147,35 +103,38 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-$CloseButton      = $window.FindName("CloseButton")
-$MinButton        = $window.FindName("MinButton")
-$InstallButton    = $window.FindName("InstallButton")
-$DeleteButton     = $window.FindName("DeleteButton")
-$OpenFolderButton = $window.FindName("OpenFolderButton")
-$ExitButton       = $window.FindName("ExitButton")
-$StatusText       = $window.FindName("StatusText")
-$SubStatusText    = $window.FindName("SubStatusText")
-$StepText         = $window.FindName("StepText")
-$ProgressLabel    = $window.FindName("ProgressLabel")
-$ToolCountText    = $window.FindName("ToolCountText")
-$ActivityBox      = $window.FindName("ActivityBox")
-$MainBorder       = $window.FindName("MainBorder")
+$CloseButton = $window.FindName("CloseButton")
+$MinButton   = $window.FindName("MinButton")
+$MainBorder  = $window.FindName("MainBorder")
+
+$BtnMacro   = $window.FindName("BtnMacro")
+$BtnGuiss   = $window.FindName("BtnGuiss")
+$BtnCmd     = $window.FindName("BtnCmd")
+$BtnPrefetch = $window.FindName("BtnPrefetch")
+$BtnAnyDesk = $window.FindName("BtnAnyDesk")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
-$ExitButton.Add_Click({ $window.Close() })
 
-$InstallButton.Add_Click({
-    $ActivityBox.AppendText("`n[Install] Starting Guiss Tools installation...`n")
+$BtnMacro.Add_Click({
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/GuiSStoolss.ps1 | iex`""
 })
 
-$DeleteButton.Add_Click({
-    $ActivityBox.AppendText("`n[Remove] Removing tools...`n")
+$BtnGuiss.Add_Click({
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/GuiSStoolss.ps1 | iex`""
 })
 
-$OpenFolderButton.Add_Click({
-    if (Test-Path $dest) { Start-Process $dest }
+$BtnCmd.Add_Click({
+    [System.Windows.MessageBox]::Show("CMD Commands button clicked!", "Guiss Command Center")
+})
+
+$BtnPrefetch.Add_Click({
+    Start-Process "$env:SystemRoot\Prefetch"
+})
+
+$BtnAnyDesk.Add_Click({
+    Start-Process "C:\Program Files (x86)\AnyDesk\AnyDesk.exe" -ErrorAction SilentlyContinue
 })
 
 $window.ShowDialog() | Out-Null
