@@ -12,7 +12,7 @@ Add-Type -AssemblyName System.Xaml
 
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="35" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
         </Border.Effect>
 
         <Grid>
@@ -24,30 +24,32 @@ Add-Type -AssemblyName System.Xaml
             <Ellipse Width="480" Height="480" Fill="#166534" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-160,-140,0,0"/>
             <Ellipse Width="320" Height="320" Fill="#4ADE80" Opacity="0.035" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-100,-85"/>
 
-            <!-- Top Bar (zelfde structuur als Tesla) -->
+            <!-- Top Bar (Tesla stijl) -->
             <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
-                <Grid Margin="18,0,18,0">
+                <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Logo + Naam -->
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="40" Height="40" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                            <TextBlock Text="G" FontSize="20" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                            <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <StackPanel Margin="12,0,0,0">
-                            <TextBlock Text="Gui SS Tools" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
-                            <TextBlock Text="Guiss Command Center" FontSize="11" Foreground="#7E92A6" Margin="0,2,0,0"/>
+                        <StackPanel Margin="14,0,0,0">
+                            <TextBlock Text="Gui SS Tools" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="Guiss Command Center" FontSize="12" Foreground="#7E92A6" Margin="0,2,0,0"/>
                         </StackPanel>
                     </StackPanel>
 
+                    <!-- Right Buttons -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="InfoButton" Content="ⓘ" Width="36" Height="36" Background="#0F1A16" Foreground="#4ADE80" BorderThickness="0" FontSize="16" Margin="0,0,8,0"/>
-                        <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="19"/>
-                        <Button x:Name="MaxButton" Content="□" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="15"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="16"/>
+                        <Button x:Name="InfoButton" Content="ⓘ" Width="38" Height="38" Background="#0F1A16" Foreground="#4ADE80" BorderThickness="0" FontSize="17" Margin="0,0,8,0"/>
+                        <Button x:Name="MinButton" Content="—" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                        <Button x:Name="MaxButton" Content="□" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="16"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="42" Height="38" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17"/>
                     </StackPanel>
                 </Grid>
             </Border>
