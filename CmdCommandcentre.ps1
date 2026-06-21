@@ -16,7 +16,6 @@ Add-Type -AssemblyName System.Xaml
         </Border.Effect>
 
         <Grid>
-            
             <Border Background="#0A120F" CornerRadius="24"/>
 
             <!-- Top Bar -->
@@ -33,21 +32,19 @@ Add-Type -AssemblyName System.Xaml
                             <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Margin="14,0,0,0">
-                            <TextBlock Text="Gui SS Tools" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
-                            <TextBlock Text="Guiss Command Center" FontSize="12" Foreground="#7E92A6" Margin="0,2,0,0"/>
+                            <TextBlock Text="Guiss Command Center" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="Guiss Tools" FontSize="12" Foreground="#7E92A6" Margin="0,2,0,0"/>
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="InfoButton" Content="ⓘ" Width="38" Height="38" Background="#0F1A16" Foreground="#4ADE80" BorderThickness="0" FontSize="17" Margin="0,0,8,0"/>
-                        <Button x:Name="MinButton" Content="—" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
-                        <Button x:Name="MaxButton" Content="□" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="16"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="42" Height="38" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17"/>
+                        <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- Main Content -->
+            <!-- Main Content (Commands + Dashboard) -->
             <Grid Margin="0,75,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="420"/>
@@ -55,7 +52,7 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left Commands -->
+                <!-- Left: Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#1A2E24" BorderThickness="1" Padding="16">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
@@ -133,20 +130,10 @@ $window = [Windows.Markup.XamlReader]::Load($reader)
 
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
-$MaxButton   = $window.FindName("MaxButton")
-$InfoButton  = $window.FindName("InfoButton")
 $MainBorder  = $window.FindName("MainBorder")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
-
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
-$MaxButton.Add_Click({ 
-    if ($window.WindowState -eq "Normal") { 
-        $window.WindowState = "Maximized" 
-    } else { 
-        $window.WindowState = "Normal" 
-    } 
-})
 $CloseButton.Add_Click({ $window.Close() })
 
 $window.ShowDialog() | Out-Null
