@@ -107,7 +107,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                     </StackPanel>
                 </Grid>
 
-                <!-- Control Center (rechter paneel) - Donker groen gemaakt -->
+                <!-- Control Center (rechterkant) -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="22">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
@@ -116,6 +116,10 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                         <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        
+                        <!-- Nieuwe knop -->
+                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        
                         <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
@@ -134,7 +138,9 @@ $InfoButton       = $window.FindName("InfoButton")
 $InstallButton    = $window.FindName("InstallButton")
 $DeleteButton     = $window.FindName("DeleteButton")
 $OpenFolderButton = $window.FindName("OpenFolderButton")
+$OpenCmdButton    = $window.FindName("OpenCmdButton")
 $ExitButton       = $window.FindName("ExitButton")
+
 $StatusText       = $window.FindName("StatusText")
 $SubStatusText    = $window.FindName("SubStatusText")
 $StepText         = $window.FindName("StepText")
@@ -158,6 +164,17 @@ $DeleteButton.Add_Click({
 
 $OpenFolderButton.Add_Click({
     if (Test-Path $dest) { Start-Process $dest }
+})
+
+# Nieuwe knop: Open CMD Commands
+$OpenCmdButton.Add_Click({
+    try {
+        Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1 | iex`""
+        $ActivityBox.AppendText("`n[CMD] Command Center wordt gestart...`n")
+    }
+    catch {
+        $ActivityBox.AppendText("`n[Error] Kon Command Center niet starten.`n")
+    }
 })
 
 $window.ShowDialog() | Out-Null
