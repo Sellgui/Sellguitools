@@ -6,7 +6,7 @@ Add-Type -AssemblyName System.Xaml
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Guiss Command Center" Width="1280" Height="800"
+        Title="Guiss Command Center" Width="1300" Height="820"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
@@ -17,38 +17,35 @@ Add-Type -AssemblyName System.Xaml
 
         <Grid>
             
-            <!-- Achtergrond -->
+            <!-- Achtergrond + decoratieve cirkels -->
             <Border Background="#0A120F" CornerRadius="24"/>
+            <Ellipse Width="500" Height="500" Fill="#166534" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-170,-150,0,0"/>
+            <Ellipse Width="340" Height="340" Fill="#4ADE80" Opacity="0.035" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-110,-95"/>
+            <Ellipse Width="210" Height="210" Fill="White" Opacity="0.02" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"/>
+            <Ellipse Width="150" Height="150" Fill="White" Opacity="0.015" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0,0,45"/>
 
-            <!-- Decoratieve cirkels (groen + licht wit) -->
-            <Ellipse Width="480" Height="480" Fill="#166534" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-160,-140,0,0"/>
-            <Ellipse Width="320" Height="320" Fill="#4ADE80" Opacity="0.035" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-100,-90"/>
-            <Ellipse Width="200" Height="200" Fill="White" Opacity="0.02" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0"/>
-            <Ellipse Width="140" Height="140" Fill="White" Opacity="0.015" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="60,0,0,50"/>
-
-            <!-- Top Bar (Tesla stijl) -->
+            <!-- Top Bar (exact zoals Tesla) -->
             <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0">
                 <Grid Margin="22,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- Logo Circle -->
                         <Border Width="44" Height="44" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
                             <TextBlock Text="G" FontSize="24" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        
+                        <!-- Tekst -->
                         <StackPanel Margin="14,0,0,0">
-                            <TextBlock Text="Guiss Command Center" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
-                            <TextBlock Text="Professional Tools &amp; Commands" FontSize="12" Foreground="#7E92A6"/>
+                            <TextBlock Text="Gui SS Tools" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="Guiss Command Center" FontSize="12" Foreground="#7E92A6"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- Top Right Buttons -->
+                    <!-- Right Buttons -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="InfoButton" Content="ⓘ" Width="38" Height="38" Background="#0F1A16" Foreground="#4ADE80" 
-                                BorderThickness="0" FontSize="17" Margin="0,0,8,0"/>
-                        <Button x:Name="MinButton" Content="—" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" 
-                                BorderThickness="0" FontSize="20"/>
-                        <Button x:Name="MaxButton" Content="□" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" 
-                                BorderThickness="0" FontSize="16"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="42" Height="38" Background="Transparent" Foreground="#FF6B6B" 
-                                BorderThickness="0" FontSize="17"/>
+                        <Button x:Name="InfoButton" Content="ⓘ" Width="38" Height="38" Background="#0F1A16" Foreground="#4ADE80" BorderThickness="0" FontSize="17" Margin="0,0,8,0"/>
+                        <Button x:Name="MinButton" Content="—" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                        <Button x:Name="MaxButton" Content="□" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="16"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="42" Height="38" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -61,7 +58,7 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Scrollable Commands -->
+                <!-- Left: Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#1A2E24" BorderThickness="1" Padding="16">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
@@ -96,7 +93,6 @@ Add-Type -AssemblyName System.Xaml
                     <StackPanel>
                         <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
 
-                        <!-- Widget 1 -->
                         <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="LAST SCAN" FontSize="12" Foreground="#4ADE80"/>
@@ -105,7 +101,6 @@ Add-Type -AssemblyName System.Xaml
                             </StackPanel>
                         </Border>
 
-                        <!-- Widget 2 -->
                         <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="SYSTEM STATUS" FontSize="12" Foreground="#4ADE80"/>
@@ -114,7 +109,6 @@ Add-Type -AssemblyName System.Xaml
                             </StackPanel>
                         </Border>
 
-                        <!-- Widget 3 -->
                         <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="QUICK STATS" FontSize="12" Foreground="#4ADE80"/>
@@ -123,7 +117,6 @@ Add-Type -AssemblyName System.Xaml
                             </StackPanel>
                         </Border>
 
-                        <!-- Widget 4 -->
                         <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
                             <StackPanel>
                                 <TextBlock Text="GUISS TOOLS" FontSize="12" Foreground="#4ADE80"/>
