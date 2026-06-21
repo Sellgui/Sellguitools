@@ -16,19 +16,19 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
 
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
 
-        <!-- === ACHTERGROND AFBEELDING === -->
+        <!-- === ACHTERGROND AFBEELDING (via GitHub Raw URL) === -->
         <Border.Background>
-            <ImageBrush ImageSource="pexels-suzyhazelwood-7185968.jpg" 
+            <ImageBrush ImageSource="https://raw.githubusercontent.com/Sellgui/Sellguitools/main/pexels-suzyhazelwood-7185968.jpg" 
                         Stretch="UniformToFill" 
-                        Opacity="0.22"/>
+                        Opacity="0.20"/>
         </Border.Background>
 
-        <!-- Donkere overlay zodat tekst goed leesbaar blijft -->
-        <Border Background="#0A120F" Opacity="0.78" CornerRadius="24"/>
+        <!-- Donkere overlay -->
+        <Border Background="#0A120F" Opacity="0.80" CornerRadius="24"/>
 
         <Grid>
             <!-- Top Bar -->
-            <Border Height="64" Background="#08100D" CornerRadius="24,24,0,0" Opacity="0.95">
+            <Border Height="64" Background="#08100D" CornerRadius="24,24,0,0">
                 <Grid Margin="20,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
@@ -93,7 +93,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                             </Border>
                         </Grid>
 
-                        <!-- Activity Console (klein) -->
+                        <!-- Activity Console -->
                         <Border Margin="0,30,0,0" Background="#0F1A16" CornerRadius="16" Padding="16" BorderBrush="#2A4738" BorderThickness="1">
                             <StackPanel>
                                 <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="White"/>
@@ -140,9 +140,7 @@ $ToolCountText    = $window.FindName("ToolCountText")
 $ActivityBox      = $window.FindName("ActivityBox")
 $MainBorder       = $window.FindName("MainBorder")
 
-# Window drag
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
-
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
