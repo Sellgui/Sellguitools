@@ -23,16 +23,12 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
             
             <!-- Achtergrond + decoratieve cirkels -->
             <Border Background="#0A120F" CornerRadius="24"/>
-            
-            <!-- Donker groene cirkels -->
             <Ellipse Width="520" Height="520" Fill="#166534" Opacity="0.06" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-180,-160,0,0"/>
             <Ellipse Width="380" Height="380" Fill="#4ADE80" Opacity="0.04" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-120,-100"/>
-            
-            <!-- 2 lichte witte cirkels -->
             <Ellipse Width="220" Height="220" Fill="White" Opacity="0.025" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,120,0,0"/>
             <Ellipse Width="160" Height="160" Fill="White" Opacity="0.02" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="80,0,0,60"/>
 
-            <!-- Top Bar (Tesla stijl) -->
+            <!-- Top Bar -->
             <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0">
                 <Grid Margin="22,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -111,13 +107,12 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                     </StackPanel>
                 </Grid>
 
-                <!-- Control Center (Right) -->
-                <Border Grid.Column="2" Background="#0B1118" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="22">
+                <!-- Control Center (rechter paneel) - Donker groen gemaakt -->
+                <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="22">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <!-- Knoppen met donkergroene kleur -->
                         <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
