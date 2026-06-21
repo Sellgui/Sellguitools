@@ -6,70 +6,84 @@ Add-Type -AssemblyName System.Xaml
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Guiss Command Center" Width="1200" Height="750"
+        Title="Guiss Command Center" Width="1250" Height="780"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
-    <Border x:Name="MainBorder" CornerRadius="22" Background="#0A120F" BorderBrush="#1A2E24" BorderThickness="1">
+    <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
+        
+        <!-- Achtergrond met donkere groene strepen + cirkels -->
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#0A120F" Offset="0"/>
+                <GradientStop Color="#0F1A16" Offset="0.5"/>
+                <GradientStop Color="#0A120F" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <!-- Decoratieve groene cirkels -->
+        <Ellipse Width="420" Height="420" Fill="#22C55E" Opacity="0.04" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-120,-100,0,0"/>
+        <Ellipse Width="280" Height="280" Fill="#4ADE80" Opacity="0.03" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-80,-80"/>
+
         <Border.Effect>
-            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.45"/>
+            <DropShadowEffect BlurRadius="35" ShadowDepth="0" Opacity="0.5"/>
         </Border.Effect>
 
         <Grid>
             <!-- Top Bar -->
-            <Border Height="58" Background="#08100D" CornerRadius="22,22,0,0">
-                <Grid>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
-                        <Border Width="36" Height="36" CornerRadius="10" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                            <TextBlock Text="⚡" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border Height="62" Background="#08100D" CornerRadius="24,24,0,0">
+                <Grid Margin="25,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="38" Height="38" CornerRadius="11" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                            <TextBlock Text="⚡" FontSize="19" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <StackPanel Margin="12,0,0,0">
-                            <TextBlock Text="Guiss Command Center" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
-                            <TextBlock Text="All your tools &amp; commands" FontSize="11" Foreground="#7E92A6"/>
+                        <StackPanel Margin="13,0,0,0">
+                            <TextBlock Text="Guiss Command Center" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="Professional Tools &amp; Commands" FontSize="11" Foreground="#7E92A6"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0">
-                        <Button x:Name="MinButton" Content="—" Width="36" Height="30" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="16"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="36" Height="30" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="15"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button x:Name="MinButton" Content="—" Width="38" Height="32" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="17"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="38" Height="32" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="16"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- Main Content -->
-            <Grid Margin="0,65,0,15">
+            <!-- Content -->
+            <Grid Margin="0,70,0,18">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="380"/>
-                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="18"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Scrollable Buttons -->
-                <Border Grid.Column="0" Background="#0B1118" CornerRadius="16" BorderBrush="#1A2E24" BorderThickness="1" Padding="15">
+                <!-- Left: Scrollable Commands -->
+                <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#1A2E24" BorderThickness="1" Padding="16">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
-                            <TextBlock Text="Commands" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,12"/>
+                            <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="5,0,0,14"/>
 
-                            <Button Content="🟢  Prime Macro Detector" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🟢  Guiss Launcher" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📁  Open Prefetch Folder" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🖥️  Start AnyDesk" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔍  Quick Macro Scan" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🛡️  Screenshare Tools" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="⚡  CMD Commands" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📊  System Info" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🧹  Clean Temp Files" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔄  Restart Explorer" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📝  Open Notepad" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🌐  Open Chrome" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔧  Services.msc" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📋  Task Manager" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🗂️  Open Downloads" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔒  Lock PC" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔄  Update Guiss Tools" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📈  Performance Monitor" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🧪  Test Command 1" Height="44" Background="#182332" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🧪  Test Command 2" Height="44" Background="#182332" Foreground="White" FontSize="14"/>
+                            <Button Content="🟢  Prime Macro Detector" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🟢  Guiss Launcher" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="📁  Open Prefetch Folder" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🖥️  Start AnyDesk" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🔍  Quick Macro Scan" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🛡️  Screenshare Tools" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="⚡  CMD Commands" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="📊  System Information" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🧹  Clean Temp Files" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🔄  Restart Explorer" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="📝  Open Notepad" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🌐  Open Chrome" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🔧  Services.msc" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="📋  Task Manager" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🗂️  Open Downloads" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🔒  Lock PC" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🔄  Update Tools" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="📈  Performance Monitor" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🧪  Test Command 1" Height="46" Background="#22C55E" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
+                            <Button Content="🧪  Test Command 2" Height="46" Background="#22C55E" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -77,32 +91,41 @@ Add-Type -AssemblyName System.Xaml
                 <!-- Right: Widgets -->
                 <Grid Grid.Column="2">
                     <StackPanel>
-                        <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,15"/>
+                        <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
 
                         <!-- Widget 1 -->
-                        <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,15">
+                        <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="LAST SCAN" FontSize="12" Foreground="#4ADE80"/>
-                                <TextBlock Text="Today at 18:42" FontSize="22" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                <TextBlock Text="No threats found" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                                <TextBlock Text="Today at 19:14" FontSize="22" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                <TextBlock Text="No threats detected • Clean system" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                             </StackPanel>
                         </Border>
 
                         <!-- Widget 2 -->
-                        <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,15">
+                        <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="SYSTEM STATUS" FontSize="12" Foreground="#4ADE80"/>
                                 <TextBlock Text="All Systems Operational" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                <TextBlock Text="CPU: 12%  •  RAM: 41%" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                                <TextBlock Text="CPU: 14%   •   RAM: 38%" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                             </StackPanel>
                         </Border>
 
-                        <!-- Widget 3 -->
-                        <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                        <!-- Widget 3 (nieuw) -->
+                        <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="QUICK STATS" FontSize="12" Foreground="#4ADE80"/>
-                                <TextBlock Text="18 Commands Available" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                <TextBlock Text="3 Tools installed • 2 running" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                                <TextBlock Text="22 Commands Available" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                <TextBlock Text="4 Tools installed • 1 running" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Widget 4 -->
+                        <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="GUISS TOOLS" FontSize="12" Foreground="#4ADE80"/>
+                                <TextBlock Text="Version 3.3 • Up to date" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                <TextBlock Text="Last update: Today" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
