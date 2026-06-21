@@ -14,17 +14,10 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
-    <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
-
-        <!-- === ACHTERGROND AFBEELDING (via GitHub Raw URL) === -->
-        <Border.Background>
-            <ImageBrush ImageSource="https://raw.githubusercontent.com/Sellgui/Sellguitools/main/pexels-suzyhazelwood-7185968.jpg" 
-                        Stretch="UniformToFill" 
-                        Opacity="0.20"/>
-        </Border.Background>
-
-        <!-- Donkere overlay -->
-        <Border Background="#0A120F" Opacity="0.80" CornerRadius="24"/>
+    <Border x:Name="MainBorder" CornerRadius="24" Background="#0A120F" BorderBrush="#1A2E24" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
 
         <Grid>
             <!-- Top Bar -->
