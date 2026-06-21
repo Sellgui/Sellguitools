@@ -14,6 +14,34 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
+    <Window.Resources>
+        <!-- Button Style -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#166534"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="16" BorderBrush="#203040" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#4ADE80"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
@@ -32,7 +60,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
             <Ellipse Width="220" Height="220" Fill="White" Opacity="0.025" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,120,0,0"/>
             <Ellipse Width="160" Height="160" Fill="White" Opacity="0.02" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="80,0,0,60"/>
 
-            <!-- Top Bar (Tesla stijl) -->
+            <!-- Top Bar (Tesla stijl - groen) -->
             <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0">
                 <Grid Margin="22,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -117,11 +145,10 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <!-- Knoppen met donkergroene kleur -->
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                        <Button x:Name="InstallButton" Content="Install / Update Tools" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Style="{StaticResource ActionButtonStyle}" Background="#3A2028"/>
+                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button x:Name="ExitButton" Content="Exit Launcher" Style="{StaticResource ActionButtonStyle}"/>
                     </StackPanel>
                 </Border>
             </Grid>
