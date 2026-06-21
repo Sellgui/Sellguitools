@@ -17,14 +17,9 @@ Add-Type -AssemblyName System.Xaml
 
         <Grid>
             
-            <!-- Achtergrond -->
             <Border Background="#0A120F" CornerRadius="24"/>
 
-            <!-- Decoratieve cirkels -->
-            <Ellipse Width="480" Height="480" Fill="#166534" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-160,-140,0,0"/>
-            <Ellipse Width="320" Height="320" Fill="#4ADE80" Opacity="0.035" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-100,-85"/>
-
-            <!-- Top Bar (Tesla stijl) -->
+            <!-- Top Bar -->
             <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
@@ -33,7 +28,6 @@ Add-Type -AssemblyName System.Xaml
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Logo + Naam -->
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
                             <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -44,7 +38,6 @@ Add-Type -AssemblyName System.Xaml
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- Right Buttons -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                         <Button x:Name="InfoButton" Content="ⓘ" Width="38" Height="38" Background="#0F1A16" Foreground="#4ADE80" BorderThickness="0" FontSize="17" Margin="0,0,8,0"/>
                         <Button x:Name="MinButton" Content="—" Width="42" Height="38" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
@@ -62,12 +55,11 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands -->
+                <!-- Left Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#1A2E24" BorderThickness="1" Padding="16">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="5,0,0,14"/>
-
                             <Button Content="🟢  Prime Macro Detector" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
                             <Button Content="🟢  Guiss Launcher" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
                             <Button Content="📁  Open Prefetch Folder" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
