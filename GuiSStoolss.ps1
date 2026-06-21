@@ -48,7 +48,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                 </Grid>
             </Border>
 
-            <!-- Rest van de content blijft hetzelfde als vorige versie -->
+            <!-- Main Content -->
             <Grid Margin="0,75,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -140,9 +140,35 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-$InstallButton.Add_Click({ $window.FindName("ActivityBox").AppendText("`n[Install] Starting...`n") })
-$DeleteButton.Add_Click({ $window.FindName("ActivityBox").AppendText("`n[Remove] Removing...`n") })
-$OpenFolderButton.Add_Click({ if (Test-Path $dest) { Start-Process $dest } })
+# === Install / Update Tools knop ===
+$InstallButton.Add_Click({
+    try {
+        if (!(Test-Path $dest)) {
+            New-Item -ItemType Directory -Path $dest -Force | Out-Null
+            $window.FindName("ActivityBox").AppendText("`n[Install] Map aangemaakt: $dest`n")
+        }
+        Start-Process $dest
+        $window.FindName("ActivityBox").AppendText("`n[Install] Map geopend met alle tools.`n")
+    }
+    catch {
+        $window.FindName("ActivityBox").AppendText("`n[Error] Kon de map niet openen.`n")
+    }
+})
+
+$DeleteButton.Add_Click({
+    if (Test-Path $dest) {
+        Remove-Item $dest -Recurse -Force
+        $window.FindName("ActivityBox").AppendText("`n[Remove] Map verwijderd: $dest`n")
+    }
+})
+
+$OpenFolderButton.Add_Click({
+    if (Test-Path $dest) {
+        Start-Process $dest
+    } else {
+        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet.`n")
+    }
+})
 
 $OpenCmdButton.Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1 | iex`""
