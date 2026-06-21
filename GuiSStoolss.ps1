@@ -20,36 +20,35 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
         </Border.Effect>
 
         <Grid>
-            
-            <!-- Achtergrond + decoratieve cirkels -->
             <Border Background="#0A120F" CornerRadius="24"/>
-            <Ellipse Width="520" Height="520" Fill="#166534" Opacity="0.06" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-180,-160,0,0"/>
-            <Ellipse Width="380" Height="380" Fill="#4ADE80" Opacity="0.04" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-120,-100"/>
-            <Ellipse Width="220" Height="220" Fill="White" Opacity="0.025" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,120,0,0"/>
-            <Ellipse Width="160" Height="160" Fill="White" Opacity="0.02" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="80,0,0,60"/>
 
             <!-- Top Bar -->
-            <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0">
-                <Grid Margin="22,0">
+            <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
+                <Grid Margin="20,0,20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="44" Height="44" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                            <TextBlock Text="G" FontSize="24" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                            <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Margin="14,0,0,0">
-                            <TextBlock Text="Guiss Launcher" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
-                            <TextBlock Text="Guiss Tools" FontSize="12" Foreground="#7E92A6"/>
+                            <TextBlock Text="Guiss Launcher" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="Guiss Tools" FontSize="12" Foreground="#7E92A6" Margin="0,2,0,0"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="InfoButton" Content="ⓘ" Width="36" Height="36" Background="#0F1A16" Foreground="#4ADE80" BorderThickness="0" FontSize="16" Margin="0,0,8,0"/>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                         <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- Main Content -->
+            <!-- Rest van de content blijft hetzelfde als vorige versie -->
             <Grid Margin="0,75,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -63,7 +62,6 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                         <TextBlock x:Name="StatusText" Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock x:Name="SubStatusText" Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#9DB1C4" Margin="0,8,0,25"/>
 
-                        <!-- Widgets -->
                         <Grid Margin="0,0,0,25">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -95,7 +93,6 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                             </Border>
                         </Grid>
 
-                        <!-- Activity Console -->
                         <Border Background="#0F1A16" CornerRadius="18" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
                             <StackPanel>
                                 <TextBlock Text="Activity Console" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80"/>
@@ -107,7 +104,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                     </StackPanel>
                 </Grid>
 
-                <!-- Control Center (rechterkant) -->
+                <!-- Control Center -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="22">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
@@ -116,10 +113,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                         <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        
-                        <!-- Nieuwe knop -->
                         <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        
                         <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
@@ -134,19 +128,11 @@ $window = [Windows.Markup.XamlReader]::Load($reader)
 
 $CloseButton      = $window.FindName("CloseButton")
 $MinButton        = $window.FindName("MinButton")
-$InfoButton       = $window.FindName("InfoButton")
 $InstallButton    = $window.FindName("InstallButton")
 $DeleteButton     = $window.FindName("DeleteButton")
 $OpenFolderButton = $window.FindName("OpenFolderButton")
 $OpenCmdButton    = $window.FindName("OpenCmdButton")
 $ExitButton       = $window.FindName("ExitButton")
-
-$StatusText       = $window.FindName("StatusText")
-$SubStatusText    = $window.FindName("SubStatusText")
-$StepText         = $window.FindName("StepText")
-$ProgressLabel    = $window.FindName("ProgressLabel")
-$ToolCountText    = $window.FindName("ToolCountText")
-$ActivityBox      = $window.FindName("ActivityBox")
 $MainBorder       = $window.FindName("MainBorder")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
@@ -154,27 +140,12 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-$InstallButton.Add_Click({
-    $ActivityBox.AppendText("`n[Install] Starting Guiss Tools installation...`n")
-})
+$InstallButton.Add_Click({ $window.FindName("ActivityBox").AppendText("`n[Install] Starting...`n") })
+$DeleteButton.Add_Click({ $window.FindName("ActivityBox").AppendText("`n[Remove] Removing...`n") })
+$OpenFolderButton.Add_Click({ if (Test-Path $dest) { Start-Process $dest } })
 
-$DeleteButton.Add_Click({
-    $ActivityBox.AppendText("`n[Remove] Removing tools...`n")
-})
-
-$OpenFolderButton.Add_Click({
-    if (Test-Path $dest) { Start-Process $dest }
-})
-
-# Nieuwe knop: Open CMD Commands
 $OpenCmdButton.Add_Click({
-    try {
-        Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1 | iex`""
-        $ActivityBox.AppendText("`n[CMD] Command Center wordt gestart...`n")
-    }
-    catch {
-        $ActivityBox.AppendText("`n[Error] Kon Command Center niet starten.`n")
-    }
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1 | iex`""
 })
 
 $window.ShowDialog() | Out-Null
