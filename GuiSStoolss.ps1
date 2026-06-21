@@ -14,6 +14,34 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
+    <Window.Resources>
+        <!-- Button Style -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#166534"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="16" BorderBrush="#203040" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#4ADE80"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
@@ -24,7 +52,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
             <!-- Achtergrond + decoratieve cirkels -->
             <Border Background="#0A120F" CornerRadius="24"/>
             
-            <!-- Donker groene decoratieve cirkels -->
+            <!-- Donker groene cirkels -->
             <Ellipse Width="520" Height="520" Fill="#166534" Opacity="0.06" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-180,-160,0,0"/>
             <Ellipse Width="380" Height="380" Fill="#4ADE80" Opacity="0.04" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-120,-100"/>
             
@@ -36,21 +64,17 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
             <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0">
                 <Grid Margin="22,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <!-- Logo -->
                         <Border Width="44" Height="44" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
                             <TextBlock Text="G" FontSize="24" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        
                         <StackPanel Margin="14,0,0,0">
                             <TextBlock Text="Guiss Launcher" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
                             <TextBlock Text="Guiss Tools" FontSize="12" Foreground="#7E92A6"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- Right side buttons -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="InfoButton" Content="ⓘ" Width="36" Height="36" Background="#0F1A16" Foreground="#4ADE80" 
-                                BorderThickness="0" FontSize="16" Margin="0,0,8,0"/>
+                        <Button x:Name="InfoButton" Content="ⓘ" Width="36" Height="36" Background="#0F1A16" Foreground="#4ADE80" BorderThickness="0" FontSize="16" Margin="0,0,8,0"/>
                         <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
                         <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17"/>
                     </StackPanel>
@@ -121,7 +145,7 @@ $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Style="{StaticResource ActionButtonStyle}" Background="#166534"/>
+                        <Button x:Name="InstallButton" Content="Install / Update Tools" Style="{StaticResource ActionButtonStyle}"/>
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" Style="{StaticResource ActionButtonStyle}" Background="#3A2028"/>
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" Style="{StaticResource ActionButtonStyle}"/>
                         <Button x:Name="ExitButton" Content="Exit Launcher" Style="{StaticResource ActionButtonStyle}"/>
