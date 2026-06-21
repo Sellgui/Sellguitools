@@ -10,6 +10,33 @@ Add-Type -AssemblyName System.Xaml
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
+    <Window.Resources>
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#182332"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="12" BorderBrush="#203040" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#4ADE80"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border x:Name="MainBorder" CornerRadius="22" Background="#0A120F" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.45"/>
@@ -48,15 +75,14 @@ Add-Type -AssemblyName System.Xaml
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="16" BorderBrush="#1A2E24" BorderThickness="1" Padding="18">
                     <StackPanel>
                         <TextBlock Text="Categories" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,15"/>
-
-                        <Button Content="🔍 Macro Detection" Tag="macro" Style="{StaticResource ActionButtonStyle}"/>
-                        <Button Content="🛡️ Screenshare Tools" Tag="ss" Style="{StaticResource ActionButtonStyle}"/>
-                        <Button Content="⚡ Quick Commands" Tag="quick" Style="{StaticResource ActionButtonStyle}"/>
-                        <Button Content="🧰 All Tools" Tag="all" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Content="🔍 Macro Detection" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Content="🛡️ Screenshare Tools" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Content="⚡ Quick Commands" Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Content="🧰 All Tools" Style="{StaticResource ActionButtonStyle}"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Main Commands Area -->
+                <!-- Commands -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
                     <StackPanel>
                         <TextBlock Text="Available Commands" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,15"/>
@@ -102,7 +128,6 @@ $BtnGuiss.Add_Click({
 })
 
 $BtnCmd.Add_Click({
-    # Hier kun je je oude CMD command plakken
     [System.Windows.MessageBox]::Show("CMD Commands button clicked!", "Guiss Command Center")
 })
 
