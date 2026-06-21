@@ -23,15 +23,17 @@ Add-Type -AssemblyName System.Xaml
             <!-- Decoratieve cirkels -->
             <Ellipse Width="480" Height="480" Fill="#166534" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-160,-140,0,0"/>
             <Ellipse Width="320" Height="320" Fill="#4ADE80" Opacity="0.035" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-100,-85"/>
-            <Ellipse Width="200" Height="200" Fill="White" Opacity="0.02" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"/>
 
             <!-- Top Bar (Tesla stijl) -->
             <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0">
                 <Grid Margin="22,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- Logo -->
                         <Border Width="44" Height="44" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
                             <TextBlock Text="G" FontSize="24" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        
+                        <!-- Naam -->
                         <StackPanel Margin="14,0,0,0">
                             <TextBlock Text="Gui SS Tools" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
                             <TextBlock Text="Guiss Command Center" FontSize="12" Foreground="#7E92A6"/>
