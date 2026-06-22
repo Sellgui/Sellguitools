@@ -14,7 +14,6 @@ Add-Type -AssemblyName System.Xaml
         Opacity="0">
 
     <Window.Resources>
-        <!-- === NIEUWE MODERNE KNOPPEN MET HOVER GLOW === -->
         <Style x:Key="RoundButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#0F2A1F"/>
             <Setter Property="Foreground" Value="White"/>
@@ -38,11 +37,6 @@ Add-Type -AssemblyName System.Xaml
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#22D3EE"/>
                                 <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
-                                <Setter TargetName="Border" Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect BlurRadius="14" ShadowDepth="0" Color="#22D3EE" Opacity="0.65"/>
-                                    </Setter.Value>
-                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -57,14 +51,26 @@ Add-Type -AssemblyName System.Xaml
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES === -->
-            <Canvas>
-                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.22" Canvas.Left="-150" Canvas.Top="-100"/>
-                <Ellipse x:Name="Circle2" Width="360" Height="360" Fill="#166534" Opacity="0.16" Canvas.Right="-90" Canvas.Bottom="30"/>
-                <Ellipse x:Name="Circle3" Width="210" Height="210" Fill="#4ADE80" Opacity="0.13" Canvas.Left="260" Canvas.Top="140"/>
-                <Ellipse x:Name="Circle4" Width="720" Height="720" Fill="#0F2A1F" Opacity="0.12" Canvas.Right="-240" Canvas.Top="-200"/>
-                <Ellipse x:Name="Circle5" Width="140" Height="140" Fill="#86EFAC" Opacity="0.25" Canvas.Left="900" Canvas.Top="360"/>
-                <Ellipse x:Name="Circle6" Width="300" Height="300" Fill="#166534" Opacity="0.11" Canvas.Left="1080" Canvas.Bottom="50"/>
+            <!-- === DECORATIVE CIRCLES + SHAPES (Nummer 2) === -->
+            <Canvas Panel.ZIndex="-1">
+                <!-- Boven / Midden -->
+                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
+                <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
+                <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
+                <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
+                <Ellipse x:Name="Circle5" Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
+                <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
+                <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
+                <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
+
+                <!-- Extra cirkels LINKSONDER -->
+                <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
+                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
+                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
+
+                <!-- Extra subtiele vormen -->
+                <Rectangle x:Name="Shape1" Width="420" Height="6"  Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
+                <Rectangle x:Name="Shape2" Width="6"   Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
 
             <Grid>
@@ -110,18 +116,17 @@ Add-Type -AssemblyName System.Xaml
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
                                 <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
-                                
-                                <Button x:Name="BtnAnydesk"            Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
-                                <Button x:Name="BtnCyemer"             Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
-                                <Button x:Name="BtnDqrkis"             Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
-                                <Button x:Name="BtnGhostFinder"        Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
-                                <Button x:Name="BtnInjector"           Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
-                                <Button x:Name="BtnMeow"               Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
-                                <Button x:Name="BtnAppData"            Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
-                                <Button x:Name="BtnPowerShellHistory"  Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
-                                <Button x:Name="BtnPrefetch"           Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
-                                <Button x:Name="BtnPrimeMacro"         Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
-                                <Button x:Name="BtnQuickcheck"         Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
+                                <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
+                                <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
+                                <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
+                                <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
+                                <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
+                                <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
+                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
+                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
+                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
+                                <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
+                                <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
@@ -181,48 +186,14 @@ catch {
     exit
 }
 
-# Fade-in
+# === FADE-IN ANIMATIE ===
 $window.Add_Loaded({
-    $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(450)
-    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
+    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeIn.From = 0
+    $fadeIn.To = 1
+    $fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 })
-
-# === CIRCLES + ANIMATIE ===
-$c1 = $window.FindName("Circle1")
-$c2 = $window.FindName("Circle2")
-$c3 = $window.FindName("Circle3")
-$c4 = $window.FindName("Circle4")
-$c5 = $window.FindName("Circle5")
-$c6 = $window.FindName("Circle6")
-
-function Start-PulseAnimation($element, $durationMs, $scaleTo) {
-    $scale = New-Object System.Windows.Media.ScaleTransform
-    $element.RenderTransform = $scale
-    $element.RenderTransformOrigin = "0.5,0.5"
-
-    $sb = New-Object System.Windows.Media.Animation.Storyboard
-    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $animY = $animX.Clone()
-
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
-
-    $sb.Children.Add($animX)
-    $sb.Children.Add($animY)
-    $sb.Begin()
-}
-
-Start-PulseAnimation $c1 4800 1.06
-Start-PulseAnimation $c2 3900 1.09
-Start-PulseAnimation $c3 3100 1.14
-Start-PulseAnimation $c4 5500 1.05
-Start-PulseAnimation $c5 2700 1.17
-Start-PulseAnimation $c6 4200 1.08
 
 # Controls
 $CloseButton = $window.FindName("CloseButton")
@@ -245,5 +216,69 @@ $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA
 $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
 $window.FindName("BtnPrimeMacro").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`"" })
 $window.FindName("BtnQuickcheck").Add_Click({ Start-Process cmd -ArgumentList "/k powershell Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)" })
+
+# ====================== ANIMATIES ======================
+$c1 = $window.FindName("Circle1");  $c2 = $window.FindName("Circle2")
+$c3 = $window.FindName("Circle3");  $c4 = $window.FindName("Circle4")
+$c5 = $window.FindName("Circle5");  $c6 = $window.FindName("Circle6")
+$c7 = $window.FindName("Circle7");  $c8 = $window.FindName("Circle8")
+$c9 = $window.FindName("Circle9");  $c10 = $window.FindName("Circle10")
+$c11 = $window.FindName("Circle11")
+$s1 = $window.FindName("Shape1");   $s2 = $window.FindName("Shape2")
+
+function Start-PulseAnimation($element, $durationMs, $scaleTo) {
+    $scale = New-Object System.Windows.Media.ScaleTransform
+    $element.RenderTransform = $scale
+    $element.RenderTransformOrigin = "0.5,0.5"
+
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $animY = $animX.Clone()
+
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+
+    $sb.Children.Add($animX)
+    $sb.Children.Add($animY)
+    $sb.Begin()
+}
+
+function Start-FloatAnimation($element, $durationMs, $distance) {
+    $translate = New-Object System.Windows.Media.TranslateTransform
+    $element.RenderTransform = $translate
+
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animY.From = 0
+    $animY.To = $distance
+    $animY.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds($durationMs))
+    $animY.AutoReverse = $true
+    $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
+
+    $sb.Children.Add($animY)
+    $sb.Begin()
+}
+
+# Pulsing circles
+Start-PulseAnimation $c1 5200 1.06; Start-PulseAnimation $c2 4100 1.08
+Start-PulseAnimation $c3 3400 1.12; Start-PulseAnimation $c4 5800 1.05
+Start-PulseAnimation $c5 2900 1.15; Start-PulseAnimation $c6 4500 1.07
+Start-PulseAnimation $c7 4900 1.06; Start-PulseAnimation $c8 3600 1.11
+
+# Floating circles (linksonder)
+Start-FloatAnimation $c9  6800 18
+Start-FloatAnimation $c10 7500 -22
+Start-FloatAnimation $c11 6200 14
+
+# Extra vormen
+Start-PulseAnimation $s1 6000 1.04
+Start-PulseAnimation $s2 5500 1.05
 
 $window.ShowDialog() | Out-Null
