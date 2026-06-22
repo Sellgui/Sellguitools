@@ -143,7 +143,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-# === Install / Update Tools (verbeterd) ===
+# === Install / Update Tools (FIXED) ===
 $InstallButton.Add_Click({
     try {
         if (!(Test-Path $zipPath)) {
@@ -151,27 +151,25 @@ $InstallButton.Add_Click({
             return
         }
 
-        if (!(Test-Path $dest)) {
-            New-Item -ItemType Directory -Path $dest -Force | Out-Null
+        # Eerst de hele Guiss-Tools map verwijderen (clean start)
+        if (Test-Path $dest) {
+            Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
         }
 
-        # Oude map verwijderen als die bestaat
+        New-Item -ItemType Directory -Path $dest -Force | Out-Null
+
+        # Uitpakken
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $dest)
+
         if (Test-Path $toolsFolder) {
-            Remove-Item $toolsFolder -Recurse -Force -ErrorAction SilentlyContinue
-        }
-
-        # Uitpakken met betere error handling
-        try {
-            [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $dest)
             Start-Process $toolsFolder
-            $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd!`n")
-        }
-        catch {
-            $window.FindName("ActivityBox").AppendText("`n[Error] Uitpakken mislukt: $($_.Exception.Message)`n")
+            $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd en map geopend!`n")
+        } else {
+            $window.FindName("ActivityBox").AppendText("`n[Error] Map GuiSS Tools niet gevonden na uitpakken.`n")
         }
     }
     catch {
-        $window.FindName("ActivityBox").AppendText("`n[Error] Er ging iets mis: $($_.Exception.Message)`n")
+        $window.FindName("ActivityBox").AppendText("`n[Error] Uitpakken mislukt: $($_.Exception.Message)`n")
     }
 })
 
