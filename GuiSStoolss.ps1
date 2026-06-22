@@ -52,17 +52,12 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         <Grid>
             <!-- Decorative animated circles -->
             <Canvas>
-                <!-- Grote zachte cirkel linksboven -->
                 <Ellipse x:Name="Circle1" Width="420" Height="420" 
                          Fill="#0F2A1F" Opacity="0.25" 
                          Canvas.Left="-80" Canvas.Top="-60"/>
-                
-                <!-- Middelgrote cirkel rechts -->
                 <Ellipse x:Name="Circle2" Width="280" Height="280" 
                          Fill="#0F2A1F" Opacity="0.18" 
                          Canvas.Right="-40" Canvas.Bottom="80"/>
-                
-                <!-- Kleine accent cirkel -->
                 <Ellipse x:Name="Circle3" Width="160" Height="160" 
                          Fill="#166534" Opacity="0.12" 
                          Canvas.Left="180" Canvas.Top="220"/>
@@ -148,7 +143,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                         </Border>
                     </StackPanel>
 
-                    <!-- Right Side - Control Center (meer naar rechts) -->
+                    <!-- Right Side - Control Center -->
                     <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" 
                             Padding="20" Margin="20,0,0,0">
                         <StackPanel>
@@ -169,21 +164,24 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
 </Window>
 "@
 
-# Laad window
+# === Laad de window veilig ===
 try {
     $reader = New-Object System.Xml.XmlNodeReader $xaml
     $window = [Windows.Markup.XamlReader]::Load($reader)
 }
 catch {
-    Write-Host "FOUT:" $_.Exception.Message -ForegroundColor Red
-    Read-Host
+    Write-Host "FOUT bij laden van de GUI:" -ForegroundColor Red
+    Write-Host $_.Exception.Message
+    Read-Host "Druk Enter om af te sluiten"
     exit
 }
 
 # === Fade-in animatie ===
 $window.Add_Loaded({
     $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(500)
+    $fade.From = 0
+    $fade.To = 1
+    $fade.Duration = [TimeSpan]::FromMilliseconds(500)
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
@@ -192,7 +190,6 @@ $circle1 = $window.FindName("Circle1")
 $circle2 = $window.FindName("Circle2")
 $circle3 = $window.FindName("Circle3")
 
-# Pulse animatie functie
 function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $scale = New-Object System.Windows.Media.ScaleTransform
     $element.RenderTransform = $scale
@@ -220,7 +217,7 @@ Start-PulseAnimation $circle1 4200 1.08
 Start-PulseAnimation $circle2 3800 1.12
 Start-PulseAnimation $circle3 3200 1.15
 
-# Controls
+# === Controls ===
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
@@ -231,7 +228,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# === Button acties ===
+# === INSTALL ===
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Downloading tools...`n")
     try {
@@ -247,6 +244,7 @@ $window.FindName("InstallButton").Add_Click({
     }
 })
 
+# === REMOVE ===
 $window.FindName("RemoveButton").Add_Click({
     if (Test-Path $destPath) {
         Remove-Item $destPath -Recurse -Force
@@ -256,14 +254,15 @@ $window.FindName("RemoveButton").Add_Click({
     }
 })
 
+# === OPEN FOLDER ===
 $window.FindName("OpenFolderButton").Add_Click({
     if (Test-Path $destPath) { Start-Process $destPath }
-    else { $ActivityBox.AppendText("`n[Error] Folder not found.`n") }
+    else { $ActivityBox.AppendText("`n[Error] Install folder not found.`n") }
 })
 
+# === OPEN CMD COMMANDS (exact zoals jij wilde) ===
 $window.FindName("OpenCmdButton").Add_Click({
-    $scriptUrl = "https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm '$scriptUrl' | iex"
+    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
 })
 
 $window.ShowDialog() | Out-Null
