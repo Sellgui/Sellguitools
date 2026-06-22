@@ -17,7 +17,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         Opacity="0">
 
     <Window.Resources>
-        <!-- Premium Button Style met Gradient + Glow -->
+        <!-- Simpele maar mooie button style met gradient -->
         <Style x:Key="PremiumButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="15"/>
@@ -26,40 +26,22 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
             <Setter Property="Margin" Value="0,0,0,12"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
+            <Setter Property="Background">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Root" CornerRadius="14" BorderThickness="0">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#1E7A3D" Offset="0"/>
-                                    <GradientStop Color="#166534" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            
-                            <Border.Effect>
-                                <DropShadowEffect x:Name="Glow" BlurRadius="10" ShadowDepth="0" Opacity="0.0" Color="#4ADE80"/>
-                            </Border.Effect>
-                            
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        
-                        <ControlTemplate.Triggers>
-                            <!-- Hover met Glow -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Glow" Property="Opacity" Value="0.7"/>
-                                <Setter TargetName="Glow" Property="BlurRadius" Value="22"/>
-                            </Trigger>
-                            
-                            <!-- Press Effect -->
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Glow" Property="Opacity" Value="0.4"/>
-                                <Setter TargetName="Glow" Property="BlurRadius" Value="12"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#1E7A3D" Offset="0"/>
+                        <GradientStop Color="#166534" Offset="1"/>
+                    </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1E8A45"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#145C2E"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
