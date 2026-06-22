@@ -51,9 +51,8 @@ Add-Type -AssemblyName System.Xaml
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES + SHAPES (Nummer 2) === -->
+            <!-- === DECORATIVE CIRCLES + SHAPES === -->
             <Canvas Panel.ZIndex="-1">
-                <!-- Boven / Midden -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -68,7 +67,7 @@ Add-Type -AssemblyName System.Xaml
                 <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
                 <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
 
-                <!-- Extra subtiele vormen -->
+                <!-- Extra vormen -->
                 <Rectangle x:Name="Shape1" Width="420" Height="6"  Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
                 <Rectangle x:Name="Shape2" Width="6"   Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
@@ -88,8 +87,11 @@ Add-Type -AssemblyName System.Xaml
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <!-- Logo met Breathing Glow -->
+                            <Border x:Name="LogoBorder" Width="42" Height="42" CornerRadius="13" 
+                                    Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" 
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel Margin="14,0,0,0">
                                 <TextBlock Text="Guiss Command Center" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
@@ -186,13 +188,32 @@ catch {
     exit
 }
 
-# === FADE-IN ANIMATIE ===
+$LogoBorder = $window.FindName("LogoBorder")
+
+# === FADE-IN + BREATHING GLOW OP LOGO ===
 $window.Add_Loaded({
+    # Window fade-in
     $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fadeIn.From = 0
     $fadeIn.To = 1
     $fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+
+    # Breathing Glow op de "G"
+    $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
+    $glow.Color = "#4ADE80"
+    $glow.BlurRadius = 18
+    $glow.ShadowDepth = 0
+    $glow.Opacity = 0.6
+    $LogoBorder.Effect = $glow
+
+    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $glowAnim.From = 0.4
+    $glowAnim.To = 0.85
+    $glowAnim.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(1800))
+    $glowAnim.AutoReverse = $true
+    $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
 })
 
 # Controls
