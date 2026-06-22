@@ -140,15 +140,39 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === KNOPPEN (via irm werkend) ===
+# === KNOPPEN MET ZWARTE CONSOLE ===
 
-$window.FindName("BtnPrimeMacro").Add_Click({ Start-Process powershell -ArgumentList "-ep bypass -c `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`"" })
-$window.FindName("BtnHuntScanner").Add_Click({ Start-Process powershell -ArgumentList "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)" })
-$window.FindName("BtnGhostFinder").Add_Click({ Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`"" })
-$window.FindName("BtnCyemer").Add_Click({ Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
-$window.FindName("BtnInjector").Add_Click({ Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`"" })
-$window.FindName("BtnMeow").Add_Click({ Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`"" })
-$window.FindName("BtnRedLotus").Add_Click({ $p = "$env:USERPROFILE\Downloads\RedLotusModAnalyzer.exe"; if (Test-Path $p) { Start-Process $p } })
-$window.FindName("BtnDqrkis").Add_Click({ Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
+$window.FindName("BtnPrimeMacro").Add_Click({
+    Start-Process cmd -ArgumentList "/c powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`""
+})
+
+$window.FindName("BtnHuntScanner").Add_Click({
+    Start-Process cmd -ArgumentList "/c powershell Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
+})
+
+$window.FindName("BtnGhostFinder").Add_Click({
+    Start-Process cmd -ArgumentList "/c powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`""
+})
+
+$window.FindName("BtnCyemer").Add_Click({
+    Start-Process cmd -ArgumentList "/c powershell -ExecutionPolicy Bypass -NoProfile -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`""
+})
+
+$window.FindName("BtnInjector").Add_Click({
+    Start-Process cmd -ArgumentList "/c powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`""
+})
+
+$window.FindName("BtnMeow").Add_Click({
+    Start-Process cmd -ArgumentList "/c powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`""
+})
+
+$window.FindName("BtnRedLotus").Add_Click({
+    $p = "$env:USERPROFILE\Downloads\RedLotusModAnalyzer.exe"
+    if (Test-Path $p) { Start-Process $p }
+})
+
+$window.FindName("BtnDqrkis").Add_Click({
+    Start-Process cmd -ArgumentList "/c powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`""
+})
 
 $window.ShowDialog() | Out-Null
