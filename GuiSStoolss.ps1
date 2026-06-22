@@ -16,6 +16,30 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Opacity="0">
 
+    <Window.Resources>
+        <!-- Smooth Button Template -->
+        <Style x:Key="SmoothButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="14" 
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
 
         <Grid>
@@ -128,26 +152,21 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <!-- Smoother knoppen -->
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" 
-                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
-                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
+                        <!-- Smoothere knoppen -->
+                        <Button x:Name="InstallButton" Content="Install / Update Tools" 
+                                Background="#145C2E" Style="{StaticResource SmoothButtonStyle}"/>
 
-                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" 
-                                Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" 
-                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
+                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" 
+                                Background="#3A2028" Style="{StaticResource SmoothButtonStyle}"/>
 
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" 
-                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
-                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
+                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" 
+                                Background="#145C2E" Style="{StaticResource SmoothButtonStyle}"/>
 
-                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" 
-                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
-                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
+                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" 
+                                Background="#145C2E" Style="{StaticResource SmoothButtonStyle}"/>
 
-                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" 
-                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
-                                Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
+                        <Button x:Name="ExitButton" Content="Exit Launcher" 
+                                Background="#145C2E" Style="{StaticResource SmoothButtonStyle}"/>
                     </StackPanel>
                 </Border>
             </Grid>
