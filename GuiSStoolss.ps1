@@ -146,49 +146,20 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <!-- Knoppen met Gradient -->
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" Margin="0,0,0,12"
-                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#1E7A3D" Offset="0"/>
-                                    <GradientStop Color="#166534" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                        <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" 
+                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
 
-                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Margin="0,0,0,12"
-                                Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand"/>
+                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" 
+                                Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
 
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Margin="0,0,0,12"
-                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#1E7A3D" Offset="0"/>
-                                    <GradientStop Color="#166534" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" 
+                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
 
-                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" Margin="0,0,0,12"
-                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#1E7A3D" Offset="0"/>
-                                    <GradientStop Color="#166534" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" 
+                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
 
-                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52"
-                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#1E7A3D" Offset="0"/>
-                                    <GradientStop Color="#166534" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" 
+                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
             </Grid>
