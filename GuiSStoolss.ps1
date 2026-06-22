@@ -160,63 +160,98 @@ catch {
     exit
 }
 
-$CloseButton = $window.FindName("CloseButton")
-$MinButton   = $window.FindName("MinButton")
-$MainBorder  = $window.FindName("MainBorder")
-$ActivityBox = $window.FindName("ActivityBox")
+$CloseButton     = $window.FindName("CloseButton")
+$MinButton       = $window.FindName("MinButton")
+$MainBorder      = $window.FindName("MainBorder")
+$ActivityBox     = $window.FindName("ActivityBox")
+$InstallButton   = $window.FindName("InstallButton")
+$RemoveButton    = $window.FindName("RemoveButton")
+$OpenFolderButton= $window.FindName("OpenFolderButton")
+$OpenCmdButton   = $window.FindName("OpenCmdButton")
+$ExitButton      = $window.FindName("ExitButton")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
-$window.FindName("ExitButton").Add_Click({ $window.Close() })
+$ExitButton.Add_Click({ $window.Close() })
 
-# ====================== INSTALL (Stabiele versie) ======================
-$window.FindName("InstallButton").Add_Click({
-    $ActivityBox.AppendText("`n[Install] Bezig met downloaden...`n")
+# ====================== ROBUUSTE INSTALL (gebaseerd op Tesla code) ======================
+$InstallButton.Add_Click({
+    $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
 
     try {
+        # Admin check
+        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $principal = New-Object Security.Principal.WindowsPrincipal($identity)
+        if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            $ActivityBox.AppendText("[Error] Deze actie vereist Administrator rechten.`n")
+            return
+        }
+
+        # Bevestiging als map al bestaat
+        if (Test-Path $destPath) {
+            $result = [System.Windows.MessageBox]::Show(
+                "Er is al een installatie gevonden.`nWil je deze vervangen?",
+                "Bevestig Installatie",
+                "YesNo",
+                "Warning"
+            )
+            if ($result -ne "Yes") {
+                $ActivityBox.AppendText("[Install] Geannuleerd door gebruiker.`n")
+                return
+            }
+            Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
+
+        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
+
+        # Download
         $ProgressPreference = 'SilentlyContinue'
         Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
 
         $ActivityBox.AppendText("[Install] Download voltooid.`n")
 
+        # Uitpakken
         if (Test-Path $destPath) {
             Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
         }
+        New-Item -ItemType Directory -Path $destPath -Force | Out-Null
 
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
+
         $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
         $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
 
+        # Map openen
         Start-Process $destPath
+
     }
     catch {
-        $ActivityBox.AppendText("[Error] Download of uitpakken mislukt.`n")
         $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
     }
 })
 
 # ====================== REMOVE ======================
-$window.FindName("RemoveButton").Add_Click({
+$RemoveButton.Add_Click({
     if (Test-Path $destPath) {
         Remove-Item $destPath -Recurse -Force
-        $ActivityBox.AppendText("`n[Remove] Tools verwijderd.`n")
+        $ActivityBox.AppendText("`n[Remove] Tools succesvol verwijderd.`n")
     } else {
-        $ActivityBox.AppendText("`n[Remove] Geen tools gevonden.`n")
+        $ActivityBox.AppendText("`n[Remove] Geen installatie gevonden.`n")
     }
 })
 
 # ====================== OPEN FOLDER ======================
-$window.FindName("OpenFolderButton").Add_Click({
+$OpenFolderButton.Add_Click({
     if (Test-Path $destPath) {
         Start-Process $destPath
     } else {
-        $ActivityBox.AppendText("`n[Error] Map niet gevonden.`n")
+        $ActivityBox.AppendText("`n[Error] Installatiemap niet gevonden.`n")
     }
 })
 
 # ====================== CMD COMMANDS ======================
-$window.FindName("OpenCmdButton").Add_Click({
+$OpenCmdButton.Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
 })
 
