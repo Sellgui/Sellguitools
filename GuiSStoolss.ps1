@@ -11,7 +11,8 @@ $downloads = Join-Path $userDir "Downloads"
 $zipPath   = Join-Path $downloads "Guiss-Tools.zip"
 $destPath  = Join-Path $downloads "Guiss-Tools"
 
-$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Guiss-Tools.zip"
+# === CORRECTE DOWNLOAD URL ===
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Gui-SS-Tools.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -226,27 +227,23 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# ====================== INSTALL (Altijd downloaden - Optie B) ======================
+# ====================== INSTALL ======================
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Bezig met downloaden...`n")
 
     try {
-        # Download de zip
         Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing
         $ActivityBox.AppendText("[Install] Download voltooid.`n")
 
-        # Oude map verwijderen als die bestaat
         if (Test-Path $destPath) {
             Remove-Item $destPath -Recurse -Force
             $ActivityBox.AppendText("[Install] Oude versie verwijderd.`n")
         }
 
-        # Uitpakken
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
         $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
         $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
 
-        # Map automatisch openen
         Start-Process $destPath
     }
     catch {
