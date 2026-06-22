@@ -108,15 +108,13 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
                         </Border>
                     </Grid>
 
-                    <!-- Activity Console -->
                     <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,25,0,8"/>
                     <Border Background="#0A120F" CornerRadius="12" BorderBrush="#2A4738" BorderThickness="1" Padding="10">
-                        <TextBox x:Name="ActivityBox" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" 
-                                 FontSize="13" IsReadOnly="True" TextWrapping="Wrap"/>
+                        <TextBox x:Name="ActivityBox" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="13" IsReadOnly="True" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
 
-                <!-- Right Side - Control Center -->
+                <!-- Right Side -->
                 <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="18" FontWeight="SemiBold" Foreground="#4ADE80"/>
@@ -138,7 +136,6 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# Fade-in
 $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
 $fadeIn.From = 0
 $fadeIn.To = 1
@@ -156,23 +153,17 @@ $CloseButton.Add_Click({ $window.Close() })
 $ExitButton = $window.FindName("ExitButton")
 $ExitButton.Add_Click({ $window.Close() })
 
-# === BUTTONS ===
-
-$window.FindName("InstallButton").Add_Click({
-    $ActivityBox.AppendText("`n[Install] Starting installation...`n")
-    # Hier komt later de install logica
-})
-
-$window.FindName("RemoveButton").Add_Click({
-    $ActivityBox.AppendText("`n[Remove] Removing tools...`n")
-})
-
+# === FIX 1: Open Install Folder (correct pad) ===
 $window.FindName("OpenFolderButton").Add_Click({
     $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
-    if (Test-Path $dest) { Start-Process $dest }
+    if (Test-Path $dest) {
+        Start-Process $dest
+    } else {
+        $ActivityBox.AppendText("`n[Error] Map niet gevonden: $dest`n")
+    }
 })
 
-# === FIX: Open CMD Commands zonder blauwe console te laten hangen ===
+# === FIX 2: Open CMD Commands (correcte URL + geen blauwe console) ===
 $window.FindName("OpenCmdButton").Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1 | iex`"" -WindowStyle Hidden
 })
