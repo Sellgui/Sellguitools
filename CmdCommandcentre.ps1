@@ -26,13 +26,8 @@ Add-Type -AssemblyName System.Xaml
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="14" 
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Left" 
-                                              VerticalAlignment="Center"
-                                              Margin="14,0,0,0"/>
+                        <Border CornerRadius="14" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="14,0,0,0"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -53,7 +48,6 @@ Add-Type -AssemblyName System.Xaml
 
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
@@ -79,7 +73,6 @@ Add-Type -AssemblyName System.Xaml
                 </Grid>
             </Border>
 
-            <!-- Main Content -->
             <Grid Grid.Row="1" Margin="20,15,20,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="420"/>
@@ -87,7 +80,6 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
@@ -109,7 +101,6 @@ Add-Type -AssemblyName System.Xaml
                     </ScrollViewer>
                 </Border>
 
-                <!-- Right: Dashboard -->
                 <Grid Grid.Column="2">
                     <StackPanel>
                         <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
@@ -169,8 +160,6 @@ $MainBorder = $window.FindName("MainBorder")
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
-
-# === KNOPPEN ===
 
 $window.FindName("BtnAnydesk").Add_Click({ Start-Process "https://download.anydesk.com/AnyDesk.exe" })
 $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
