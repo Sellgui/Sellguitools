@@ -6,6 +6,14 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+$userDir   = [Environment]::GetFolderPath("UserProfile")
+$downloads = Join-Path $userDir "Downloads"
+$zipPath   = Join-Path $downloads "Guiss-Tools.zip"
+$destPath  = Join-Path $downloads "Guiss-Tools"
+
+# === PAS DE URL HIERONDER AAN ALS JE EEN ANDERE ZIP HEBT ===
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Guiss-Tools.zip"
+
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -74,7 +82,7 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
                     <ColumnDefinition Width="280"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left Side -->
+                <!-- Left -->
                 <StackPanel>
                     <TextBlock Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                     <TextBlock Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#7E92A6" Margin="0,8,0,25"/>
@@ -153,17 +161,51 @@ $CloseButton.Add_Click({ $window.Close() })
 $ExitButton = $window.FindName("ExitButton")
 $ExitButton.Add_Click({ $window.Close() })
 
-# === FIX 1: Open Install Folder (correct pad) ===
-$window.FindName("OpenFolderButton").Add_Click({
-    $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
-    if (Test-Path $dest) {
-        Start-Process $dest
-    } else {
-        $ActivityBox.AppendText("`n[Error] Map niet gevonden: $dest`n")
+# === INSTALL / UPDATE TOOLS ===
+$window.FindName("InstallButton").Add_Click({
+    $ActivityBox.AppendText("`n[Install] Downloading tools...`n")
+
+    try {
+        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing
+        $ActivityBox.AppendText("[Install] Download completed.`n")
+
+        if (Test-Path $destPath) {
+            Remove-Item $destPath -Recurse -Force
+        }
+
+        $ActivityBox.AppendText("[Install] Extracting files...`n")
+        Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
+
+        $ActivityBox.AppendText("[Install] Extraction successful!`n")
+        $ActivityBox.AppendText("[Install] Tools installed in: $destPath`n")
+
+        Start-Process $destPath
+    }
+    catch {
+        $ActivityBox.AppendText("[Error] Something went wrong: $($_.Exception.Message)`n")
     }
 })
 
-# === FIX 2: Open CMD Commands (correcte URL + geen blauwe console) ===
+# === REMOVE INSTALLED TOOLS ===
+$window.FindName("RemoveButton").Add_Click({
+    if (Test-Path $destPath) {
+        Remove-Item $destPath -Recurse -Force
+        $ActivityBox.AppendText("`n[Remove] Tools removed successfully.`n")
+    } else {
+        $ActivityBox.AppendText("`n[Remove] No tools found to remove.`n")
+    }
+})
+
+# === OPEN INSTALL FOLDER ===
+$window.FindName("OpenFolderButton").Add_Click({
+    if (Test-Path $destPath) {
+        Start-Process $destPath
+    } else {
+        $ActivityBox.AppendText("`n[Error] Install folder not found.`n")
+    }
+})
+
+# === OPEN CMD COMMANDS (Command Centre) ===
 $window.FindName("OpenCmdButton").Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1 | iex`"" -WindowStyle Hidden
 })
