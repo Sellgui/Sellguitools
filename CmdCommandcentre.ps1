@@ -14,21 +14,37 @@ Add-Type -AssemblyName System.Xaml
         Opacity="0">
 
     <Window.Resources>
+        <!-- === NIEUWE MODERNE KNOPPEN MET HOVER GLOW === -->
         <Style x:Key="RoundButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#0D3B24"/>
+            <Setter Property="Background" Value="#0F2A1F"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Height" Value="46"/>
             <Setter Property="Margin" Value="0,0,0,6"/>
             <Setter Property="BorderThickness" Value="1.5"/>
-            <Setter Property="BorderBrush" Value="#0F3D1F"/>
+            <Setter Property="BorderBrush" Value="#1A4738"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="14" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border x:Name="Border" CornerRadius="14" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="14,0,0,0"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#22D3EE"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="14" ShadowDepth="0" Color="#22D3EE" Opacity="0.65"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -41,7 +57,7 @@ Add-Type -AssemblyName System.Xaml
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES (zacht op de achtergrond) === -->
+            <!-- === DECORATIVE CIRCLES === -->
             <Canvas>
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.22" Canvas.Left="-150" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="360" Height="360" Fill="#166534" Opacity="0.16" Canvas.Right="-90" Canvas.Bottom="30"/>
@@ -94,17 +110,18 @@ Add-Type -AssemblyName System.Xaml
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
                                 <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
-                                <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
-                                <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
-                                <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
-                                <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
-                                <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
-                                <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
-                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
-                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
-                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
-                                <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
-                                <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
+                                
+                                <Button x:Name="BtnAnydesk"            Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
+                                <Button x:Name="BtnCyemer"             Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
+                                <Button x:Name="BtnDqrkis"             Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
+                                <Button x:Name="BtnGhostFinder"        Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
+                                <Button x:Name="BtnInjector"           Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
+                                <Button x:Name="BtnMeow"               Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
+                                <Button x:Name="BtnAppData"            Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
+                                <Button x:Name="BtnPowerShellHistory"  Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
+                                <Button x:Name="BtnPrefetch"           Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
+                                <Button x:Name="BtnPrimeMacro"         Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
+                                <Button x:Name="BtnQuickcheck"         Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
@@ -171,7 +188,7 @@ $window.Add_Loaded({
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
-# === CIRCLES ANIMATIE ===
+# === CIRCLES + ANIMATIE ===
 $c1 = $window.FindName("Circle1")
 $c2 = $window.FindName("Circle2")
 $c3 = $window.FindName("Circle3")
