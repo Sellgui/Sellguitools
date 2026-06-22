@@ -35,20 +35,20 @@ Add-Type -AssemblyName System.Xaml
         </Style>
     </Window.Resources>
 
-    <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
+    <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1" Background="#0A120F">
         <Border.Effect>
             <DropShadowEffect BlurRadius="45" ShadowDepth="0" Opacity="0.6"/>
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES (nu zichtbaar) === -->
+            <!-- === DECORATIVE CIRCLES (zacht op de achtergrond) === -->
             <Canvas>
-                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.25" Canvas.Left="-150" Canvas.Top="-100"/>
-                <Ellipse x:Name="Circle2" Width="360" Height="360" Fill="#166534" Opacity="0.18" Canvas.Right="-90" Canvas.Bottom="30"/>
-                <Ellipse x:Name="Circle3" Width="210" Height="210" Fill="#4ADE80" Opacity="0.15" Canvas.Left="260" Canvas.Top="140"/>
-                <Ellipse x:Name="Circle4" Width="720" Height="720" Fill="#0F2A1F" Opacity="0.14" Canvas.Right="-240" Canvas.Top="-200"/>
-                <Ellipse x:Name="Circle5" Width="140" Height="140" Fill="#86EFAC" Opacity="0.28" Canvas.Left="900" Canvas.Top="360"/>
-                <Ellipse x:Name="Circle6" Width="300" Height="300" Fill="#166534" Opacity="0.12" Canvas.Left="1080" Canvas.Bottom="50"/>
+                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.22" Canvas.Left="-150" Canvas.Top="-100"/>
+                <Ellipse x:Name="Circle2" Width="360" Height="360" Fill="#166534" Opacity="0.16" Canvas.Right="-90" Canvas.Bottom="30"/>
+                <Ellipse x:Name="Circle3" Width="210" Height="210" Fill="#4ADE80" Opacity="0.13" Canvas.Left="260" Canvas.Top="140"/>
+                <Ellipse x:Name="Circle4" Width="720" Height="720" Fill="#0F2A1F" Opacity="0.12" Canvas.Right="-240" Canvas.Top="-200"/>
+                <Ellipse x:Name="Circle5" Width="140" Height="140" Fill="#86EFAC" Opacity="0.25" Canvas.Left="900" Canvas.Top="360"/>
+                <Ellipse x:Name="Circle6" Width="300" Height="300" Fill="#166534" Opacity="0.11" Canvas.Left="1080" Canvas.Bottom="50"/>
             </Canvas>
 
             <Grid>
@@ -164,14 +164,14 @@ catch {
     exit
 }
 
-# Fade-in animatie
+# Fade-in
 $window.Add_Loaded({
     $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(450)
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
-# === CIRCLES + ANIMATIE ===
+# === CIRCLES ANIMATIE ===
 $c1 = $window.FindName("Circle1")
 $c2 = $window.FindName("Circle2")
 $c3 = $window.FindName("Circle3")
