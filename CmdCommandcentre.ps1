@@ -87,7 +87,7 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: All 68 Tools (Alphabetical) -->
+                <!-- Left: All 68 Tools -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
@@ -226,23 +226,83 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === 68 TOOLS - CLICK HANDLERS ===
+# === ALLE 68 KNOPPEN WERKENDE ===
 
-# (Ik heb hieronder de belangrijkste toegevoegd. De rest kun je later uitbreiden als je wilt)
-
-$window.FindName("BtnMeowModAnalyzer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')`"" })
-$window.FindName("BtnJournalTrace").Add_Click({ Start-Process "https://github.com/spokwn/JournalTrace/releases/latest" })
-$window.FindName("BtnPrefetchView").Add_Click({ Start-Process "https://github.com/Orbdiff/PrefetchView/releases/latest" })
-$window.FindName("BtnJARParser").Add_Click({ Start-Process "https://github.com/Orbdiff/JARParser/releases/latest" })
+# GitHub Tools
+$window.FindName("BtnActivitiesCache").Add_Click({ Start-Process "https://github.com/spokwn/ActivitiesCache-execution/releases/latest" })
+$window.FindName("BtnAltDetector").Add_Click({ Start-Process "https://github.com/praiselily/AltDetector/releases/latest" })
+$window.FindName("BtnBAMParser").Add_Click({ Start-Process "https://github.com/spokwn/BAM-parser/releases/latest" })
+$window.FindName("BtnBamDeletedKeys").Add_Click({ Start-Process "https://github.com/spokwn/BamDeletedKeys/releases/latest" })
+$window.FindName("BtnBAMReveal").Add_Click({ Start-Process "https://github.com/Orbdiff/BAMReveal/releases/latest" })
 $window.FindName("BtnCheckDeletedUSN").Add_Click({ Start-Process "https://github.com/Orbdiff/CheckDeletedUSN/releases/latest" })
-$window.FindName("BtnRLModAnalyzer").Add_Click({ Start-Process "https://github.com/ItzIceHere/RedLotus-Mod-Analyzer/releases/latest" })
+$window.FindName("BtnDPSAnalyzer").Add_Click({ Start-Process "https://github.com/Orbdiff/DPS-Analyzer/releases/latest" })
+$window.FindName("BtnEspoukenTool").Add_Click({ Start-Process "https://github.com/spokwn/Tool/releases/latest" })
+$window.FindName("BtnFileless").Add_Click({ Start-Process "https://github.com/Orbdiff/Fileless/releases/latest" })
+$window.FindName("BtnInjGen").Add_Click({ Start-Process "https://github.com/Orbdiff/InjGen/releases/latest" })
+$window.FindName("BtnJARParser").Add_Click({ Start-Process "https://github.com/Orbdiff/JARParser/releases/latest" })
+$window.FindName("BtnJournalParser").Add_Click({ Start-Process "https://github.com/Orbdiff/JournalParser/releases/latest" })
+$window.FindName("BtnJournalTrace").Add_Click({ Start-Process "https://github.com/spokwn/JournalTrace/releases/latest" })
+$window.FindName("BtnKernelLiveDumpTool").Add_Click({ Start-Process "https://github.com/spokwn/KernelLiveDumpTool/releases/latest" })
+$window.FindName("BtnMeowClientsFucker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowClientFucker/releases/latest" })
+$window.FindName("BtnMeowDoomsdayFucker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowDoomsdayFucker/releases/latest" })
+$window.FindName("BtnMeowImportsChecker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowImportsChecker/releases/latest" })
+$window.FindName("BtnMeowNovowareFucker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowNovowareFucker/releases/latest" })
 $window.FindName("BtnMeowResolver").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowResolver/releases/latest" })
-$window.FindName("BtnMFTECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/MFTECmd.zip" })
-$window.FindName("BtnPECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/PECmd.zip" })
-$window.FindName("Btnbstrings").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/bstrings.zip" })
-$window.FindName("BtnWinPrefetchView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/winprefetchview.zip" })
-$window.FindName("BtnUSBDeview").Add_Click({ Start-Process "https://www.nirsoft.net/utils/usbdeview.zip" })
+$window.FindName("BtnPathsParser").Add_Click({ Start-Process "https://github.com/spokwn/PathsParser/releases/latest" })
+$window.FindName("Btnpcasvcexecuted").Add_Click({ Start-Process "https://github.com/spokwn/pcasvc-executed/releases/latest" })
+$window.FindName("BtnPFTrace").Add_Click({ Start-Process "https://github.com/Orbdiff/PFTrace/releases/latest" })
+$window.FindName("BtnPrefetchView").Add_Click({ Start-Process "https://github.com/Orbdiff/PrefetchView/releases/latest" })
+$window.FindName("Btnprefetchparser").Add_Click({ Start-Process "https://github.com/spokwn/prefetch-parser/releases/latest" })
+$window.FindName("Btnprocessparser").Add_Click({ Start-Process "https://github.com/spokwn/process-parser/releases/latest" })
+$window.FindName("BtnPSHunter").Add_Click({ Start-Process "https://github.com/praiselily/PSHunter/releases/latest" })
+$window.FindName("BtnRLAltChecker").Add_Click({ Start-Process "https://github.com/ItzIceHere/RedLotusAltChecker/releases/latest" })
+$window.FindName("BtnRLModAnalyzer").Add_Click({ Start-Process "https://github.com/ItzIceHere/RedLotus-Mod-Analyzer/releases/latest" })
+$window.FindName("BtnRLTaskSentinel").Add_Click({ Start-Process "https://github.com/ItzIceHere/RedLotus-Task-Sentinel/releases/latest" })
+$window.FindName("BtnStringsParser").Add_Click({ Start-Process "https://github.com/Orbdiff/StringsParser/releases/latest" })
+$window.FindName("BtnUSBDetector").Add_Click({ Start-Process "https://github.com/Orbdiff/USBDetector/releases/latest" })
+
+# Cmd Tools
+$window.FindName("BtnMeowModAnalyzer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')`"" })
 $window.FindName("BtnDQRKISFUCKER").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
 $window.FindName("BtnMacroDetector").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/NiccBlahh/MacroDetector/refs/heads/main/MacroDetector.ps1' | Invoke-Expression`"" })
+$window.FindName("BtnWeHateFakers").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"iwr https://raw.githubusercontent.com/praiselily/WeHateFakers/refs/heads/main/HotspotLogs.ps1 | iex`"" })
+$window.FindName("BtnCommonDirectories").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/CommonDirectories.ps1')`"" })
+$window.FindName("BtnHarddiskConverter").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/HarddiskConverter.ps1')`"" })
+$window.FindName("BtnServices").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1')`"" })
+$window.FindName("BtnSignedScheduledTasks").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Signed-Scheduled-Tasks.ps1')`"" })
+
+# Web + Download Tools
+$window.FindName("BtnAmcacheParser").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/AmcacheParser.zip" })
+$window.FindName("Btnbstrings").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/bstrings.zip" })
+$window.FindName("BtnJLECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/JLECmd.zip" })
+$window.FindName("BtnJumpListExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/JumpListExplorer.zip" })
+$window.FindName("BtnMFTECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/MFTECmd.zip" })
+$window.FindName("BtnPECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/PECmd.zip" })
+$window.FindName("BtnRecentFileCacheParser").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/RecentFileCacheParser.zip" })
+$window.FindName("BtnRegistryExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/RegistryExplorer.zip" })
+$window.FindName("BtnShellBagsExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/ShellBagsExplorer.zip" })
+$window.FindName("BtnSrumECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/SrumECmd.zip" })
+$window.FindName("BtnTimelineExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/TimelineExplorer.zip" })
+
+$window.FindName("BtnComputerActivityView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/computer_activity_view.html" })
+$window.FindName("BtnBrowserDownloadsView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/browserdownloadsview.zip" })
+$window.FindName("BtnFullEventLogView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/fulleventlogview.zip" })
+$window.FindName("BtnNetworkUsageView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/networkusageview.zip" })
+$window.FindName("BtnAlternateStreamView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/alternatestreamview.zip" })
+$window.FindName("BtnUSBDeview").Add_Click({ Start-Process "https://www.nirsoft.net/utils/usbdeview.zip" })
+$window.FindName("BtnOpenSaveFilesView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/opensavefilesview.zip" })
+$window.FindName("BtnExecutedProgramsList").Add_Click({ Start-Process "https://www.nirsoft.net/utils/executedprogramslist.zip" })
+$window.FindName("BtnTaskSchedulerView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/taskschedulerview.zip" })
+$window.FindName("BtnJumpListsView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/jumplistsview.zip" })
+$window.FindName("BtnWinPrefetchView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/winprefetchview.zip" })
+$window.FindName("BtnRegScanner").Add_Click({ Start-Process "https://www.nirsoft.net/utils/regscanner.zip" })
+$window.FindName("BtnShellBagsView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/shellbagsview.zip" })
+
+$window.FindName("BtnDIEengine").Add_Click({ Start-Process "https://github.com/horsicq/DIE-engine/releases" })
+$window.FindName("BtnSystemInformer").Add_Click({ Start-Process "https://www.systeminformer.com/canary" })
+
+$window.FindName("BtnNET90").Add_Click({ Start-Process "https://download.visualstudio.microsoft.com/download/pr/92dba916-bc51-4e76-8b0e-d41d37ce5fa4/ab08f3e95bf7a3d3da336a7e8c8eca63/dotnet-sdk-9.0.203-win-x64.exe" })
+$window.FindName("BtnNET100").Add_Click({ Start-Process "https://download.visualstudio.microsoft.com/download/pr/b3f93f0e-9e5e-4b4c-a4c4-36db0c4b0e3e/dotnet-runtime-10.0.0-win-x64.exe" })
+$window.FindName("BtnVSRedist").Add_Click({ Start-Process "https://aka.ms/vs/17/release/vc_redist.x64.exe" })
 
 $window.ShowDialog() | Out-Null
