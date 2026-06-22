@@ -227,7 +227,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# ====================== INSTALL ======================
+# ====================== INSTALL (Correcte versie) ======================
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Bezig met downloaden...`n")
 
