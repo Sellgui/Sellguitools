@@ -15,7 +15,7 @@ Add-Type -AssemblyName System.Xaml
 
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
+            <DropShadowEffect BlurRadius="45" ShadowDepth="0" Opacity="0.6"/>
         </Border.Effect>
 
         <Grid>
@@ -27,14 +27,18 @@ Add-Type -AssemblyName System.Xaml
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
             <!-- Decoratieve Cirkels -->
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" Fill="#166534" Opacity="0.07" 
-                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-180,-160,0,0"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" Fill="#4ADE80" Opacity="0.055" 
-                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-120,-100"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" Fill="White" Opacity="0.03" 
-                     HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" Fill="White" Opacity="0.025" 
-                     HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40"/>
+            <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" 
+                     Fill="#166534" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="-180,-160,0,0"/>
+            <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" 
+                     Fill="#4ADE80" Opacity="0.055" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                     Margin="0,0,-120,-100"/>
+            <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" 
+                     Fill="White" Opacity="0.03" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                     Margin="0,60,0,0"/>
+            <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" 
+                     Fill="White" Opacity="0.025" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                     Margin="40,0,0,40"/>
 
             <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
@@ -70,7 +74,7 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands (scrollbar verborgen) -->
+                <!-- Left: Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
@@ -145,13 +149,38 @@ Add-Type -AssemblyName System.Xaml
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# Fade-in
+# === ANIMATIES (veilig) ===
+
+# 1. Fade-in bij opstarten
 $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
 $fadeIn.From = 0
 $fadeIn.To = 1
-$fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
+$fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(500))
 $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 
+# 2. Subtiele pulsing op de decoratieve cirkels
+$Circle1 = $window.FindName("Circle1")
+$Circle2 = $window.FindName("Circle2")
+$Circle3 = $window.FindName("Circle3")
+$Circle4 = $window.FindName("Circle4")
+
+function Start-CircleAnimation {
+    param($Ellipse, [double]$From, [double]$To, [int]$DurationMs)
+    $anim = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $anim.From = $From
+    $anim.To = $To
+    $anim.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds($DurationMs))
+    $anim.AutoReverse = $true
+    $anim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $Ellipse.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $anim)
+}
+
+Start-CircleAnimation -Ellipse $Circle1 -From 0.05 -To 0.11 -DurationMs 6200
+Start-CircleAnimation -Ellipse $Circle2 -From 0.04 -To 0.09 -DurationMs 5400
+Start-CircleAnimation -Ellipse $Circle3 -From 0.025 -To 0.055 -DurationMs 6800
+Start-CircleAnimation -Ellipse $Circle4 -From 0.02 -To 0.05 -DurationMs 5900
+
+# === EVENT HANDLERS ===
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
