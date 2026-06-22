@@ -11,10 +11,6 @@ $downloads = Join-Path $userDir "Downloads"
 $zipPath   = Join-Path $downloads "Guiss-Tools.zip"
 $destPath  = Join-Path $downloads "Guiss-Tools"
 
-# Lokale zip (als die in dezelfde map staat als dit script)
-$localZip = Join-Path $PSScriptRoot "Gui-SS-Tools.zip"
-
-# GitHub fallback
 $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Guiss-Tools.zip"
 
 [xml]$xaml = @"
@@ -189,7 +185,7 @@ $window.Add_Loaded({
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
-# Circles
+# Circles + animatie
 $circle1 = $window.FindName("Circle1")
 $circle2 = $window.FindName("Circle2")
 $circle3 = $window.FindName("Circle3")
@@ -209,4 +205,77 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
     [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.Scale
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+    $sb.Children.Add($animX); $sb.Children.Add($animY); $sb.Begin()
+}
+
+Start-PulseAnimation $circle1 4500 1.07
+Start-PulseAnimation $circle2 3800 1.10
+Start-PulseAnimation $circle3 3200 1.15
+Start-PulseAnimation $circle4 5200 1.06
+Start-PulseAnimation $circle5 2900 1.18
+Start-PulseAnimation $circle6 4100 1.09
+
+$CloseButton = $window.FindName("CloseButton")
+$MinButton   = $window.FindName("MinButton")
+$MainBorder  = $window.FindName("MainBorder")
+$ActivityBox = $window.FindName("ActivityBox")
+
+$MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
+$MinButton.Add_Click({ $window.WindowState = "Minimized" })
+$CloseButton.Add_Click({ $window.Close() })
+$window.FindName("ExitButton").Add_Click({ $window.Close() })
+
+# ====================== INSTALL (Altijd downloaden - Optie B) ======================
+$window.FindName("InstallButton").Add_Click({
+    $ActivityBox.AppendText("`n[Install] Bezig met downloaden...`n")
+
+    try {
+        # Download de zip
+        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing
+        $ActivityBox.AppendText("[Install] Download voltooid.`n")
+
+        # Oude map verwijderen als die bestaat
+        if (Test-Path $destPath) {
+            Remove-Item $destPath -Recurse -Force
+            $ActivityBox.AppendText("[Install] Oude versie verwijderd.`n")
+        }
+
+        # Uitpakken
+        Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
+        $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
+        $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
+
+        # Map automatisch openen
+        Start-Process $destPath
+    }
+    catch {
+        $ActivityBox.AppendText("[Error] Er is iets misgegaan: $($_.Exception.Message)`n")
+    }
+})
+
+# ====================== REMOVE ======================
+$window.FindName("RemoveButton").Add_Click({
+    if (Test-Path $destPath) {
+        Remove-Item $destPath -Recurse -Force
+        $ActivityBox.AppendText("`n[Remove] Alle tools zijn succesvol verwijderd.`n")
+    } else {
+        $ActivityBox.AppendText("`n[Remove] Geen tools gevonden om te verwijderen.`n")
+    }
+})
+
+# ====================== OPEN FOLDER ======================
+$window.FindName("OpenFolderButton").Add_Click({
+    if (Test-Path $destPath) {
+        Start-Process $destPath
+    } else {
+        $ActivityBox.AppendText("`n[Error] Installatiemap niet gevonden.`n")
+    }
+})
+
+# ====================== OPEN CMD COMMANDS ======================
+$window.FindName("OpenCmdButton").Add_Click({
+    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
+})
+
+$window.ShowDialog() | Out-Null
