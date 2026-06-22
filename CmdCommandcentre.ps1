@@ -3,12 +3,15 @@ Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName System.Xaml
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Guiss Command Center" Width="1320" Height="830"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Opacity="0">
 
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
@@ -16,10 +19,25 @@ Add-Type -AssemblyName System.Xaml
         </Border.Effect>
 
         <Grid>
-            <Border Background="#0A120F" CornerRadius="24"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="68"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
+
+            <!-- Decoratieve Cirkels -->
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" Fill="#166534" Opacity="0.07" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-180,-160,0,0"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" Fill="#4ADE80" Opacity="0.055" 
+                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-120,-100"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" Fill="White" Opacity="0.03" 
+                     HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" Fill="White" Opacity="0.025" 
+                     HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40"/>
 
             <!-- Top Bar -->
-            <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
+            <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -44,8 +62,8 @@ Add-Type -AssemblyName System.Xaml
                 </Grid>
             </Border>
 
-            <!-- Main Content (Commands + Dashboard) -->
-            <Grid Margin="0,75,0,20">
+            <!-- Main Content -->
+            <Grid Grid.Row="1" Margin="20,15,20,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="420"/>
                     <ColumnDefinition Width="18"/>
@@ -57,26 +75,27 @@ Add-Type -AssemblyName System.Xaml
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="5,0,0,14"/>
-                            <Button Content="🟢  Prime Macro Detector" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🟢  Guiss Launcher" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📁  Open Prefetch Folder" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🖥️  Start AnyDesk" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔍  Quick Macro Scan" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🛡️  Screenshare Tools" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="⚡  CMD Commands" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📊  System Information" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🧹  Clean Temp Files" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔄  Restart Explorer" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📝  Open Notepad" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🌐  Open Chrome" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔧  Services.msc" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📋  Task Manager" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🗂️  Open Downloads" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔒  Lock PC" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🔄  Update Tools" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="📈  Performance Monitor" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🧪  Test Command 1" Height="48" Background="#166534" Foreground="White" FontSize="14" Margin="0,0,0,8"/>
-                            <Button Content="🧪  Test Command 2" Height="48" Background="#166534" Foreground="White" FontSize="14"/>
+
+                            <Button Content="🟢  Prime Macro Detector" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🟢  Guiss Launcher" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="📁  Open Prefetch Folder" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🖥️  Start AnyDesk" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🔍  Quick Macro Scan" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🛡️  Screenshare Tools" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="⚡  CMD Commands" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="📊  System Information" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🧹  Clean Temp Files" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🔄  Restart Explorer" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="📝  Open Notepad" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🌐  Open Chrome" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🔧  Services.msc" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="📋  Task Manager" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🗂️  Open Downloads" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🔒  Lock PC" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🔄  Update Tools" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="📈  Performance Monitor" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🧪  Test Command 1" Height="48" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,8" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="🧪  Test Command 2" Height="48" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -127,6 +146,13 @@ Add-Type -AssemblyName System.Xaml
 
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
+
+# Fade-in
+$fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+$fadeIn.From = 0
+$fadeIn.To = 1
+$fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
+$window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
