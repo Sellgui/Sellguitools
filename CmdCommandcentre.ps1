@@ -14,14 +14,13 @@ Add-Type -AssemblyName System.Xaml
         Opacity="0">
 
     <Window.Resources>
-        <!-- Tesla-style ronde knoppen met donkere rand -->
         <Style x:Key="RoundButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#145C2E"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="46"/>
             <Setter Property="Margin" Value="0,0,0,6"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="BorderBrush" Value="#0F3D1F"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -87,7 +86,7 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands met emoji's -->
+                <!-- Left: Commands met emoji's + donkere rand -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
@@ -155,7 +154,6 @@ Add-Type -AssemblyName System.Xaml
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# Fade-in
 $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
 $fadeIn.From = 0
 $fadeIn.To = 1
