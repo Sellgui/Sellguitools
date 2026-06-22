@@ -50,17 +50,31 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         </Border.Effect>
 
         <Grid>
-            <!-- Decorative animated circles -->
+            <!-- === DECORATIVE CIRCLES === -->
             <Canvas>
-                <Ellipse x:Name="Circle1" Width="420" Height="420" 
-                         Fill="#0F2A1F" Opacity="0.25" 
-                         Canvas.Left="-80" Canvas.Top="-60"/>
-                <Ellipse x:Name="Circle2" Width="280" Height="280" 
-                         Fill="#0F2A1F" Opacity="0.18" 
-                         Canvas.Right="-40" Canvas.Bottom="80"/>
-                <Ellipse x:Name="Circle3" Width="160" Height="160" 
-                         Fill="#166534" Opacity="0.12" 
-                         Canvas.Left="180" Canvas.Top="220"/>
+                <!-- Grote donkergroene cirkel -->
+                <Ellipse x:Name="Circle1" Width="480" Height="480" Fill="#0F2A1F" Opacity="0.22" 
+                         Canvas.Left="-120" Canvas.Top="-90"/>
+                
+                <!-- Middelgrote heldere groene cirkel -->
+                <Ellipse x:Name="Circle2" Width="320" Height="320" Fill="#166534" Opacity="0.18" 
+                         Canvas.Right="-60" Canvas.Bottom="60"/>
+                
+                <!-- Kleine zachte witte-groene cirkel -->
+                <Ellipse x:Name="Circle3" Width="180" Height="180" Fill="#4ADE80" Opacity="0.12" 
+                         Canvas.Left="220" Canvas.Top="180"/>
+                
+                <!-- Extra grote zachte cirkel -->
+                <Ellipse x:Name="Circle4" Width="620" Height="620" Fill="#052E16" Opacity="0.15" 
+                         Canvas.Right="-180" Canvas.Top="-150"/>
+                
+                <!-- Kleine accent cirkel wit-groen -->
+                <Ellipse x:Name="Circle5" Width="110" Height="110" Fill="#86EFAC" Opacity="0.25" 
+                         Canvas.Left="850" Canvas.Top="420"/>
+                
+                <!-- Extra decoratieve cirkel -->
+                <Ellipse x:Name="Circle6" Width="250" Height="250" Fill="#166534" Opacity="0.10" 
+                         Canvas.Left="1050" Canvas.Bottom="80"/>
             </Canvas>
 
             <Grid>
@@ -104,7 +118,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                         <TextBlock Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#7E92A6" Margin="0,8,0,25"/>
 
-                        <!-- Status boxes -->
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -143,7 +156,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                         </Border>
                     </StackPanel>
 
-                    <!-- Right Side - Control Center -->
+                    <!-- Right Side -->
                     <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" 
                             Padding="20" Margin="20,0,0,0">
                         <StackPanel>
@@ -164,31 +177,30 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
 </Window>
 "@
 
-# === Laad de window veilig ===
 try {
     $reader = New-Object System.Xml.XmlNodeReader $xaml
     $window = [Windows.Markup.XamlReader]::Load($reader)
 }
 catch {
-    Write-Host "FOUT bij laden van de GUI:" -ForegroundColor Red
-    Write-Host $_.Exception.Message
-    Read-Host "Druk Enter om af te sluiten"
+    Write-Host "FOUT:" $_.Exception.Message -ForegroundColor Red
+    Read-Host
     exit
 }
 
-# === Fade-in animatie ===
+# Fade-in
 $window.Add_Loaded({
     $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fade.From = 0
-    $fade.To = 1
-    $fade.Duration = [TimeSpan]::FromMilliseconds(500)
+    $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(500)
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
-# === Decorative circles animatie ===
+# === CIRCLES + ANIMATIE ===
 $circle1 = $window.FindName("Circle1")
 $circle2 = $window.FindName("Circle2")
 $circle3 = $window.FindName("Circle3")
+$circle4 = $window.FindName("Circle4")
+$circle5 = $window.FindName("Circle5")
+$circle6 = $window.FindName("Circle6")
 
 function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $scale = New-Object System.Windows.Media.ScaleTransform
@@ -196,11 +208,9 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $element.RenderTransformOrigin = "0.5,0.5"
 
     $sb = New-Object System.Windows.Media.Animation.Storyboard
-
     $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
     $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
     $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-
     $animY = $animX.Clone()
 
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
@@ -213,11 +223,14 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $sb.Begin()
 }
 
-Start-PulseAnimation $circle1 4200 1.08
-Start-PulseAnimation $circle2 3800 1.12
+Start-PulseAnimation $circle1 4500 1.07
+Start-PulseAnimation $circle2 3800 1.10
 Start-PulseAnimation $circle3 3200 1.15
+Start-PulseAnimation $circle4 5200 1.06
+Start-PulseAnimation $circle5 2900 1.18
+Start-PulseAnimation $circle6 4100 1.09
 
-# === Controls ===
+# Controls
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
@@ -228,7 +241,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# === INSTALL ===
+# Buttons
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Downloading tools...`n")
     try {
@@ -237,30 +250,23 @@ $window.FindName("InstallButton").Add_Click({
         if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force }
         $ActivityBox.AppendText("[Install] Extracting...`n")
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
-        $ActivityBox.AppendText("[Install] Done! Tools installed.`n")
+        $ActivityBox.AppendText("[Install] Done!`n")
         Start-Process $destPath
-    } catch {
-        $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
-    }
+    } catch { $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n") }
 })
 
-# === REMOVE ===
 $window.FindName("RemoveButton").Add_Click({
     if (Test-Path $destPath) {
         Remove-Item $destPath -Recurse -Force
         $ActivityBox.AppendText("`n[Remove] Tools removed successfully.`n")
-    } else {
-        $ActivityBox.AppendText("`n[Remove] No tools found.`n")
-    }
+    } else { $ActivityBox.AppendText("`n[Remove] No tools found.`n") }
 })
 
-# === OPEN FOLDER ===
 $window.FindName("OpenFolderButton").Add_Click({
     if (Test-Path $destPath) { Start-Process $destPath }
-    else { $ActivityBox.AppendText("`n[Error] Install folder not found.`n") }
+    else { $ActivityBox.AppendText("`n[Error] Folder not found.`n") }
 })
 
-# === OPEN CMD COMMANDS (exact zoals jij wilde) ===
 $window.FindName("OpenCmdButton").Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
 })
