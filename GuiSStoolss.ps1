@@ -16,35 +16,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Opacity="0">
 
-    <Window.Resources>
-        <!-- Simpele maar mooie button style met gradient -->
-        <Style x:Key="PremiumButtonStyle" TargetType="Button">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Height" Value="52"/>
-            <Setter Property="Margin" Value="0,0,0,12"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#1E7A3D" Offset="0"/>
-                        <GradientStop Color="#166534" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1E8A45"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#145C2E"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="45" ShadowDepth="0" Opacity="0.6"/>
@@ -175,11 +146,49 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Style="{StaticResource PremiumButtonStyle}"/>
-                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Background="#3A2028" Style="{StaticResource PremiumButtonStyle}"/>
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Style="{StaticResource PremiumButtonStyle}"/>
-                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Style="{StaticResource PremiumButtonStyle}"/>
-                        <Button x:Name="ExitButton" Content="Exit Launcher" Style="{StaticResource PremiumButtonStyle}"/>
+                        <!-- Knoppen met Gradient -->
+                        <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" Margin="0,0,0,12"
+                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#1E7A3D" Offset="0"/>
+                                    <GradientStop Color="#166534" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+
+                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Margin="0,0,0,12"
+                                Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand"/>
+
+                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Margin="0,0,0,12"
+                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#1E7A3D" Offset="0"/>
+                                    <GradientStop Color="#166534" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+
+                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" Margin="0,0,0,12"
+                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#1E7A3D" Offset="0"/>
+                                    <GradientStop Color="#166534" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+
+                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52"
+                                Foreground="White" FontSize="15" FontWeight="SemiBold" Cursor="Hand">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#1E7A3D" Offset="0"/>
+                                    <GradientStop Color="#166534" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                     </StackPanel>
                 </Border>
             </Grid>
