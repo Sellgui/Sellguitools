@@ -42,11 +42,8 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         </Style>
     </Window.Resources>
 
-    <Border x:Name="MainBorder" 
-            Background="#0A120F"
-            CornerRadius="24" 
-            BorderBrush="#1A2E24" 
-            BorderThickness="1">
+    <Border x:Name="MainBorder" Background="#0A120F" CornerRadius="24" 
+            BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
         </Border.Effect>
@@ -60,8 +57,9 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0">
                 <Grid Margin="25,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                            <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" 
+                        <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" 
+                                BorderBrush="#2A4738" BorderThickness="1">
+                            <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Margin="14,0,0,0">
@@ -70,9 +68,9 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                         </StackPanel>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="MinButton" Content="—" Width="40" Height="36" 
+                        <Button x:Name="MinButton" Content="—" Width="40" Height="36"
                                 Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" 
+                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36"
                                 Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
                     </StackPanel>
                 </Grid>
@@ -85,7 +83,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                     <ColumnDefinition Width="280"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left Side -->
+                <!-- Left -->
                 <StackPanel>
                     <TextBlock Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                     <TextBlock Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#7E92A6" Margin="0,8,0,25"/>
@@ -121,12 +119,14 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
 
                     <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,25,0,8"/>
                     <Border Background="#0A120F" CornerRadius="12" BorderBrush="#2A4738" BorderThickness="1" Padding="10">
-                        <TextBox x:Name="ActivityBox" Background="Transparent" Foreground="#A0B8C8" 
-                                 BorderThickness="0" FontSize="13" IsReadOnly="True" TextWrapping="Wrap"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBox x:Name="ActivityBox" Background="Transparent" Foreground="#A0B8C8" 
+                                     BorderThickness="0" FontSize="13" IsReadOnly="True" TextWrapping="Wrap"/>
+                        </ScrollViewer>
                     </Border>
                 </StackPanel>
 
-                <!-- Right Side - Control Center -->
+                <!-- Right Side -->
                 <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="18" FontWeight="SemiBold" Foreground="#4ADE80"/>
@@ -145,30 +145,30 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
 </Window>
 "@
 
-$reader = New-Object System.Xml.XmlNodeReader $xaml
-$window = [Windows.Markup.XamlReader]::Load($reader)
+try {
+    $reader = New-Object System.Xml.XmlNodeReader $xaml
+    $window = [Windows.Markup.XamlReader]::Load($reader)
+}
+catch {
+    Write-Host "XAML FOUT:" -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor Yellow
+    Write-Host "`nDruk op Enter om af te sluiten..."
+    Read-Host
+    exit
+}
 
-# Fade-in animatie
-$fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
-$fadeIn.From = 0
-$fadeIn.To = 1
-$fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
-$window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
-
-# Controls ophalen
+# Controls
 $CloseButton     = $window.FindName("CloseButton")
 $MinButton       = $window.FindName("MinButton")
 $MainBorder      = $window.FindName("MainBorder")
 $ActivityBox     = $window.FindName("ActivityBox")
-$ExitButton      = $window.FindName("ExitButton")
 
-# Window sleep + knoppen
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
-$ExitButton.Add_Click({ $window.Close() })
+$window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# === INSTALL / UPDATE ===
+# === INSTALL ===
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Downloading tools...`n")
     try {
@@ -177,11 +177,10 @@ $window.FindName("InstallButton").Add_Click({
 
         if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force }
 
-        $ActivityBox.AppendText("[Install] Extracting files...`n")
+        $ActivityBox.AppendText("[Install] Extracting...`n")
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
 
-        $ActivityBox.AppendText("[Install] Extraction successful!`n")
-        $ActivityBox.AppendText("[Install] Tools installed in: $destPath`n")
+        $ActivityBox.AppendText("[Install] Done! Tools installed.`n")
         Start-Process $destPath
     }
     catch {
@@ -189,29 +188,26 @@ $window.FindName("InstallButton").Add_Click({
     }
 })
 
-# === REMOVE TOOLS ===
+# === REMOVE ===
 $window.FindName("RemoveButton").Add_Click({
     if (Test-Path $destPath) {
         Remove-Item $destPath -Recurse -Force
         $ActivityBox.AppendText("`n[Remove] Tools removed successfully.`n")
     } else {
-        $ActivityBox.AppendText("`n[Remove] No tools found to remove.`n")
+        $ActivityBox.AppendText("`n[Remove] No tools found.`n")
     }
 })
 
-# === OPEN INSTALL FOLDER ===
+# === OPEN FOLDER ===
 $window.FindName("OpenFolderButton").Add_Click({
-    if (Test-Path $destPath) {
-        Start-Process $destPath
-    } else {
-        $ActivityBox.AppendText("`n[Error] Install folder not found.`n")
-    }
+    if (Test-Path $destPath) { Start-Process $destPath }
+    else { $ActivityBox.AppendText("`n[Error] Install folder not found.`n") }
 })
 
-# === OPEN CMD COMMANDS (opgeruimd) ===
+# === OPEN CMD COMMANDS (verbeterd) ===
 $window.FindName("OpenCmdButton").Add_Click({
     $scriptUrl = "https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1"
-    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm '$scriptUrl' | iex"
+    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm '$scriptUrl' | iex"
 })
 
-$window.ShowDialog() |
+$window.ShowDialog() | Out-Null
