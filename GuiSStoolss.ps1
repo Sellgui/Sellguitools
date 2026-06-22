@@ -38,30 +38,23 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border.Background>
                             
                             <Border.Effect>
-                                <DropShadowEffect x:Name="Glow" BlurRadius="8" ShadowDepth="0" Opacity="0.0" Color="#4ADE80"/>
+                                <DropShadowEffect x:Name="Glow" BlurRadius="10" ShadowDepth="0" Opacity="0.0" Color="#4ADE80"/>
                             </Border.Effect>
                             
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         
                         <ControlTemplate.Triggers>
+                            <!-- Hover met Glow -->
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Glow" Property="Opacity" Value="0.65"/>
-                                <Setter TargetName="Glow" Property="BlurRadius" Value="20"/>
-                                <Setter TargetName="Root" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="1.03" ScaleY="1.03"/>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter TargetName="Glow" Property="Opacity" Value="0.7"/>
+                                <Setter TargetName="Glow" Property="BlurRadius" Value="22"/>
                             </Trigger>
                             
+                            <!-- Press Effect -->
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Glow" Property="Opacity" Value="0.35"/>
-                                <Setter TargetName="Root" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter TargetName="Glow" Property="Opacity" Value="0.4"/>
+                                <Setter TargetName="Glow" Property="BlurRadius" Value="12"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -216,7 +209,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# === Fade-in animatie bij opstarten ===
+# Fade-in animatie
 $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
 $fadeIn.From = 0
 $fadeIn.To = 1
