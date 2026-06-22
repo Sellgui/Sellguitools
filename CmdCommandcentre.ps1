@@ -14,6 +14,7 @@ Add-Type -AssemblyName System.Xaml
         Opacity="0">
 
     <Window.Resources>
+        <!-- Ronde knoppen met emoji links uitgelijnd -->
         <Style x:Key="RoundButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#145C2E"/>
             <Setter Property="Foreground" Value="White"/>
@@ -30,8 +31,9 @@ Add-Type -AssemblyName System.Xaml
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Left" 
+                                              VerticalAlignment="Center"
+                                              Margin="14,0,0,0"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -86,7 +88,7 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands met emoji's + donkere rand -->
+                <!-- Left: Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
@@ -154,6 +156,7 @@ Add-Type -AssemblyName System.Xaml
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
+# Fade-in
 $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
 $fadeIn.From = 0
 $fadeIn.To = 1
