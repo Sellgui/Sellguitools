@@ -22,21 +22,37 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         Opacity="0">
 
     <Window.Resources>
+        <!-- === NIEUWE MODERNE KNOPPEN === -->
         <Style x:Key="MainButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#166534"/>
+            <Setter Property="Background" Value="#0F2A1F"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Height" Value="48"/>
             <Setter Property="Margin" Value="0,0,0,10"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="#1A4738"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="12" Background="{TemplateBinding Background}">
+                        <Border x:Name="Border" CornerRadius="12" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#22D3EE"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="14" ShadowDepth="0" Color="#22D3EE" Opacity="0.65"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -50,31 +66,14 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES === -->
+            <!-- Decorative Circles -->
             <Canvas>
-                <!-- Grote donkergroene cirkel -->
-                <Ellipse x:Name="Circle1" Width="480" Height="480" Fill="#0F2A1F" Opacity="0.22" 
-                         Canvas.Left="-120" Canvas.Top="-90"/>
-                
-                <!-- Middelgrote heldere groene cirkel -->
-                <Ellipse x:Name="Circle2" Width="320" Height="320" Fill="#166534" Opacity="0.18" 
-                         Canvas.Right="-60" Canvas.Bottom="60"/>
-                
-                <!-- Kleine zachte witte-groene cirkel -->
-                <Ellipse x:Name="Circle3" Width="180" Height="180" Fill="#4ADE80" Opacity="0.12" 
-                         Canvas.Left="220" Canvas.Top="180"/>
-                
-                <!-- Extra grote zachte cirkel -->
-                <Ellipse x:Name="Circle4" Width="620" Height="620" Fill="#052E16" Opacity="0.15" 
-                         Canvas.Right="-180" Canvas.Top="-150"/>
-                
-                <!-- Kleine accent cirkel wit-groen -->
-                <Ellipse x:Name="Circle5" Width="110" Height="110" Fill="#86EFAC" Opacity="0.25" 
-                         Canvas.Left="850" Canvas.Top="420"/>
-                
-                <!-- Extra decoratieve cirkel -->
-                <Ellipse x:Name="Circle6" Width="250" Height="250" Fill="#166534" Opacity="0.10" 
-                         Canvas.Left="1050" Canvas.Bottom="80"/>
+                <Ellipse x:Name="Circle1" Width="480" Height="480" Fill="#0F2A1F" Opacity="0.22" Canvas.Left="-120" Canvas.Top="-90"/>
+                <Ellipse x:Name="Circle2" Width="320" Height="320" Fill="#166534" Opacity="0.18" Canvas.Right="-60" Canvas.Bottom="60"/>
+                <Ellipse x:Name="Circle3" Width="180" Height="180" Fill="#4ADE80" Opacity="0.12" Canvas.Left="220" Canvas.Top="180"/>
+                <Ellipse x:Name="Circle4" Width="620" Height="620" Fill="#052E16" Opacity="0.15" Canvas.Right="-180" Canvas.Top="-150"/>
+                <Ellipse x:Name="Circle5" Width="110" Height="110" Fill="#86EFAC" Opacity="0.25" Canvas.Left="850" Canvas.Top="420"/>
+                <Ellipse x:Name="Circle6" Width="250" Height="250" Fill="#166534" Opacity="0.10" Canvas.Left="1050" Canvas.Bottom="80"/>
             </Canvas>
 
             <Grid>
@@ -87,10 +86,8 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                 <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0">
                     <Grid Margin="25,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" 
-                                    BorderBrush="#2A4738" BorderThickness="1">
-                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel Margin="14,0,0,0">
                                 <TextBlock Text="Guiss Launcher" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
@@ -98,10 +95,8 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                             </StackPanel>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                            <Button x:Name="MinButton" Content="—" Width="40" Height="36"
-                                    Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
-                            <Button x:Name="CloseButton" Content="✕" Width="40" Height="36"
-                                    Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
+                            <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                            <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -150,23 +145,21 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                         <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,25,0,8"/>
                         <Border Background="#0A120F" CornerRadius="12" BorderBrush="#2A4738" BorderThickness="1" Padding="10">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <TextBox x:Name="ActivityBox" Background="Transparent" Foreground="#A0B8C8" 
-                                         BorderThickness="0" FontSize="13" IsReadOnly="True" TextWrapping="Wrap"/>
+                                <TextBox x:Name="ActivityBox" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="13" IsReadOnly="True" TextWrapping="Wrap"/>
                             </ScrollViewer>
                         </Border>
                     </StackPanel>
 
                     <!-- Right Side -->
-                    <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" 
-                            Padding="20" Margin="20,0,0,0">
+                    <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" Padding="20" Margin="20,0,0,0">
                         <StackPanel>
                             <TextBlock Text="Control Center" FontSize="18" FontWeight="SemiBold" Foreground="#4ADE80"/>
                             <TextBlock Text="Manage your Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,20"/>
 
                             <Button x:Name="InstallButton"    Content="Install / Update Tools"   Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="RemoveButton"     Content="Remove Installed Tools"   Background="#6B2D2D" Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="RemoveButton"     Content="Remove Installed Tools"   Background="#3F1F1F" Style="{StaticResource MainButtonStyle}"/>
                             <Button x:Name="OpenFolderButton" Content="Open Install Folder"      Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="OpenCmdButton"    Content="Open CMD Commands"        Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="OpenCmdButton"    Content="CMD Commands"             Style="{StaticResource MainButtonStyle}"/>
                             <Button x:Name="ExitButton"       Content="Exit Launcher"            Style="{StaticResource MainButtonStyle}"/>
                         </StackPanel>
                     </Border>
@@ -187,14 +180,13 @@ catch {
     exit
 }
 
-# Fade-in
 $window.Add_Loaded({
     $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(500)
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
-# === CIRCLES + ANIMATIE ===
+# Circles + animatie
 $circle1 = $window.FindName("Circle1")
 $circle2 = $window.FindName("Circle2")
 $circle3 = $window.FindName("Circle3")
@@ -206,21 +198,16 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $scale = New-Object System.Windows.Media.ScaleTransform
     $element.RenderTransform = $scale
     $element.RenderTransformOrigin = "0.5,0.5"
-
     $sb = New-Object System.Windows.Media.Animation.Storyboard
     $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
     $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
     $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
     $animY = $animX.Clone()
-
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
     [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
     [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
-
-    $sb.Children.Add($animX)
-    $sb.Children.Add($animY)
-    $sb.Begin()
+    $sb.Children.Add($animX); $sb.Children.Add($animY); $sb.Begin()
 }
 
 Start-PulseAnimation $circle1 4500 1.07
@@ -230,7 +217,6 @@ Start-PulseAnimation $circle4 5200 1.06
 Start-PulseAnimation $circle5 2900 1.18
 Start-PulseAnimation $circle6 4100 1.09
 
-# Controls
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
@@ -241,7 +227,6 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# Buttons
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Downloading tools...`n")
     try {
