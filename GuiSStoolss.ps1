@@ -30,22 +30,22 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
             <!-- Achtergrond -->
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <!-- Decoratieve cirkels met animatie -->
-            <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="480" Height="480" 
-                     Fill="#166534" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                     Margin="-160,-140,0,0"/>
+            <!-- === Decoratieve cirkels (zichtbaar) === -->
+            <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" 
+                     Fill="#166534" Opacity="0.08" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="-180,-160,0,0"/>
             
-            <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="320" Height="320" 
-                     Fill="#4ADE80" Opacity="0.035" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                     Margin="0,0,-100,-85"/>
+            <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" 
+                     Fill="#4ADE80" Opacity="0.06" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                     Margin="0,0,-120,-100"/>
             
-            <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="200" Height="200" 
-                     Fill="White" Opacity="0.02" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                     Margin="0,80,0,0"/>
+            <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" 
+                     Fill="White" Opacity="0.035" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                     Margin="0,60,0,0"/>
             
-            <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="150" Height="150" 
-                     Fill="White" Opacity="0.015" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
-                     Margin="60,0,0,50"/>
+            <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" 
+                     Fill="White" Opacity="0.025" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                     Margin="40,0,0,40"/>
 
             <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
@@ -159,7 +159,6 @@ $Circle4 = $window.FindName("Circle4")
 
 function Start-CircleAnimation {
     param($Ellipse, [double]$FromOpacity, [double]$ToOpacity, [int]$DurationMs)
-
     $animation = New-Object System.Windows.Media.Animation.DoubleAnimation
     $animation.From = $FromOpacity
     $animation.To = $ToOpacity
@@ -169,11 +168,10 @@ function Start-CircleAnimation {
     $Ellipse.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $animation)
 }
 
-# Start animaties (zachte pulsing)
-Start-CircleAnimation -Ellipse $Circle1 -FromOpacity 0.03 -ToOpacity 0.08 -DurationMs 4500
-Start-CircleAnimation -Ellipse $Circle2 -FromOpacity 0.02 -ToOpacity 0.06 -DurationMs 3800
-Start-CircleAnimation -Ellipse $Circle3 -FromOpacity 0.015 -ToOpacity 0.04 -DurationMs 5200
-Start-CircleAnimation -Ellipse $Circle4 -FromOpacity 0.01 -ToOpacity 0.03 -DurationMs 4100
+Start-CircleAnimation -Ellipse $Circle1 -FromOpacity 0.05 -ToOpacity 0.12 -DurationMs 4200
+Start-CircleAnimation -Ellipse $Circle2 -FromOpacity 0.04 -ToOpacity 0.10 -DurationMs 3600
+Start-CircleAnimation -Ellipse $Circle3 -FromOpacity 0.025 -ToOpacity 0.06 -DurationMs 4800
+Start-CircleAnimation -Ellipse $Circle4 -FromOpacity 0.02 -ToOpacity 0.05 -DurationMs 3900
 
 $CloseButton      = $window.FindName("CloseButton")
 $MinButton        = $window.FindName("MinButton")
