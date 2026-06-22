@@ -76,24 +76,25 @@ Add-Type -AssemblyName System.Xaml
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <Button Content="Open Prefetch Folder" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Start AnyDesk" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Quick Macro Scan" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Screenshare Tools" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="CMD Commands" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="System Information" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Clean Temp Files" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Restart Explorer" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Open Notepad" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Open Chrome" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Services.msc" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Task Manager" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Open Downloads" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Lock PC" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Update Tools" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Performance Monitor" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Test Command 1" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Test Command 2" Height="46" Background="#0B1118" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
+                            <!-- Donker groene knoppen -->
+                            <Button Content="Open Prefetch Folder" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Start AnyDesk" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Quick Macro Scan" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Screenshare Tools" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="CMD Commands" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="System Information" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Clean Temp Files" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Restart Explorer" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Open Notepad" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Open Chrome" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Services.msc" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Task Manager" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Open Downloads" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Lock PC" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Update Tools" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Performance Monitor" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Test Command 1" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Test Command 2" Height="46" Background="#0F3D1F" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
