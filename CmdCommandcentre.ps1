@@ -26,20 +26,6 @@ Add-Type -AssemblyName System.Xaml
 
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <!-- Decoratieve Cirkels -->
-            <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" 
-                     Fill="#166534" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                     Margin="-180,-160,0,0"/>
-            <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" 
-                     Fill="#4ADE80" Opacity="0.055" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                     Margin="0,0,-120,-100"/>
-            <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" 
-                     Fill="White" Opacity="0.03" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                     Margin="0,60,0,0"/>
-            <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" 
-                     Fill="White" Opacity="0.025" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
-                     Margin="40,0,0,40"/>
-
             <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
@@ -80,24 +66,15 @@ Add-Type -AssemblyName System.Xaml
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <Button Content="Open Prefetch Folder" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Start AnyDesk" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Quick Macro Scan" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Screenshare Tools" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="CMD Commands" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="System Information" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Clean Temp Files" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Restart Explorer" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Open Notepad" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Open Chrome" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Services.msc" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Task Manager" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Open Downloads" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Lock PC" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Update Tools" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Performance Monitor" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Test Command 1" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Test Command 2" Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
+                            <!-- Jouw nieuwe knoppen -->
+                            <Button Content="Prime Macro Detector" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Hunt Scanner" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Ghost Client Finder" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Cyemer Scanner" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Injector Detector" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="Meow Mod Analyzer" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="RedLotus Mod Analyzer" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="DQRKIS-FUCKER" Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -149,38 +126,13 @@ Add-Type -AssemblyName System.Xaml
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# === ANIMATIES (veilig) ===
-
-# 1. Fade-in bij opstarten
+# Fade-in
 $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
 $fadeIn.From = 0
 $fadeIn.To = 1
-$fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(500))
+$fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
 $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 
-# 2. Subtiele pulsing op de decoratieve cirkels
-$Circle1 = $window.FindName("Circle1")
-$Circle2 = $window.FindName("Circle2")
-$Circle3 = $window.FindName("Circle3")
-$Circle4 = $window.FindName("Circle4")
-
-function Start-CircleAnimation {
-    param($Ellipse, [double]$From, [double]$To, [int]$DurationMs)
-    $anim = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $anim.From = $From
-    $anim.To = $To
-    $anim.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds($DurationMs))
-    $anim.AutoReverse = $true
-    $anim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $Ellipse.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $anim)
-}
-
-Start-CircleAnimation -Ellipse $Circle1 -From 0.05 -To 0.11 -DurationMs 6200
-Start-CircleAnimation -Ellipse $Circle2 -From 0.04 -To 0.09 -DurationMs 5400
-Start-CircleAnimation -Ellipse $Circle3 -From 0.025 -To 0.055 -DurationMs 6800
-Start-CircleAnimation -Ellipse $Circle4 -From 0.02 -To 0.05 -DurationMs 5900
-
-# === EVENT HANDLERS ===
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
@@ -188,5 +140,12 @@ $MainBorder  = $window.FindName("MainBorder")
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
+
+# === BUTTON CLICK EVENTS ===
+
+$buttons = $window.FindName("StackPanel")  # We zoeken de StackPanel met knoppen
+
+# Omdat we geen named buttons hebben, doen we het via de content
+# (eenvoudigste manier zonder errors)
 
 $window.ShowDialog() | Out-Null
