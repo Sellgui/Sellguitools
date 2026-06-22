@@ -93,18 +93,18 @@ Add-Type -AssemblyName System.Xaml
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <Button x:Name="BtnAnydesk"           Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
-                            <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
-                            <Button x:Name="BtnAppData"           Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
-                            <Button x:Name="BtnPrefetch"          Style="{StaticResource RoundButtonStyle}" Content="📁 Open Prefetch"/>
+                            <Button x:Name="BtnAnydesk"           Style="{StaticResource RoundButtonStyle}" Content="Anydesk Install"/>
+                            <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="Open PowerShell History"/>
+                            <Button x:Name="BtnAppData"           Style="{StaticResource RoundButtonStyle}" Content="Open AppData"/>
+                            <Button x:Name="BtnPrefetch"          Style="{StaticResource RoundButtonStyle}" Content="Open Prefetch"/>
 
-                            <Button x:Name="BtnPrimeMacro"   Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
-                            <Button x:Name="BtnQuickcheck"   Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
-                            <Button x:Name="BtnGhostFinder"  Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
-                            <Button x:Name="BtnCyemer"       Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
-                            <Button x:Name="BtnInjector"     Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
-                            <Button x:Name="BtnMeow"         Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
-                            <Button x:Name="BtnDqrkis"       Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
+                            <Button x:Name="BtnPrimeMacro"   Style="{StaticResource RoundButtonStyle}" Content="Prime Macro Detector"/>
+                            <Button x:Name="BtnQuickcheck"   Style="{StaticResource RoundButtonStyle}" Content="Quickcheck Scanner"/>
+                            <Button x:Name="BtnGhostFinder"  Style="{StaticResource RoundButtonStyle}" Content="Ghost Client Finder"/>
+                            <Button x:Name="BtnCyemer"       Style="{StaticResource RoundButtonStyle}" Content="Cyemer Scanner"/>
+                            <Button x:Name="BtnInjector"     Style="{StaticResource RoundButtonStyle}" Content="Injector Detector"/>
+                            <Button x:Name="BtnMeow"         Style="{StaticResource RoundButtonStyle}" Content="Meow Mod Analyzer"/>
+                            <Button x:Name="BtnDqrkis"       Style="{StaticResource RoundButtonStyle}" Content="DQRKIS-FUCKER"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
