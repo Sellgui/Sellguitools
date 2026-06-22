@@ -17,9 +17,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         Opacity="0">
 
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="45" ShadowDepth="0" Opacity="0.6"/>
-        </Border.Effect>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -93,9 +90,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Grid.ColumnDefinitions>
 
                             <Border Grid.Column="0" Background="#0F1A16" CornerRadius="16" Padding="18">
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2"/>
-                                </Border.Effect>
                                 <StackPanel>
                                     <TextBlock Text="SYSTEM STATUS" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="StepText" Text="All Systems OK" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
@@ -103,9 +97,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
 
                             <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" Padding="18">
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2"/>
-                                </Border.Effect>
                                 <StackPanel>
                                     <TextBlock Text="LAST SCAN" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="ProgressLabel" Text="Today 19:14" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
@@ -113,9 +104,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
 
                             <Border Grid.Column="4" Background="#0F1A16" CornerRadius="16" Padding="18">
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2"/>
-                                </Border.Effect>
                                 <StackPanel>
                                     <TextBlock Text="TOOLS" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="ToolCountText" Text="12" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
@@ -124,9 +112,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         </Grid>
 
                         <Border Background="#0F1A16" CornerRadius="18" Padding="18">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.25"/>
-                            </Border.Effect>
                             <StackPanel>
                                 <TextBlock Text="Activity Console" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80"/>
                                 <TextBox x:Name="ActivityBox" Height="280" Background="#08100D" Foreground="#D8E8F5" 
@@ -139,9 +124,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 
                 <!-- Control Center -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" Padding="22">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
-                    </Border.Effect>
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
