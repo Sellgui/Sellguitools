@@ -61,7 +61,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         <Grid>
             <!-- DECORATIVE CIRCLES + SHAPES -->
             <Canvas Panel.ZIndex="-1">
-                <!-- Boven / Midden -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -71,12 +70,11 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                 <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
                 <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
 
-                <!-- Extra cirkels LINKSONDER + Floating -->
+                <!-- Extra cirkels LINKSONDER -->
                 <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
                 <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
                 <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
 
-                <!-- Extra subtiele vormen -->
                 <Rectangle x:Name="Shape1" Width="420" Height="6"  Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
                 <Rectangle x:Name="Shape2" Width="6"   Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
@@ -91,11 +89,8 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                 <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0">
                     <Grid Margin="25,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <!-- Logo met Breathing Glow -->
-                            <Border x:Name="LogoBorder" Width="42" Height="42" CornerRadius="13" 
-                                    Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" 
-                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="LogoBorder" Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel Margin="14,0,0,0">
                                 <TextBlock Text="Guiss Launcher" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
@@ -110,7 +105,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                 </Border>
 
                 <!-- Main Content -->
-                <Grid x:Name="MainContent" Grid.Row="1" Margin="25,20,40,25">
+                <Grid Grid.Row="1" Margin="25,20,40,25">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="300"/>
@@ -188,27 +183,17 @@ catch {
     exit
 }
 
-# === FADE-IN WINDOW + CONTENT ===
-$MainContent = $window.FindName("MainContent")
-$LogoBorder  = $window.FindName("LogoBorder")
+# === FADE-IN + BREATHING GLOW ===
+$LogoBorder = $window.FindName("LogoBorder")
 
 $window.Add_Loaded({
-    # Window fade-in
     $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fadeIn.From = 0
     $fadeIn.To = 1
     $fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 
-    # Content fade-in (iets later)
-    $contentFade = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $contentFade.From = 0
-    $contentFade.To = 1
-    $contentFade.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(600))
-    $contentFade.BeginTime = [TimeSpan]::FromMilliseconds(300)
-    $MainContent.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $contentFade)
-
-    # Breathing Glow op logo "G"
+    # Breathing Glow op logo
     $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
     $glow.Color = "#4ADE80"
     $glow.BlurRadius = 18
@@ -235,23 +220,46 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# ====================== INSTALL ======================
+# ====================== ROBUUSTE INSTALL ======================
 $window.FindName("InstallButton").Add_Click({
-    $ActivityBox.AppendText("`n[Install] Bezig met downloaden...`n")
+    $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
 
     try {
-        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
-        $ActivityBox.AppendText("[Install] Download voltooid.`n")
-
-        if (Test-Path $destPath) {
-            Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
+        # Admin check
+        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $principal = New-Object Security.Principal.WindowsPrincipal($identity)
+        if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            $ActivityBox.AppendText("[Error] Deze actie vereist Administrator rechten!`n")
+            return
         }
 
+        # Download
+        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
+        $ProgressPreference = 'SilentlyContinue'
+
+        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
+
+        # Controleer of bestand geldig is
+        $zipFile = Get-Item $zipPath -ErrorAction Stop
+        if ($zipFile.Length -lt 100000) {
+            throw "Het gedownloade bestand is te klein of corrupt."
+        }
+
+        $ActivityBox.AppendText("[Install] Download voltooid ($([math]::Round($zipFile.Length / 1MB, 2)) MB).`n")
+
+        # Oude map verwijderen
+        if (Test-Path $destPath) {
+            Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
+            $ActivityBox.AppendText("[Install] Oude installatie verwijderd.`n")
+        }
+
+        # Uitpakken
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
         $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
         $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
 
         Start-Process $destPath
+
     }
     catch {
         $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
@@ -331,13 +339,13 @@ function Start-FloatAnimation($element, $durationMs, $distance) {
     $sb.Begin()
 }
 
-# Pulsing circles
+# Cirkels
 Start-PulseAnimation $c1 5200 1.06; Start-PulseAnimation $c2 4100 1.08
 Start-PulseAnimation $c3 3400 1.12; Start-PulseAnimation $c4 5800 1.05
 Start-PulseAnimation $c5 2900 1.15; Start-PulseAnimation $c6 4500 1.07
 Start-PulseAnimation $c7 4900 1.06; Start-PulseAnimation $c8 3600 1.11
 
-# Floating circles (linksonder)
+# Floating circles linksonder
 Start-FloatAnimation $c9  6800 18
 Start-FloatAnimation $c10 7500 -22
 Start-FloatAnimation $c11 6200 14
