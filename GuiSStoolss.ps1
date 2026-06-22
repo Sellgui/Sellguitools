@@ -60,7 +60,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <!-- Alle cirkels en vormen hier (zoals vorige versie) -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -172,7 +171,7 @@ $window = [Windows.Markup.XamlReader]::Load($reader)
 $LogoBorder = $window.FindName("LogoBorder")
 $ActivityBox = $window.FindName("ActivityBox")
 
-# === FADE-IN + BREATHING GLOW ===
+# Fade-in + Breathing Glow
 $window.Add_Loaded({
     $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
@@ -191,15 +190,57 @@ $window.Add_Loaded({
     $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
 })
 
-# ====================== ANIMATIES (cirkels) ======================
-# (zelfde als vorige versie - ik laat ze hier kort voor de duidelijkheid)
+# ====================== ANIMATIES ======================
+$c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
+$c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
+$c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
+$c7 = $window.FindName("Circle7"); $c8 = $window.FindName("Circle8")
+$c9 = $window.FindName("Circle9"); $c10 = $window.FindName("Circle10")
+$c11 = $window.FindName("Circle11")
+$s1 = $window.FindName("Shape1"); $s2 = $window.FindName("Shape2")
 
-# ====================== POPUP / ANNOUNCEMENT (zoals Tesla) ======================
+function Start-PulseAnimation($element, $durationMs, $scaleTo) {
+    $scale = New-Object System.Windows.Media.ScaleTransform
+    $element.RenderTransform = $scale
+    $element.RenderTransformOrigin = "0.5,0.5"
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $animY = $animX.Clone()
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+    $sb.Children.Add($animX); $sb.Children.Add($animY); $sb.Begin()
+}
+
+function Start-FloatAnimation($element, $durationMs, $distance) {
+    $translate = New-Object System.Windows.Media.TranslateTransform
+    $element.RenderTransform = $translate
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animY.From = 0; $animY.To = $distance; $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animY.AutoReverse = $true; $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
+    $sb.Children.Add($animY); $sb.Begin()
+}
+
+Start-PulseAnimation $c1 5200 1.06; Start-PulseAnimation $c2 4100 1.08
+Start-PulseAnimation $c3 3400 1.12; Start-PulseAnimation $c4 5800 1.05
+Start-PulseAnimation $c5 2900 1.15; Start-PulseAnimation $c6 4500 1.07
+Start-PulseAnimation $c7 4900 1.06; Start-PulseAnimation $c8 3600 1.11
+Start-FloatAnimation $c9 6800 18; Start-FloatAnimation $c10 7500 -22
+Start-FloatAnimation $c11 6200 14
+Start-PulseAnimation $s1 6000 1.04; Start-PulseAnimation $s2 5500 1.05
+
+# ====================== POPUP (zoals Tesla) ======================
 function Show-Announcement {
     [xml]$popupXaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Update" Width="620" Height="480"
+        Title="Welcome" Width="620" Height="420"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
@@ -226,15 +267,15 @@ function Show-Announcement {
             </StackPanel>
 
             <Border Grid.Row="1" Background="#0A1018" CornerRadius="14" BorderBrush="#1C2E40" BorderThickness="1" Padding="18" Margin="0,20,0,0">
-                <TextBlock TextWrapping="Wrap" Foreground="#DCE7F2" FontSize="14">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" Foreground="#DCE7F2" FontSize="14" Margin="0,0,0,12">
 Thanks for using Guiss Launcher!
 
 This launcher is still in active development. New tools and improvements are added regularly.
 
 If you have any suggestions or find bugs, feel free to reach out.
-
-Enjoy using the tools!
-                </TextBlock>
+                    </TextBlock>
+                </StackPanel>
             </Border>
 
             <Button x:Name="OkButton" Grid.Row="2" Content="Got it!" Width="140" Height="44" 
@@ -255,7 +296,7 @@ Enjoy using the tools!
     $popup.ShowDialog() | Out-Null
 }
 
-# ====================== STARTUP ======================
+# ====================== BUTTONS ======================
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
@@ -265,20 +306,64 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# Toon de announcement popup na het laden
+$window.FindName("InstallButton").Add_Click({
+    $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
+    try {
+        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $principal = New-Object Security.Principal.WindowsPrincipal($identity)
+        if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
+            return
+        }
+
+        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
+
+        $zipFile = Get-Item $zipPath
+        if ($zipFile.Length -lt 50000) { throw "Download mislukt (bestand te klein)." }
+
+        $ActivityBox.AppendText("[Install] Download succesvol!`n")
+
+        if (Test-Path $destPath) {
+            Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
+
+        Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
+        $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
+        $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
+
+        Start-Process $destPath
+    }
+    catch {
+        $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
+    }
+})
+
+$window.FindName("RemoveButton").Add_Click({
+    if (Test-Path $destPath) {
+        Remove-Item $destPath -Recurse -Force
+        $ActivityBox.AppendText("`n[Remove] Tools verwijderd.`n")
+    } else {
+        $ActivityBox.AppendText("`n[Remove] Geen installatie gevonden.`n")
+    }
+})
+
+$window.FindName("OpenFolderButton").Add_Click({
+    if (Test-Path $destPath) {
+        Start-Process $destPath
+    } else {
+        $ActivityBox.AppendText("`n[Error] Map niet gevonden.`n")
+    }
+})
+
+$window.FindName("OpenCmdButton").Add_Click({
+    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
+})
+
+# Toon de popup automatisch bij het opstarten
 $window.Add_ContentRendered({
     Show-Announcement
 })
-
-# ====================== INSTALL / REMOVE / ETC. ======================
-# (zelfde als vorige robuuste versie)
-
-$window.FindName("InstallButton").Add_Click({ ... })   # (zelfde als laatste versie)
-$window.FindName("RemoveButton").Add_Click({ ... })
-$window.FindName("OpenFolderButton").Add_Click({ ... })
-$window.FindName("OpenCmdButton").Add_Click({ ... })
-
-# ====================== ANIMATIES ======================
-# (zelfde pulsing + floating circles als vorige versie)
 
 $window.ShowDialog() | Out-Null
