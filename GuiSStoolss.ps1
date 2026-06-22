@@ -214,11 +214,14 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
 
     $animY = $animX.Clone()
 
+    $propX = "(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+    $propY = "(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, $propX)
 
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, $propY)
 
     $sb.Children.Add($animX)
     $sb.Children.Add($animY)
