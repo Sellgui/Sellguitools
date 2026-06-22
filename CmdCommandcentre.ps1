@@ -13,6 +13,32 @@ Add-Type -AssemblyName System.Xaml
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Opacity="0">
 
+    <Window.Resources>
+        <!-- Mooie ronde knoppen stijl -->
+        <Style x:Key="RoundButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#145C2E"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="14" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="#2A4738" 
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="45" ShadowDepth="0" Opacity="0.6"/>
@@ -60,23 +86,23 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands (alfabetisch) -->
+                <!-- Left: Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <Button x:Name="BtnAnydesk"           Content="Anydesk Install"           Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnCyemer"            Content="Cyemer Scanner"            Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnDqrkis"            Content="DQRKIS-FUCKER"             Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnGhostFinder"       Content="Ghost Client Finder"       Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnInjector"          Content="Injector Detector"         Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnMeow"              Content="Meow Mod Analyzer"         Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnAppData"           Content="Open AppData"              Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnPowerShellHistory" Content="Open PowerShell History"   Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnPrefetch"          Content="Open Prefetch"             Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnPrimeMacro"        Content="Prime Macro Detector"      Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnQuickcheck"        Content="Quickcheck Scanner"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Anydesk Install"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Cyemer Scanner"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="DQRKIS-FUCKER"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Ghost Client Finder"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Injector Detector"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Meow Mod Analyzer"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Open AppData"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Open PowerShell History"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Open Prefetch"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Prime Macro Detector"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="Quickcheck Scanner"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -143,7 +169,7 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === KNOPPEN (alfabetisch) ===
+# === KNOPPEN ===
 
 $window.FindName("BtnAnydesk").Add_Click({ Start-Process "https://download.anydesk.com/AnyDesk.exe" })
 $window.FindName("BtnCyemer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
