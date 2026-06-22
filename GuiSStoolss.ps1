@@ -16,9 +16,59 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
+    <Window.Resources>
+        <!-- Verbeterde Button Style met Hover + Schaduw -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="14"
+                                BorderThickness="0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.25"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <!-- Hover Effect -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#1E7A3D"/>
+                                <Setter TargetName="Root" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            
+                            <!-- Press Effect -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#145C2E"/>
+                                <Setter TargetName="Root" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
+            <DropShadowEffect BlurRadius="45" ShadowDepth="0" Opacity="0.6"/>
         </Border.Effect>
 
         <Grid>
@@ -27,37 +77,19 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Achtergrond -->
+            <!-- Achtergrond + Decoratieve Cirkels -->
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <!-- === Decoratieve Cirkels (met smooth animatie) === -->
-            <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" 
-                     Fill="#166534" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                     Margin="-180,-160,0,0"/>
-            
-            <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" 
-                     Fill="#4ADE80" Opacity="0.055" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                     Margin="0,0,-120,-100"/>
-            
-            <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" 
-                     Fill="White" Opacity="0.03" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                     Margin="0,60,0,0"/>
-            
-            <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" 
-                     Fill="White" Opacity="0.025" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
-                     Margin="40,0,0,40"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" Fill="#166534" Opacity="0.07" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-180,-160,0,0"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" Fill="#4ADE80" Opacity="0.055" 
+                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-120,-100"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" Fill="White" Opacity="0.03" 
+                     HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" Fill="White" Opacity="0.025" 
+                     HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40"/>
 
-            <!-- === Statische Strepen (groen + wit) === -->
-            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="2" Fill="#4ADE80" Opacity="0.04" 
-                       VerticalAlignment="Top" Margin="0,120,0,0"/>
-            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="1" Fill="#166534" Opacity="0.06" 
-                       VerticalAlignment="Top" Margin="0,280,0,0"/>
-            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="2" Fill="White" Opacity="0.025" 
-                       VerticalAlignment="Bottom" Margin="0,0,0,180"/>
-            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="1" Fill="#4ADE80" Opacity="0.035" 
-                       VerticalAlignment="Bottom" Margin="0,0,0,320"/>
-
-            <!-- Top Bar -->
+            <!-- Top Bar met subtiele gradient -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
@@ -97,6 +129,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock x:Name="StatusText" Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock x:Name="SubStatusText" Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#9DB1C4" Margin="0,8,0,25"/>
 
+                        <!-- Widgets met schaduw -->
                         <Grid Margin="0,0,0,25">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -107,6 +140,9 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Grid.ColumnDefinitions>
 
                             <Border Grid.Column="0" Background="#0F1A16" CornerRadius="16" Padding="18">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2"/>
+                                </Border.Effect>
                                 <StackPanel>
                                     <TextBlock Text="SYSTEM STATUS" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="StepText" Text="All Systems OK" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
@@ -114,6 +150,9 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
 
                             <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" Padding="18">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2"/>
+                                </Border.Effect>
                                 <StackPanel>
                                     <TextBlock Text="LAST SCAN" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="ProgressLabel" Text="Today 19:14" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
@@ -121,6 +160,9 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
 
                             <Border Grid.Column="4" Background="#0F1A16" CornerRadius="16" Padding="18">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2"/>
+                                </Border.Effect>
                                 <StackPanel>
                                     <TextBlock Text="TOOLS" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="ToolCountText" Text="12" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
@@ -128,7 +170,11 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
                         </Grid>
 
+                        <!-- Activity Console met schaduw -->
                         <Border Background="#0F1A16" CornerRadius="18" Padding="18">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.25"/>
+                            </Border.Effect>
                             <StackPanel>
                                 <TextBlock Text="Activity Console" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80"/>
                                 <TextBox x:Name="ActivityBox" Height="280" Background="#08100D" Foreground="#D8E8F5" 
@@ -139,17 +185,29 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                     </StackPanel>
                 </Grid>
 
-                <!-- Control Center -->
+                <!-- Control Center met moderne knoppen -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" Padding="22">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
+                    </Border.Effect>
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                        <Button x:Name="InstallButton" Content="Install / Update Tools" 
+                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
+                        
+                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" 
+                                Background="#3A2028" Style="{StaticResource ModernButtonStyle}"/>
+                        
+                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" 
+                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
+                        
+                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" 
+                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
+                        
+                        <Button x:Name="ExitButton" Content="Exit Launcher" 
+                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -161,7 +219,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# === Smooth Animaties voor de cirkels ===
+# Circle animaties
 $Circle1 = $window.FindName("Circle1")
 $Circle2 = $window.FindName("Circle2")
 $Circle3 = $window.FindName("Circle3")
@@ -178,7 +236,6 @@ function Start-CircleAnimation {
     $Ellipse.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $animation)
 }
 
-# Langzamere, smoothere animaties
 Start-CircleAnimation -Ellipse $Circle1 -FromOpacity 0.05 -ToOpacity 0.11 -DurationMs 6200
 Start-CircleAnimation -Ellipse $Circle2 -FromOpacity 0.04 -ToOpacity 0.09 -DurationMs 5400
 Start-CircleAnimation -Ellipse $Circle3 -FromOpacity 0.025 -ToOpacity 0.055 -DurationMs 6800
