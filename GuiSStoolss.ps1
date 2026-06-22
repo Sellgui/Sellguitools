@@ -122,26 +122,32 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                     </StackPanel>
                 </Grid>
 
-                <!-- Control Center -->
+                <!-- Control Center met smoothere knoppen -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" Padding="22">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
+                        <!-- Smoother knoppen -->
                         <Button x:Name="InstallButton" Content="Install / Update Tools" Height="52" 
-                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
+                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
 
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" 
-                                Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                                Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" 
+                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
 
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" 
-                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
+                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
 
                         <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" 
-                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
+                                Margin="0,0,0,12" Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
 
                         <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" 
-                                Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                                Background="#145C2E" Foreground="White" FontSize="15" FontWeight="SemiBold" 
+                                Cursor="Hand" BorderThickness="0" CornerRadius="12"/>
                     </StackPanel>
                 </Border>
             </Grid>
