@@ -6,6 +6,103 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+# =============================================
+#              SPLASH SCREEN
+# =============================================
+[xml]$splashXaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Guiss Launcher" Width="520" Height="320"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Opacity="0">
+
+    <Border Background="#0A120F" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="35" ShadowDepth="0" Opacity="0.6"/>
+        </Border.Effect>
+
+        <Grid>
+            <Canvas>
+                <Ellipse x:Name="Circle1" Width="180" Height="180" Fill="#052E16" Opacity="0.25" Canvas.Left="-40" Canvas.Top="-30"/>
+                <Ellipse x:Name="Circle2" Width="120" Height="120" Fill="#166534" Opacity="0.20" Canvas.Right="-25" Canvas.Bottom="-20"/>
+                <Ellipse x:Name="Circle3" Width="80" Height="80" Fill="#4ADE80" Opacity="0.15" Canvas.Left="60" Canvas.Top="80"/>
+                <Ellipse x:Name="Circle4" Width="220" Height="220" Fill="#0F2A1F" Opacity="0.18" Canvas.Right="-60" Canvas.Top="-50"/>
+            </Canvas>
+
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border x:Name="LogoBorder" Width="70" Height="70" CornerRadius="20" 
+                        Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1.5"
+                        HorizontalAlignment="Center">
+                    <TextBlock Text="G" FontSize="42" FontWeight="Bold" Foreground="#4ADE80" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Guiss Launcher" FontSize="28" FontWeight="SemiBold" 
+                           Foreground="White" HorizontalAlignment="Center" Margin="0,20,0,6"/>
+                <TextBlock Text="Loading tools..." FontSize="15" Foreground="#7E92A6" 
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
+"@
+
+$splashReader = New-Object System.Xml.XmlNodeReader $splashXaml
+$splash = [Windows.Markup.XamlReader]::Load($splashReader)
+
+# Splash animaties
+$c1 = $splash.FindName("Circle1"); $c2 = $splash.FindName("Circle2")
+$c3 = $splash.FindName("Circle3"); $c4 = $splash.FindName("Circle4")
+$LogoBorder = $splash.FindName("LogoBorder")
+
+function Start-Pulse($element, $duration, $scale) {
+    $scaleTransform = New-Object System.Windows.Media.ScaleTransform
+    $element.RenderTransform = $scaleTransform
+    $element.RenderTransformOrigin = "0.5,0.5"
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $anim = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $anim.From = 1; $anim.To = $scale; $anim.Duration = [TimeSpan]::FromMilliseconds($duration)
+    $anim.AutoReverse = $true; $anim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($anim, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($anim, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+    $sb.Children.Add($anim)
+    $animY = $anim.Clone()
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+    $sb.Children.Add($animY)
+    $sb.Begin()
+}
+
+Start-Pulse $c1 4200 1.08
+Start-Pulse $c2 3600 1.10
+Start-Pulse $c3 2800 1.15
+Start-Pulse $c4 4800 1.06
+
+# Breathing glow
+$glow = New-Object System.Windows.Media.Effects.DropShadowEffect
+$glow.Color = "#4ADE80"
+$glow.BlurRadius = 20
+$glow.ShadowDepth = 0
+$glow.Opacity = 0.7
+$LogoBorder.Effect = $glow
+
+$glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
+$glowAnim.From = 0.5; $glowAnim.To = 0.9; $glowAnim.Duration = [TimeSpan]::FromMilliseconds(1600)
+$glowAnim.AutoReverse = $true; $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+$glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
+
+$splash.Add_Loaded({
+    $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(400)
+    $splash.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
+})
+
+$splash.Show()
+Start-Sleep -Milliseconds 1600
+$splash.Close()
+
+# =============================================
+#           MAIN GUI (Guiss Launcher)
+# =============================================
 $userDir   = [Environment]::GetFolderPath("UserProfile")
 $downloads = Join-Path $userDir "Downloads"
 $zipPath   = Join-Path $downloads "Guiss-Tools.zip"
@@ -235,52 +332,67 @@ Start-FloatAnimation $c9 6800 18; Start-FloatAnimation $c10 7500 -22
 Start-FloatAnimation $c11 6200 14
 Start-PulseAnimation $s1 6000 1.04; Start-PulseAnimation $s2 5500 1.05
 
-# ====================== POPUP (zoals Tesla) ======================
+# ====================== POPUP MET CIRKELS ======================
 function Show-Announcement {
     [xml]$popupXaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Welcome" Width="620" Height="420"
+        Title="Welcome" Width="720" Height="540"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
-    <Border Background="#0D141D" CornerRadius="20" BorderBrush="#203447" BorderThickness="1" Padding="24">
+    <Border Background="#0A120F" CornerRadius="22" BorderBrush="#1A2E24" BorderThickness="1" Padding="28">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect BlurRadius="35" ShadowDepth="0" Opacity="0.55"/>
         </Border.Effect>
 
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            <Canvas Panel.ZIndex="-1">
+                <Ellipse x:Name="Circle1" Width="220" Height="220" Fill="#052E16" Opacity="0.22" Canvas.Left="-50" Canvas.Top="-40"/>
+                <Ellipse x:Name="Circle2" Width="160" Height="160" Fill="#166534" Opacity="0.18" Canvas.Right="-30" Canvas.Bottom="-30"/>
+                <Ellipse x:Name="Circle3" Width="100" Height="100" Fill="#4ADE80" Opacity="0.15" Canvas.Left="80" Canvas.Top="90"/>
+                <Ellipse x:Name="Circle4" Width="280" Height="280" Fill="#0F2A1F" Opacity="0.16" Canvas.Right="-70" Canvas.Top="-60"/>
+                <Ellipse x:Name="Circle5" Width="80" Height="80" Fill="#86EFAC" Opacity="0.20" Canvas.Left="480" Canvas.Top="60"/>
+            </Canvas>
 
-            <StackPanel Orientation="Horizontal">
-                <Border Width="44" Height="44" CornerRadius="12" Background="#112130" BorderBrush="#28445C" BorderThickness="1">
-                    <TextBlock Text="i" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <Border Width="52" Height="52" CornerRadius="14" Background="#0F2A1F" BorderBrush="#2A4738" BorderThickness="1.5">
+                        <TextBlock Text="G" FontSize="28" FontWeight="Bold" Foreground="#4ADE80" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Margin="16,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="Welcome to Guiss Launcher" FontSize="24" FontWeight="SemiBold" Foreground="White"/>
+                        <TextBlock Text="Guiss Tools • Version 3.3" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Border Grid.Row="1" Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="What this launcher does:" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,10"/>
+
+                        <TextBlock TextWrapping="Wrap" Foreground="#D1E8D9" FontSize="14" LineHeight="22">
+• <Bold>Install / Update Tools</Bold> — Downloads and installs the latest Guiss Tools from GitHub.<LineBreak/>
+• <Bold>Remove Installed Tools</Bold> — Completely removes all installed tools from your system.<LineBreak/>
+• <Bold>Open Install Folder</Bold> — Quickly opens the folder where the tools are installed.<LineBreak/>
+• <Bold>CMD Commands</Bold> — Opens the Command Center with many useful forensic & detection tools.
+                        </TextBlock>
+
+                        <TextBlock Text="Tip: Always run this launcher as Administrator for full functionality." 
+                                   Foreground="#7E92A6" FontSize="13" Margin="0,16,0,0"/>
+                    </StackPanel>
                 </Border>
-                <StackPanel Margin="14,0,0,0">
-                    <TextBlock Text="Welcome to Guiss Launcher" FontSize="22" FontWeight="SemiBold" Foreground="White"/>
-                    <TextBlock Text="Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,0"/>
-                </StackPanel>
-            </StackPanel>
 
-            <Border Grid.Row="1" Background="#0A1018" CornerRadius="14" BorderBrush="#1C2E40" BorderThickness="1" Padding="18" Margin="0,20,0,0">
-                <StackPanel>
-                    <TextBlock TextWrapping="Wrap" Foreground="#DCE7F2" FontSize="14" Margin="0,0,0,12">
-Thanks for using Guiss Launcher!
-
-This launcher is still in active development. New tools and improvements are added regularly.
-
-If you have any suggestions or find bugs, feel free to reach out.
-                    </TextBlock>
-                </StackPanel>
-            </Border>
-
-            <Button x:Name="OkButton" Grid.Row="2" Content="Got it!" Width="140" Height="44" 
-                    Background="#1CCEF2" Foreground="White" FontWeight="SemiBold" 
-                    BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" Margin="0,20,0,0"/>
+                <Button x:Name="OkButton" Grid.Row="2" Content="Let's go!" Width="160" Height="48" 
+                        Background="#166534" Foreground="White" FontWeight="SemiBold" FontSize="15"
+                        BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" Margin="0,24,0,0"/>
+            </Grid>
         </Grid>
     </Border>
 </Window>
@@ -290,8 +402,47 @@ If you have any suggestions or find bugs, feel free to reach out.
     $popup = [Windows.Markup.XamlReader]::Load($popupReader)
     $popup.Owner = $window
 
+    $c1 = $popup.FindName("Circle1"); $c2 = $popup.FindName("Circle2")
+    $c3 = $popup.FindName("Circle3"); $c4 = $popup.FindName("Circle4")
+    $c5 = $popup.FindName("Circle5")
     $okButton = $popup.FindName("OkButton")
-    $okButton.Add_Click({ $popup.Close() })
+
+    $popup.Add_Loaded({
+        $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(400)
+        $popup.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
+
+        function Start-Pulse($element, $duration, $scale) {
+            $scaleTransform = New-Object System.Windows.Media.ScaleTransform
+            $element.RenderTransform = $scaleTransform
+            $element.RenderTransformOrigin = "0.5,0.5"
+            $sb = New-Object System.Windows.Media.Animation.Storyboard
+            $anim = New-Object System.Windows.Media.Animation.DoubleAnimation
+            $anim.From = 1; $anim.To = $scale; $anim.Duration = [TimeSpan]::FromMilliseconds($duration)
+            $anim.AutoReverse = $true; $anim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+            [System.Windows.Media.Animation.Storyboard]::SetTarget($anim, $element)
+            [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($anim, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+            $sb.Children.Add($anim)
+            $animY = $anim.Clone()
+            [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+            $sb.Children.Add($animY)
+            $sb.Begin()
+        }
+
+        Start-Pulse $c1 4800 1.07
+        Start-Pulse $c2 3900 1.09
+        Start-Pulse $c3 3200 1.12
+        Start-Pulse $c4 5200 1.05
+        Start-Pulse $c5 3600 1.10
+    })
+
+    $okButton.Add_Click({
+        $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
+        $popup.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
+        Start-Sleep -Milliseconds 280
+        $popup.Close()
+    })
 
     $popup.ShowDialog() | Out-Null
 }
@@ -315,7 +466,6 @@ $window.FindName("InstallButton").Add_Click({
             $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
             return
         }
-
         $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
         $ProgressPreference = 'SilentlyContinue'
         Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
@@ -361,7 +511,7 @@ $window.FindName("OpenCmdButton").Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
 })
 
-# Toon de popup automatisch bij het opstarten
+# Toon de popup automatisch
 $window.Add_ContentRendered({
     Show-Announcement
 })
