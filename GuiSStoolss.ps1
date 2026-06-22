@@ -21,12 +21,16 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         </Border.Effect>
 
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="68"/>   <!-- Top Bar -->
+                <RowDefinition Height="*"/>    <!-- Content -->
+            </Grid.RowDefinitions>
+
             <!-- Achtergrond -->
-            <Border Background="#0A120F" CornerRadius="24"/>
+            <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
             <!-- Top Bar - HELEMAAL BOVENAAN -->
-            <Border Height="68" Background="#08100D" VerticalAlignment="Top" 
-                    CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
+            <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -52,7 +56,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
             </Border>
 
             <!-- Main Content -->
-            <Grid Margin="20,80,20,20">
+            <Grid Grid.Row="1" Margin="20,15,20,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="20"/>
