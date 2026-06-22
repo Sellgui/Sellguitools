@@ -66,7 +66,6 @@ Add-Type -AssemblyName System.Xaml
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <!-- Jouw knoppen met namen -->
                             <Button x:Name="BtnPrimeMacro"   Content="Prime Macro Detector"     Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button x:Name="BtnHuntScanner"  Content="Hunt Scanner"             Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button x:Name="BtnGhostFinder"  Content="Ghost Client Finder"      Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
@@ -141,7 +140,7 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === BUTTON CLICK HANDLERS ===
+# === BUTTONS MET WERKENDE COMMANDS ===
 
 $BtnPrimeMacro = $window.FindName("BtnPrimeMacro")
 $BtnHuntScanner = $window.FindName("BtnHuntScanner")
@@ -178,11 +177,7 @@ $BtnMeow.Add_Click({
 
 $BtnRedLotus.Add_Click({
     $path = "$env:USERPROFILE\Downloads\RedLotusModAnalyzer.exe"
-    if (Test-Path $path) {
-        Start-Process $path
-    } else {
-        [System.Windows.MessageBox]::Show("RedLotusModAnalyzer.exe niet gevonden in Downloads!", "Error")
-    }
+    if (Test-Path $path) { Start-Process $path }
 })
 
 $BtnDqrkis.Add_Click({
