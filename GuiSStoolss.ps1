@@ -11,6 +11,10 @@ $downloads = Join-Path $userDir "Downloads"
 $zipPath   = Join-Path $downloads "Guiss-Tools.zip"
 $destPath  = Join-Path $downloads "Guiss-Tools"
 
+# Lokale zip (als die in dezelfde map staat als dit script)
+$localZip = Join-Path $PSScriptRoot "Gui-SS-Tools.zip"
+
+# GitHub fallback
 $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Guiss-Tools.zip"
 
 [xml]$xaml = @"
@@ -22,7 +26,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         Opacity="0">
 
     <Window.Resources>
-        <!-- === NIEUWE MODERNE KNOPPEN === -->
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#0F2A1F"/>
             <Setter Property="Foreground" Value="White"/>
@@ -186,7 +189,7 @@ $window.Add_Loaded({
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
-# Circles + animatie
+# Circles
 $circle1 = $window.FindName("Circle1")
 $circle2 = $window.FindName("Circle2")
 $circle3 = $window.FindName("Circle3")
@@ -206,54 +209,4 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
     [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
-    $sb.Children.Add($animX); $sb.Children.Add($animY); $sb.Begin()
-}
-
-Start-PulseAnimation $circle1 4500 1.07
-Start-PulseAnimation $circle2 3800 1.10
-Start-PulseAnimation $circle3 3200 1.15
-Start-PulseAnimation $circle4 5200 1.06
-Start-PulseAnimation $circle5 2900 1.18
-Start-PulseAnimation $circle6 4100 1.09
-
-$CloseButton = $window.FindName("CloseButton")
-$MinButton   = $window.FindName("MinButton")
-$MainBorder  = $window.FindName("MainBorder")
-$ActivityBox = $window.FindName("ActivityBox")
-
-$MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
-$MinButton.Add_Click({ $window.WindowState = "Minimized" })
-$CloseButton.Add_Click({ $window.Close() })
-$window.FindName("ExitButton").Add_Click({ $window.Close() })
-
-$window.FindName("InstallButton").Add_Click({
-    $ActivityBox.AppendText("`n[Install] Downloading tools...`n")
-    try {
-        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing
-        $ActivityBox.AppendText("[Install] Download completed.`n")
-        if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force }
-        $ActivityBox.AppendText("[Install] Extracting...`n")
-        Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
-        $ActivityBox.AppendText("[Install] Done!`n")
-        Start-Process $destPath
-    } catch { $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n") }
-})
-
-$window.FindName("RemoveButton").Add_Click({
-    if (Test-Path $destPath) {
-        Remove-Item $destPath -Recurse -Force
-        $ActivityBox.AppendText("`n[Remove] Tools removed successfully.`n")
-    } else { $ActivityBox.AppendText("`n[Remove] No tools found.`n") }
-})
-
-$window.FindName("OpenFolderButton").Add_Click({
-    if (Test-Path $destPath) { Start-Process $destPath }
-    else { $ActivityBox.AppendText("`n[Error] Folder not found.`n") }
-})
-
-$window.FindName("OpenCmdButton").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
-})
-
-$window.ShowDialog() | Out-Null
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.Scale
