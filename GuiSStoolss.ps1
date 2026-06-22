@@ -6,9 +6,8 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
-$zipPath = Join-Path $env:USERPROFILE "Downloads\Gui SS Tools.zip"
-$toolsFolder = Join-Path $dest "GuiSS Tools"
+$dest = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools"
+$zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -143,7 +142,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-# === Install / Update Tools (Automatisch uitpakken + map openen) ===
+# === Install / Update Tools (voor Gui-SS-Tools.zip) ===
 $InstallButton.Add_Click({
     try {
         if (!(Test-Path $zipPath)) {
@@ -151,7 +150,7 @@ $InstallButton.Add_Click({
             return
         }
 
-        # Oude map volledig verwijderen voor schone install
+        # Oude map verwijderen voor schone install
         if (Test-Path $dest) {
             Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
         }
@@ -162,12 +161,8 @@ $InstallButton.Add_Click({
         [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $dest)
 
         # Map automatisch openen
-        if (Test-Path $toolsFolder) {
-            Start-Process $toolsFolder
-            $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd!`n")
-        } else {
-            $window.FindName("ActivityBox").AppendText("`n[Error] Map niet gevonden na uitpakken.`n")
-        }
+        Start-Process $dest
+        $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd en map geopend!`n")
     }
     catch {
         $window.FindName("ActivityBox").AppendText("`n[Error] Uitpakken mislukt: $($_.Exception.Message)`n")
@@ -182,8 +177,8 @@ $DeleteButton.Add_Click({
 })
 
 $OpenFolderButton.Add_Click({
-    if (Test-Path $toolsFolder) {
-        Start-Process $toolsFolder
+    if (Test-Path $dest) {
+        Start-Process $dest
     } else {
         $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet.`n")
     }
