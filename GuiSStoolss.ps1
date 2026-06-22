@@ -193,7 +193,6 @@ $window.Add_Loaded({
     $fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 
-    # Breathing Glow op logo
     $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
     $glow.Color = "#4ADE80"
     $glow.BlurRadius = 18
@@ -220,7 +219,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# ====================== ROBUUSTE INSTALL ======================
+# ====================== BETERE INSTALL ======================
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
 
@@ -229,31 +228,26 @@ $window.FindName("InstallButton").Add_Click({
         $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
         $principal = New-Object Security.Principal.WindowsPrincipal($identity)
         if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-            $ActivityBox.AppendText("[Error] Deze actie vereist Administrator rechten!`n")
+            $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
             return
         }
 
-        # Download
-        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
-        $ProgressPreference = 'SilentlyContinue'
+        $ActivityBox.AppendText("[Install] Bezig met downloaden van GitHub...`n")
 
+        $ProgressPreference = 'SilentlyContinue'
         Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
 
-        # Controleer of bestand geldig is
-        $zipFile = Get-Item $zipPath -ErrorAction Stop
-        if ($zipFile.Length -lt 100000) {
-            throw "Het gedownloade bestand is te klein of corrupt."
+        $zipFile = Get-Item $zipPath
+        if ($zipFile.Length -lt 50000) {
+            throw "Download mislukt. Het bestand is te klein (mogelijk 404 error)."
         }
 
-        $ActivityBox.AppendText("[Install] Download voltooid ($([math]::Round($zipFile.Length / 1MB, 2)) MB).`n")
+        $ActivityBox.AppendText("[Install] Download succesvol!`n")
 
-        # Oude map verwijderen
         if (Test-Path $destPath) {
             Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
-            $ActivityBox.AppendText("[Install] Oude installatie verwijderd.`n")
         }
 
-        # Uitpakken
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
         $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
         $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
@@ -262,7 +256,9 @@ $window.FindName("InstallButton").Add_Click({
 
     }
     catch {
+        $ActivityBox.AppendText("[Error] Installatie mislukt.`n")
         $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
+        $ActivityBox.AppendText("[Tip] Controleer of de GitHub release correct is gepubliceerd.`n")
     }
 })
 
