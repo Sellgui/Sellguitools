@@ -2,7 +2,6 @@ Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName System.Xaml
-Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -22,10 +21,16 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         </Border.Effect>
 
         <Grid>
-            <Border Background="#0A120F" CornerRadius="24"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="68"/>   <!-- Top Bar -->
+                <RowDefinition Height="*"/>    <!-- Main Content -->
+            </Grid.RowDefinitions>
 
-            <!-- Top Bar -->
-            <Border Height="68" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
+            <!-- Achtergrond -->
+            <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
+
+            <!-- Top Bar (helemaal bovenaan) -->
+            <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -44,14 +49,14 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="MinButton" Content="_" ToolTip="Minimaliseren" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
-                        <Button x:Name="CloseButton" Content="X" ToolTip="Afsluiten" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" FontWeight="Bold" Margin="8,0,0,0"/>
+                        <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
             <!-- Main Content -->
-            <Grid Margin="0,75,0,20">
+            <Grid Grid.Row="1" Margin="20,10,20,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="20"/>
@@ -59,7 +64,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                 </Grid.ColumnDefinitions>
 
                 <!-- Left Content -->
-                <Grid Grid.Column="0" Margin="25,0,0,0">
+                <Grid Grid.Column="0">
                     <StackPanel>
                         <TextBlock x:Name="StatusText" Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock x:Name="SubStatusText" Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#9DB1C4" Margin="0,8,0,25"/>
@@ -116,7 +121,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="ExitButton" Content="Afsluiten" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -142,7 +147,6 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-# === Install / Update Tools (voor Gui-SS-Tools.zip) ===
 $InstallButton.Add_Click({
     try {
         if (!(Test-Path $zipPath)) {
@@ -150,19 +154,15 @@ $InstallButton.Add_Click({
             return
         }
 
-        # Oude map verwijderen voor schone install
         if (Test-Path $dest) {
             Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
         }
 
         New-Item -ItemType Directory -Path $dest -Force | Out-Null
-
-        # ZIP uitpakken
         [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $dest)
 
-        # Map automatisch openen
         Start-Process $dest
-        $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geÃ¯nstalleerd en map geopend!`n")
+        $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd!`n")
     }
     catch {
         $window.FindName("ActivityBox").AppendText("`n[Error] Uitpakken mislukt: $($_.Exception.Message)`n")
@@ -179,8 +179,6 @@ $DeleteButton.Add_Click({
 $OpenFolderButton.Add_Click({
     if (Test-Path $dest) {
         Start-Process $dest
-    } else {
-        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet.`n")
     }
 })
 
@@ -189,4 +187,3 @@ $OpenCmdButton.Add_Click({
 })
 
 $window.ShowDialog() | Out-Null
-
