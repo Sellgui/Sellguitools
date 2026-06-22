@@ -14,7 +14,7 @@ Add-Type -AssemblyName System.Xaml
         Opacity="0">
 
     <Window.Resources>
-        <!-- Custom Tesla-style groene scrollbar -->
+        <!-- Custom groene scrollbar -->
         <Style x:Key="GreenScrollBar" TargetType="ScrollBar">
             <Setter Property="Width" Value="8"/>
             <Setter Property="Background" Value="#0B1118"/>
@@ -89,18 +89,15 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands -->
+                <!-- Left: Commands met custom scrollbar -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#1A2E24" BorderThickness="1" Padding="12">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                  ScrollViewer.Style="{x:Null}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ScrollViewer.Resources>
                             <Style TargetType="ScrollBar" BasedOn="{StaticResource GreenScrollBar}"/>
                         </ScrollViewer.Resources>
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <!-- Donker groene knoppen (zichtbaar) -->
                             <Button Content="Open Prefetch Folder" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button Content="Start AnyDesk" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button Content="Quick Macro Scan" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
