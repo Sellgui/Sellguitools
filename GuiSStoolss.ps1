@@ -22,14 +22,24 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="68"/>   <!-- Top Bar -->
-                <RowDefinition Height="*"/>    <!-- Content -->
+                <RowDefinition Height="68"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <!-- Achtergrond -->
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <!-- Top Bar - HELEMAAL BOVENAAN -->
+            <!-- Decoratieve cirkels (groen + wit) -->
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="480" Height="480" Fill="#166534" Opacity="0.05" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-160,-140,0,0"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="320" Height="320" Fill="#4ADE80" Opacity="0.035" 
+                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-100,-85"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="200" Height="200" Fill="White" Opacity="0.02" 
+                     HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0"/>
+            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="150" Height="150" Fill="White" Opacity="0.015" 
+                     HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="60,0,0,50"/>
+
+            <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
@@ -69,6 +79,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock x:Name="StatusText" Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock x:Name="SubStatusText" Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#9DB1C4" Margin="0,8,0,25"/>
 
+                        <!-- Widgets zonder witte rand -->
                         <Grid Margin="0,0,0,25">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -78,21 +89,21 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border Grid.Column="0" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                            <Border Grid.Column="0" Background="#0F1A16" CornerRadius="16" Padding="18">
                                 <StackPanel>
                                     <TextBlock Text="SYSTEM STATUS" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="StepText" Text="All Systems OK" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
                                 </StackPanel>
                             </Border>
 
-                            <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                            <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" Padding="18">
                                 <StackPanel>
                                     <TextBlock Text="LAST SCAN" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="ProgressLabel" Text="Today 19:14" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
                                 </StackPanel>
                             </Border>
 
-                            <Border Grid.Column="4" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                            <Border Grid.Column="4" Background="#0F1A16" CornerRadius="16" Padding="18">
                                 <StackPanel>
                                     <TextBlock Text="TOOLS" FontSize="11" Foreground="#4ADE80"/>
                                     <TextBlock x:Name="ToolCountText" Text="12" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
@@ -100,7 +111,8 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
                         </Grid>
 
-                        <Border Background="#0F1A16" CornerRadius="18" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                        <!-- Activity Console zonder witte rand -->
+                        <Border Background="#0F1A16" CornerRadius="18" Padding="18">
                             <StackPanel>
                                 <TextBlock Text="Activity Console" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80"/>
                                 <TextBox x:Name="ActivityBox" Height="280" Background="#08100D" Foreground="#D8E8F5" 
@@ -112,7 +124,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                 </Grid>
 
                 <!-- Control Center -->
-                <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="22">
+                <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" Padding="22">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
