@@ -66,15 +66,15 @@ Add-Type -AssemblyName System.Xaml
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <!-- Jouw nieuwe knoppen -->
-                            <Button Content="Prime Macro Detector" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Hunt Scanner" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Ghost Client Finder" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Cyemer Scanner" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Injector Detector" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="Meow Mod Analyzer" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="RedLotus Mod Analyzer" Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button Content="DQRKIS-FUCKER" Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
+                            <!-- Jouw knoppen met namen -->
+                            <Button x:Name="BtnPrimeMacro"   Content="Prime Macro Detector"     Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnHuntScanner"  Content="Hunt Scanner"             Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnGhostFinder"  Content="Ghost Client Finder"      Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnCyemer"       Content="Cyemer Scanner"           Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnInjector"     Content="Injector Detector"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnMeow"         Content="Meow Mod Analyzer"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnRedLotus"     Content="RedLotus Mod Analyzer"    Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnDqrkis"       Content="DQRKIS-FUCKER"            Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -141,11 +141,52 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === BUTTON CLICK EVENTS ===
+# === BUTTON CLICK HANDLERS ===
 
-$buttons = $window.FindName("StackPanel")  # We zoeken de StackPanel met knoppen
+$BtnPrimeMacro = $window.FindName("BtnPrimeMacro")
+$BtnHuntScanner = $window.FindName("BtnHuntScanner")
+$BtnGhostFinder = $window.FindName("BtnGhostFinder")
+$BtnCyemer = $window.FindName("BtnCyemer")
+$BtnInjector = $window.FindName("BtnInjector")
+$BtnMeow = $window.FindName("BtnMeow")
+$BtnRedLotus = $window.FindName("BtnRedLotus")
+$BtnDqrkis = $window.FindName("BtnDqrkis")
 
-# Omdat we geen named buttons hebben, doen we het via de content
-# (eenvoudigste manier zonder errors)
+$BtnPrimeMacro.Add_Click({
+    Start-Process powershell -ArgumentList "-ep bypass -c `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`""
+})
+
+$BtnHuntScanner.Add_Click({
+    Start-Process powershell -ArgumentList "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
+})
+
+$BtnGhostFinder.Add_Click({
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`""
+})
+
+$BtnCyemer.Add_Click({
+    Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`""
+})
+
+$BtnInjector.Add_Click({
+    Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`""
+})
+
+$BtnMeow.Add_Click({
+    Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`""
+})
+
+$BtnRedLotus.Add_Click({
+    $path = "$env:USERPROFILE\Downloads\RedLotusModAnalyzer.exe"
+    if (Test-Path $path) {
+        Start-Process $path
+    } else {
+        [System.Windows.MessageBox]::Show("RedLotusModAnalyzer.exe niet gevonden in Downloads!", "Error")
+    }
+})
+
+$BtnDqrkis.Add_Click({
+    Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`""
+})
 
 $window.ShowDialog() | Out-Null
