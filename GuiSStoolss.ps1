@@ -143,7 +143,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-# === Install / Update Tools (FIXED) ===
+# === Install / Update Tools (Automatisch uitpakken + map openen) ===
 $InstallButton.Add_Click({
     try {
         if (!(Test-Path $zipPath)) {
@@ -151,21 +151,22 @@ $InstallButton.Add_Click({
             return
         }
 
-        # Eerst de hele Guiss-Tools map verwijderen (clean start)
+        # Oude map volledig verwijderen voor schone install
         if (Test-Path $dest) {
             Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
         }
 
         New-Item -ItemType Directory -Path $dest -Force | Out-Null
 
-        # Uitpakken
+        # ZIP uitpakken
         [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $dest)
 
+        # Map automatisch openen
         if (Test-Path $toolsFolder) {
             Start-Process $toolsFolder
-            $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd en map geopend!`n")
+            $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd!`n")
         } else {
-            $window.FindName("ActivityBox").AppendText("`n[Error] Map GuiSS Tools niet gevonden na uitpakken.`n")
+            $window.FindName("ActivityBox").AppendText("`n[Error] Map niet gevonden na uitpakken.`n")
         }
     }
     catch {
