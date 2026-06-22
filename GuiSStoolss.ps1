@@ -44,8 +44,8 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
+                        <Button x:Name="MinButton" Content="_" ToolTip="Minimaliseren" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                        <Button x:Name="CloseButton" Content="X" ToolTip="Afsluiten" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" FontWeight="Bold" Margin="8,0,0,0"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -116,7 +116,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" Height="52" Background="#3A2028" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <Button x:Name="ExitButton" Content="Exit Launcher" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                        <Button x:Name="ExitButton" Content="Afsluiten" Height="52" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -162,7 +162,7 @@ $InstallButton.Add_Click({
 
         # Map automatisch openen
         Start-Process $dest
-        $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd en map geopend!`n")
+        $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geÃ¯nstalleerd en map geopend!`n")
     }
     catch {
         $window.FindName("ActivityBox").AppendText("`n[Error] Uitpakken mislukt: $($_.Exception.Message)`n")
@@ -189,3 +189,4 @@ $OpenCmdButton.Add_Click({
 })
 
 $window.ShowDialog() | Out-Null
+
