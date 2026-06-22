@@ -72,7 +72,6 @@ Add-Type -AssemblyName System.Xaml
                             <Button x:Name="BtnCyemer"       Content="Cyemer Scanner"           Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button x:Name="BtnInjector"     Content="Injector Detector"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button x:Name="BtnMeow"         Content="Meow Mod Analyzer"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnRedLotus"     Content="RedLotus Mod Analyzer"    Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button x:Name="BtnDqrkis"       Content="DQRKIS-FUCKER"            Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
                         </StackPanel>
                     </ScrollViewer>
@@ -140,39 +139,34 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === KNOPPEN (nu met powershell.exe direct → voorkomt afsluiten van GUI) ===
+# === KNOPPEN (zwarte console + GUI blijft open) ===
 
 $window.FindName("BtnPrimeMacro").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`""
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`""
 })
 
 $window.FindName("BtnQuickcheck").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)`""
+    Start-Process cmd -ArgumentList "/k powershell Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
 })
 
 $window.FindName("BtnGhostFinder").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`""
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`""
 })
 
 $window.FindName("BtnCyemer").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`""
+    Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`""
 })
 
 $window.FindName("BtnInjector").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`""
+    Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`""
 })
 
 $window.FindName("BtnMeow").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`""
-})
-
-$window.FindName("BtnRedLotus").Add_Click({
-    $p = "$env:USERPROFILE\Downloads\RedLotusModAnalyzer.exe"
-    if (Test-Path $p) { Start-Process $p }
+    Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`""
 })
 
 $window.FindName("BtnDqrkis").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`""
+    Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`""
 })
 
 $window.ShowDialog() | Out-Null
