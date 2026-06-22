@@ -14,22 +14,23 @@ Add-Type -AssemblyName System.Xaml
         Opacity="0">
 
     <Window.Resources>
-        <!-- Mooie ronde knoppen stijl -->
+        <!-- Tesla-style ronde knoppen met donkere rand -->
         <Style x:Key="RoundButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#145C2E"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="46"/>
             <Setter Property="Margin" Value="0,0,0,6"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#0F3D1F"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border CornerRadius="14" 
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="#2A4738" 
-                                BorderThickness="1">
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center" 
                                               VerticalAlignment="Center"/>
                         </Border>
@@ -86,23 +87,23 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands -->
+                <!-- Left: Commands met emoji's -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Anydesk Install"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Cyemer Scanner"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="DQRKIS-FUCKER"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Ghost Client Finder"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Injector Detector"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Meow Mod Analyzer"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Open AppData"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Open PowerShell History"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Open Prefetch"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Prime Macro Detector"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="Quickcheck Scanner"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
+                            <Button Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
