@@ -41,14 +41,14 @@ Add-Type -AssemblyName System.Xaml
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES === -->
+            <!-- === DECORATIVE CIRCLES (nu zichtbaar) === -->
             <Canvas>
-                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-150" Canvas.Top="-100"/>
-                <Ellipse x:Name="Circle2" Width="340" Height="340" Fill="#166534" Opacity="0.15" Canvas.Right="-80" Canvas.Bottom="40"/>
-                <Ellipse x:Name="Circle3" Width="200" Height="200" Fill="#4ADE80" Opacity="0.12" Canvas.Left="280" Canvas.Top="150"/>
-                <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.12" Canvas.Right="-220" Canvas.Top="-180"/>
-                <Ellipse x:Name="Circle5" Width="130" Height="130" Fill="#86EFAC" Opacity="0.22" Canvas.Left="920" Canvas.Top="380"/>
-                <Ellipse x:Name="Circle6" Width="280" Height="280" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
+                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.25" Canvas.Left="-150" Canvas.Top="-100"/>
+                <Ellipse x:Name="Circle2" Width="360" Height="360" Fill="#166534" Opacity="0.18" Canvas.Right="-90" Canvas.Bottom="30"/>
+                <Ellipse x:Name="Circle3" Width="210" Height="210" Fill="#4ADE80" Opacity="0.15" Canvas.Left="260" Canvas.Top="140"/>
+                <Ellipse x:Name="Circle4" Width="720" Height="720" Fill="#0F2A1F" Opacity="0.14" Canvas.Right="-240" Canvas.Top="-200"/>
+                <Ellipse x:Name="Circle5" Width="140" Height="140" Fill="#86EFAC" Opacity="0.28" Canvas.Left="900" Canvas.Top="360"/>
+                <Ellipse x:Name="Circle6" Width="300" Height="300" Fill="#166534" Opacity="0.12" Canvas.Left="1080" Canvas.Bottom="50"/>
             </Canvas>
 
             <Grid>
@@ -56,8 +56,6 @@ Add-Type -AssemblyName System.Xaml
                     <RowDefinition Height="68"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
-                <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
                 <!-- Top Bar -->
                 <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
@@ -115,6 +113,7 @@ Add-Type -AssemblyName System.Xaml
                     <Grid Grid.Column="2">
                         <StackPanel>
                             <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
+                            
                             <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                                 <StackPanel>
                                     <TextBlock Text="LAST SCAN" FontSize="12" Foreground="#4ADE80"/>
@@ -122,6 +121,7 @@ Add-Type -AssemblyName System.Xaml
                                     <TextBlock Text="No threats detected • Clean system" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                                 </StackPanel>
                             </Border>
+
                             <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                                 <StackPanel>
                                     <TextBlock Text="SYSTEM STATUS" FontSize="12" Foreground="#4ADE80"/>
@@ -129,6 +129,7 @@ Add-Type -AssemblyName System.Xaml
                                     <TextBlock Text="CPU: 14% • RAM: 38%" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                                 </StackPanel>
                             </Border>
+
                             <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                                 <StackPanel>
                                     <TextBlock Text="QUICK STATS" FontSize="12" Foreground="#4ADE80"/>
@@ -136,6 +137,7 @@ Add-Type -AssemblyName System.Xaml
                                     <TextBlock Text="4 Tools installed • 1 running" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                                 </StackPanel>
                             </Border>
+
                             <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
                                 <StackPanel>
                                     <TextBlock Text="GUISS TOOLS" FontSize="12" Foreground="#4ADE80"/>
@@ -162,14 +164,14 @@ catch {
     exit
 }
 
-# Fade-in
+# Fade-in animatie
 $window.Add_Loaded({
     $fade = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fade.From = 0; $fade.To = 1; $fade.Duration = [TimeSpan]::FromMilliseconds(450)
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fade)
 })
 
-# === CIRCLES ANIMATIE ===
+# === CIRCLES + ANIMATIE ===
 $c1 = $window.FindName("Circle1")
 $c2 = $window.FindName("Circle2")
 $c3 = $window.FindName("Circle3")
@@ -214,7 +216,7 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# Knoppen (zelfde als origineel)
+# Knoppen
 $window.FindName("BtnAnydesk").Add_Click({ Start-Process "https://download.anydesk.com/AnyDesk.exe" })
 $window.FindName("BtnCyemer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
 $window.FindName("BtnDqrkis").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
