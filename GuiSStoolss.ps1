@@ -18,7 +18,8 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Guiss Launcher" Width="1320" Height="830"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Opacity="0">
 
     <Window.Resources>
         <Style x:Key="MainButtonStyle" TargetType="Button">
@@ -83,11 +84,12 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                     <ColumnDefinition Width="280"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left -->
+                <!-- Left Side -->
                 <StackPanel>
                     <TextBlock Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                     <TextBlock Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#7E92A6" Margin="0,8,0,25"/>
 
+                    <!-- Drie status boxes -->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -126,7 +128,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                     </Border>
                 </StackPanel>
 
-                <!-- Right Side -->
+                <!-- Right Side - Control Center -->
                 <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
                     <StackPanel>
                         <TextBlock Text="Control Center" FontSize="18" FontWeight="SemiBold" Foreground="#4ADE80"/>
@@ -145,23 +147,32 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
 </Window>
 "@
 
+# === Laad de window veilig ===
 try {
     $reader = New-Object System.Xml.XmlNodeReader $xaml
     $window = [Windows.Markup.XamlReader]::Load($reader)
 }
 catch {
-    Write-Host "XAML FOUT:" -ForegroundColor Red
-    Write-Host $_.Exception.Message -ForegroundColor Yellow
-    Write-Host "`nDruk op Enter om af te sluiten..."
-    Read-Host
+    Write-Host "FOUT bij laden van de GUI:" -ForegroundColor Red
+    Write-Host $_.Exception.Message
+    Read-Host "Druk Enter om af te sluiten"
     exit
 }
 
-# Controls
-$CloseButton     = $window.FindName("CloseButton")
-$MinButton       = $window.FindName("MinButton")
-$MainBorder      = $window.FindName("MainBorder")
-$ActivityBox     = $window.FindName("ActivityBox")
+# === Fade-in animatie (veilig) ===
+$window.Add_Loaded({
+    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeIn.From = 0
+    $fadeIn.To = 1
+    $fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+})
+
+# === Controls ophalen ===
+$CloseButton = $window.FindName("CloseButton")
+$MinButton   = $window.FindName("MinButton")
+$MainBorder  = $window.FindName("MainBorder")
+$ActivityBox = $window.FindName("ActivityBox")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
@@ -177,10 +188,10 @@ $window.FindName("InstallButton").Add_Click({
 
         if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force }
 
-        $ActivityBox.AppendText("[Install] Extracting...`n")
+        $ActivityBox.AppendText("[Install] Extracting files...`n")
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
 
-        $ActivityBox.AppendText("[Install] Done! Tools installed.`n")
+        $ActivityBox.AppendText("[Install] Extraction successful!`n")
         Start-Process $destPath
     }
     catch {
@@ -194,7 +205,7 @@ $window.FindName("RemoveButton").Add_Click({
         Remove-Item $destPath -Recurse -Force
         $ActivityBox.AppendText("`n[Remove] Tools removed successfully.`n")
     } else {
-        $ActivityBox.AppendText("`n[Remove] No tools found.`n")
+        $ActivityBox.AppendText("`n[Remove] No tools found to remove.`n")
     }
 })
 
@@ -204,7 +215,7 @@ $window.FindName("OpenFolderButton").Add_Click({
     else { $ActivityBox.AppendText("`n[Error] Install folder not found.`n") }
 })
 
-# === OPEN CMD COMMANDS (verbeterd) ===
+# === OPEN CMD COMMANDS (hidden) ===
 $window.FindName("OpenCmdButton").Add_Click({
     $scriptUrl = "https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1"
     Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm '$scriptUrl' | iex"
