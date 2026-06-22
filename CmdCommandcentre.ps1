@@ -87,80 +87,20 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: All 68 Tools -->
+                <!-- Left: Only Cmd Tools -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <Button x:Name="BtnActivitiesCache" Style="{StaticResource RoundButtonStyle}" Content="📜 ActivitiesCache"/>
-                            <Button x:Name="BtnAltDetector" Style="{StaticResource RoundButtonStyle}" Content="🕵️ AltDetector"/>
-                            <Button x:Name="BtnAmcacheParser" Style="{StaticResource RoundButtonStyle}" Content="📦 AmcacheParser"/>
-                            <Button x:Name="BtnBAMParser" Style="{StaticResource RoundButtonStyle}" Content="📋 BAM-parser"/>
-                            <Button x:Name="BtnBamDeletedKeys" Style="{StaticResource RoundButtonStyle}" Content="🗑️ BamDeletedKeys"/>
-                            <Button x:Name="BtnBAMReveal" Style="{StaticResource RoundButtonStyle}" Content="🔍 BAMReveal"/>
-                            <Button x:Name="Btnbstrings" Style="{StaticResource RoundButtonStyle}" Content="🔤 bstrings"/>
-                            <Button x:Name="BtnBrowserDownloadsView" Style="{StaticResource RoundButtonStyle}" Content="🌐 BrowserDownloadsView"/>
-                            <Button x:Name="BtnCheckDeletedUSN" Style="{StaticResource RoundButtonStyle}" Content="🗑️ CheckDeletedUSN"/>
-                            <Button x:Name="BtnCommonDirectories" Style="{StaticResource RoundButtonStyle}" Content="📁 CommonDirectories"/>
-                            <Button x:Name="BtnComputerActivityView" Style="{StaticResource RoundButtonStyle}" Content="🖥️ ComputerActivityView"/>
-                            <Button x:Name="BtnDIEengine" Style="{StaticResource RoundButtonStyle}" Content="🔧 DIE-engine"/>
-                            <Button x:Name="BtnDPSAnalyzer" Style="{StaticResource RoundButtonStyle}" Content="📊 DPS-Analyzer"/>
+                            <Button x:Name="BtnMeowModAnalyzer" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
                             <Button x:Name="BtnDQRKISFUCKER" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
-                            <Button x:Name="BtnEspoukenTool" Style="{StaticResource RoundButtonStyle}" Content="🛠️ Espouken Tool"/>
-                            <Button x:Name="BtnExecutedProgramsList" Style="{StaticResource RoundButtonStyle}" Content="📋 ExecutedProgramsList"/>
-                            <Button x:Name="BtnFileless" Style="{StaticResource RoundButtonStyle}" Content="👻 Fileless"/>
-                            <Button x:Name="BtnFullEventLogView" Style="{StaticResource RoundButtonStyle}" Content="📜 FullEventLogView"/>
-                            <Button x:Name="BtnHarddiskConverter" Style="{StaticResource RoundButtonStyle}" Content="💾 HarddiskConverter"/>
-                            <Button x:Name="BtnInjGen" Style="{StaticResource RoundButtonStyle}" Content="💉 InjGen"/>
-                            <Button x:Name="BtnJARParser" Style="{StaticResource RoundButtonStyle}" Content="📦 JARParser"/>
-                            <Button x:Name="BtnJLECmd" Style="{StaticResource RoundButtonStyle}" Content="📋 JLECmd"/>
-                            <Button x:Name="BtnJournalParser" Style="{StaticResource RoundButtonStyle}" Content="📜 JournalParser"/>
-                            <Button x:Name="BtnJournalTrace" Style="{StaticResource RoundButtonStyle}" Content="📜 JournalTrace"/>
-                            <Button x:Name="BtnJumpListExplorer" Style="{StaticResource RoundButtonStyle}" Content="📋 JumpListExplorer"/>
-                            <Button x:Name="BtnJumpListsView" Style="{StaticResource RoundButtonStyle}" Content="📋 JumpListsView"/>
-                            <Button x:Name="BtnKernelLiveDumpTool" Style="{StaticResource RoundButtonStyle}" Content="💾 KernelLiveDumpTool"/>
-                            <Button x:Name="BtnMacroDetector" Style="{StaticResource RoundButtonStyle}" Content="🛡️ MacroDetector"/>
-                            <Button x:Name="BtnMeowClientsFucker" Style="{StaticResource RoundButtonStyle}" Content="🐱 MeowClientsFucker"/>
-                            <Button x:Name="BtnMeowDoomsdayFucker" Style="{StaticResource RoundButtonStyle}" Content="🐱 MeowDoomsdayFucker"/>
-                            <Button x:Name="BtnMeowImportsChecker" Style="{StaticResource RoundButtonStyle}" Content="🐱 MeowImportsChecker"/>
-                            <Button x:Name="BtnMeowModAnalyzer" Style="{StaticResource RoundButtonStyle}" Content="🐱 MeowModAnalyzer"/>
-                            <Button x:Name="BtnMeowNovowareFucker" Style="{StaticResource RoundButtonStyle}" Content="🐱 MeowNovowareFucker"/>
-                            <Button x:Name="BtnMeowResolver" Style="{StaticResource RoundButtonStyle}" Content="🐱 MeowResolver"/>
-                            <Button x:Name="BtnMFTECmd" Style="{StaticResource RoundButtonStyle}" Content="📦 MFTECmd"/>
-                            <Button x:Name="BtnNET90" Style="{StaticResource RoundButtonStyle}" Content="⚙️ NET 9.0"/>
-                            <Button x:Name="BtnNET100" Style="{StaticResource RoundButtonStyle}" Content="⚙️ NET 10.0"/>
-                            <Button x:Name="BtnNetworkUsageView" Style="{StaticResource RoundButtonStyle}" Content="🌐 NetworkUsageView"/>
-                            <Button x:Name="BtnOpenSaveFilesView" Style="{StaticResource RoundButtonStyle}" Content="📁 OpenSaveFilesView"/>
-                            <Button x:Name="BtnPathsParser" Style="{StaticResource RoundButtonStyle}" Content="📁 PathsParser"/>
-                            <Button x:Name="Btnpcasvcexecuted" Style="{StaticResource RoundButtonStyle}" Content="📜 pcasvc-executed"/>
-                            <Button x:Name="BtnPECmd" Style="{StaticResource RoundButtonStyle}" Content="📦 PECmd"/>
-                            <Button x:Name="BtnPFTrace" Style="{StaticResource RoundButtonStyle}" Content="📜 PFTrace"/>
-                            <Button x:Name="BtnPrefetchView" Style="{StaticResource RoundButtonStyle}" Content="📜 PrefetchView"/>
-                            <Button x:Name="Btnprefetchparser" Style="{StaticResource RoundButtonStyle}" Content="📜 prefetch-parser"/>
-                            <Button x:Name="Btnprocessparser" Style="{StaticResource RoundButtonStyle}" Content="📋 process-parser"/>
-                            <Button x:Name="BtnPSHunter" Style="{StaticResource RoundButtonStyle}" Content="🔍 PSHunter"/>
-                            <Button x:Name="BtnRecentFileCacheParser" Style="{StaticResource RoundButtonStyle}" Content="📁 RecentFileCacheParser"/>
-                            <Button x:Name="BtnRegScanner" Style="{StaticResource RoundButtonStyle}" Content="🔍 RegScanner"/>
-                            <Button x:Name="BtnRegistryExplorer" Style="{StaticResource RoundButtonStyle}" Content="📋 RegistryExplorer"/>
-                            <Button x:Name="BtnRLAltChecker" Style="{StaticResource RoundButtonStyle}" Content="🔴 RL AltChecker"/>
-                            <Button x:Name="BtnRLModAnalyzer" Style="{StaticResource RoundButtonStyle}" Content="🔴 RL ModAnalyzer"/>
-                            <Button x:Name="BtnRLTaskSentinel" Style="{StaticResource RoundButtonStyle}" Content="🔴 RL TaskSentinel"/>
-                            <Button x:Name="BtnServices" Style="{StaticResource RoundButtonStyle}" Content="⚙️ Services"/>
-                            <Button x:Name="BtnShellBagsExplorer" Style="{StaticResource RoundButtonStyle}" Content="📁 ShellBagsExplorer"/>
-                            <Button x:Name="BtnShellBagsView" Style="{StaticResource RoundButtonStyle}" Content="📁 ShellBagsView"/>
-                            <Button x:Name="BtnSignedScheduledTasks" Style="{StaticResource RoundButtonStyle}" Content="📋 SignedScheduledTasks"/>
-                            <Button x:Name="BtnSrumECmd" Style="{StaticResource RoundButtonStyle}" Content="📊 SrumECmd"/>
-                            <Button x:Name="BtnStringsParser" Style="{StaticResource RoundButtonStyle}" Content="🔤 StringsParser"/>
-                            <Button x:Name="BtnSystemInformer" Style="{StaticResource RoundButtonStyle}" Content="🖥️ SystemInformer"/>
-                            <Button x:Name="BtnTaskSchedulerView" Style="{StaticResource RoundButtonStyle}" Content="📋 TaskSchedulerView"/>
-                            <Button x:Name="BtnTimelineExplorer" Style="{StaticResource RoundButtonStyle}" Content="📜 TimelineExplorer"/>
-                            <Button x:Name="BtnUSBDetector" Style="{StaticResource RoundButtonStyle}" Content="🔌 USBDetector"/>
-                            <Button x:Name="BtnUSBDeview" Style="{StaticResource RoundButtonStyle}" Content="🔌 USBDeview"/>
-                            <Button x:Name="BtnUserAssistView" Style="{StaticResource RoundButtonStyle}" Content="👤 UserAssistView"/>
-                            <Button x:Name="BtnVSRedist" Style="{StaticResource RoundButtonStyle}" Content="⚙️ VSRedist"/>
+                            <Button x:Name="BtnMacroDetector" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Macro Detector"/>
                             <Button x:Name="BtnWeHateFakers" Style="{StaticResource RoundButtonStyle}" Content="🔥 WeHateFakers"/>
-                            <Button x:Name="BtnWinPrefetchView" Style="{StaticResource RoundButtonStyle}" Content="📜 WinPrefetchView"/>
+                            <Button x:Name="BtnCommonDirectories" Style="{StaticResource RoundButtonStyle}" Content="📁 Common Directories"/>
+                            <Button x:Name="BtnHarddiskConverter" Style="{StaticResource RoundButtonStyle}" Content="💾 Harddisk Converter"/>
+                            <Button x:Name="BtnServices" Style="{StaticResource RoundButtonStyle}" Content="⚙️ Services"/>
+                            <Button x:Name="BtnSignedScheduledTasks" Style="{StaticResource RoundButtonStyle}" Content="📋 Signed Scheduled Tasks"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -189,8 +129,8 @@ Add-Type -AssemblyName System.Xaml
                         <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="QUICK STATS" FontSize="12" Foreground="#4ADE80"/>
-                                <TextBlock Text="68 Tools Available" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                <TextBlock Text="Minecraft SS Ready" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                                <TextBlock Text="8 Cmd Tools Available" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                <TextBlock Text="Pure Command Tools" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                             </StackPanel>
                         </Border>
 
@@ -212,6 +152,7 @@ Add-Type -AssemblyName System.Xaml
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
+# Fade-in
 $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
 $fadeIn.From = 0
 $fadeIn.To = 1
@@ -226,83 +167,38 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === ALLE 68 KNOPPEN WERKENDE ===
+# === ALLEEN CMD KNOPPEN ===
 
-# GitHub Tools
-$window.FindName("BtnActivitiesCache").Add_Click({ Start-Process "https://github.com/spokwn/ActivitiesCache-execution/releases/latest" })
-$window.FindName("BtnAltDetector").Add_Click({ Start-Process "https://github.com/praiselily/AltDetector/releases/latest" })
-$window.FindName("BtnBAMParser").Add_Click({ Start-Process "https://github.com/spokwn/BAM-parser/releases/latest" })
-$window.FindName("BtnBamDeletedKeys").Add_Click({ Start-Process "https://github.com/spokwn/BamDeletedKeys/releases/latest" })
-$window.FindName("BtnBAMReveal").Add_Click({ Start-Process "https://github.com/Orbdiff/BAMReveal/releases/latest" })
-$window.FindName("BtnCheckDeletedUSN").Add_Click({ Start-Process "https://github.com/Orbdiff/CheckDeletedUSN/releases/latest" })
-$window.FindName("BtnDPSAnalyzer").Add_Click({ Start-Process "https://github.com/Orbdiff/DPS-Analyzer/releases/latest" })
-$window.FindName("BtnEspoukenTool").Add_Click({ Start-Process "https://github.com/spokwn/Tool/releases/latest" })
-$window.FindName("BtnFileless").Add_Click({ Start-Process "https://github.com/Orbdiff/Fileless/releases/latest" })
-$window.FindName("BtnInjGen").Add_Click({ Start-Process "https://github.com/Orbdiff/InjGen/releases/latest" })
-$window.FindName("BtnJARParser").Add_Click({ Start-Process "https://github.com/Orbdiff/JARParser/releases/latest" })
-$window.FindName("BtnJournalParser").Add_Click({ Start-Process "https://github.com/Orbdiff/JournalParser/releases/latest" })
-$window.FindName("BtnJournalTrace").Add_Click({ Start-Process "https://github.com/spokwn/JournalTrace/releases/latest" })
-$window.FindName("BtnKernelLiveDumpTool").Add_Click({ Start-Process "https://github.com/spokwn/KernelLiveDumpTool/releases/latest" })
-$window.FindName("BtnMeowClientsFucker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowClientFucker/releases/latest" })
-$window.FindName("BtnMeowDoomsdayFucker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowDoomsdayFucker/releases/latest" })
-$window.FindName("BtnMeowImportsChecker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowImportsChecker/releases/latest" })
-$window.FindName("BtnMeowNovowareFucker").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowNovowareFucker/releases/latest" })
-$window.FindName("BtnMeowResolver").Add_Click({ Start-Process "https://github.com/MeowTonynoh/MeowResolver/releases/latest" })
-$window.FindName("BtnPathsParser").Add_Click({ Start-Process "https://github.com/spokwn/PathsParser/releases/latest" })
-$window.FindName("Btnpcasvcexecuted").Add_Click({ Start-Process "https://github.com/spokwn/pcasvc-executed/releases/latest" })
-$window.FindName("BtnPFTrace").Add_Click({ Start-Process "https://github.com/Orbdiff/PFTrace/releases/latest" })
-$window.FindName("BtnPrefetchView").Add_Click({ Start-Process "https://github.com/Orbdiff/PrefetchView/releases/latest" })
-$window.FindName("Btnprefetchparser").Add_Click({ Start-Process "https://github.com/spokwn/prefetch-parser/releases/latest" })
-$window.FindName("Btnprocessparser").Add_Click({ Start-Process "https://github.com/spokwn/process-parser/releases/latest" })
-$window.FindName("BtnPSHunter").Add_Click({ Start-Process "https://github.com/praiselily/PSHunter/releases/latest" })
-$window.FindName("BtnRLAltChecker").Add_Click({ Start-Process "https://github.com/ItzIceHere/RedLotusAltChecker/releases/latest" })
-$window.FindName("BtnRLModAnalyzer").Add_Click({ Start-Process "https://github.com/ItzIceHere/RedLotus-Mod-Analyzer/releases/latest" })
-$window.FindName("BtnRLTaskSentinel").Add_Click({ Start-Process "https://github.com/ItzIceHere/RedLotus-Task-Sentinel/releases/latest" })
-$window.FindName("BtnStringsParser").Add_Click({ Start-Process "https://github.com/Orbdiff/StringsParser/releases/latest" })
-$window.FindName("BtnUSBDetector").Add_Click({ Start-Process "https://github.com/Orbdiff/USBDetector/releases/latest" })
+$window.FindName("BtnMeowModAnalyzer").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')`""
+})
 
-# Cmd Tools
-$window.FindName("BtnMeowModAnalyzer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')`"" })
-$window.FindName("BtnDQRKISFUCKER").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
-$window.FindName("BtnMacroDetector").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/NiccBlahh/MacroDetector/refs/heads/main/MacroDetector.ps1' | Invoke-Expression`"" })
-$window.FindName("BtnWeHateFakers").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"iwr https://raw.githubusercontent.com/praiselily/WeHateFakers/refs/heads/main/HotspotLogs.ps1 | iex`"" })
-$window.FindName("BtnCommonDirectories").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/CommonDirectories.ps1')`"" })
-$window.FindName("BtnHarddiskConverter").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/HarddiskConverter.ps1')`"" })
-$window.FindName("BtnServices").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1')`"" })
-$window.FindName("BtnSignedScheduledTasks").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Signed-Scheduled-Tasks.ps1')`"" })
+$window.FindName("BtnDQRKISFUCKER").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`""
+})
 
-# Web + Download Tools
-$window.FindName("BtnAmcacheParser").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/AmcacheParser.zip" })
-$window.FindName("Btnbstrings").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/bstrings.zip" })
-$window.FindName("BtnJLECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/JLECmd.zip" })
-$window.FindName("BtnJumpListExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/JumpListExplorer.zip" })
-$window.FindName("BtnMFTECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/MFTECmd.zip" })
-$window.FindName("BtnPECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/PECmd.zip" })
-$window.FindName("BtnRecentFileCacheParser").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/RecentFileCacheParser.zip" })
-$window.FindName("BtnRegistryExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/RegistryExplorer.zip" })
-$window.FindName("BtnShellBagsExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/ShellBagsExplorer.zip" })
-$window.FindName("BtnSrumECmd").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/SrumECmd.zip" })
-$window.FindName("BtnTimelineExplorer").Add_Click({ Start-Process "https://download.ericzimmermanstools.com/net9/TimelineExplorer.zip" })
+$window.FindName("BtnMacroDetector").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/NiccBlahh/MacroDetector/refs/heads/main/MacroDetector.ps1' | Invoke-Expression`""
+})
 
-$window.FindName("BtnComputerActivityView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/computer_activity_view.html" })
-$window.FindName("BtnBrowserDownloadsView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/browserdownloadsview.zip" })
-$window.FindName("BtnFullEventLogView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/fulleventlogview.zip" })
-$window.FindName("BtnNetworkUsageView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/networkusageview.zip" })
-$window.FindName("BtnAlternateStreamView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/alternatestreamview.zip" })
-$window.FindName("BtnUSBDeview").Add_Click({ Start-Process "https://www.nirsoft.net/utils/usbdeview.zip" })
-$window.FindName("BtnOpenSaveFilesView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/opensavefilesview.zip" })
-$window.FindName("BtnExecutedProgramsList").Add_Click({ Start-Process "https://www.nirsoft.net/utils/executedprogramslist.zip" })
-$window.FindName("BtnTaskSchedulerView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/taskschedulerview.zip" })
-$window.FindName("BtnJumpListsView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/jumplistsview.zip" })
-$window.FindName("BtnWinPrefetchView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/winprefetchview.zip" })
-$window.FindName("BtnRegScanner").Add_Click({ Start-Process "https://www.nirsoft.net/utils/regscanner.zip" })
-$window.FindName("BtnShellBagsView").Add_Click({ Start-Process "https://www.nirsoft.net/utils/shellbagsview.zip" })
+$window.FindName("BtnWeHateFakers").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"iwr https://raw.githubusercontent.com/praiselily/WeHateFakers/refs/heads/main/HotspotLogs.ps1 | iex`""
+})
 
-$window.FindName("BtnDIEengine").Add_Click({ Start-Process "https://github.com/horsicq/DIE-engine/releases" })
-$window.FindName("BtnSystemInformer").Add_Click({ Start-Process "https://www.systeminformer.com/canary" })
+$window.FindName("BtnCommonDirectories").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/CommonDirectories.ps1')`""
+})
 
-$window.FindName("BtnNET90").Add_Click({ Start-Process "https://download.visualstudio.microsoft.com/download/pr/92dba916-bc51-4e76-8b0e-d41d37ce5fa4/ab08f3e95bf7a3d3da336a7e8c8eca63/dotnet-sdk-9.0.203-win-x64.exe" })
-$window.FindName("BtnNET100").Add_Click({ Start-Process "https://download.visualstudio.microsoft.com/download/pr/b3f93f0e-9e5e-4b4c-a4c4-36db0c4b0e3e/dotnet-runtime-10.0.0-win-x64.exe" })
-$window.FindName("BtnVSRedist").Add_Click({ Start-Process "https://aka.ms/vs/17/release/vc_redist.x64.exe" })
+$window.FindName("BtnHarddiskConverter").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/HarddiskConverter.ps1')`""
+})
+
+$window.FindName("BtnServices").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1')`""
+})
+
+$window.FindName("BtnSignedScheduledTasks").Add_Click({
+    Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Signed-Scheduled-Tasks.ps1')`""
+})
 
 $window.ShowDialog() | Out-Null
