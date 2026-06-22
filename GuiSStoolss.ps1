@@ -58,23 +58,23 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES + SHAPES === -->
-            <Canvas>
+            <!-- DECORATIVE CIRCLES + SHAPES (nu met ZIndex -1) -->
+            <Canvas Panel.ZIndex="-1">
                 <!-- Grote zachte cirkels -->
-                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.18" Canvas.Left="-140" Canvas.Top="-100"/>
-                <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.15" Canvas.Right="-80" Canvas.Bottom="40"/>
-                <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.12" Canvas.Left="280" Canvas.Top="160"/>
+                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
+                <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
+                <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
                 
                 <!-- Extra cirkels -->
-                <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.10" Canvas.Right="-220" Canvas.Top="-180"/>
-                <Ellipse x:Name="Circle5" Width="150" Height="150" Fill="#86EFAC" Opacity="0.22" Canvas.Left="920" Canvas.Top="380"/>
-                <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.09" Canvas.Left="1100" Canvas.Bottom="60"/>
-                <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.12" Canvas.Left="750" Canvas.Top="-80"/>
-                <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.08" Canvas.Left="1050" Canvas.Top="520"/>
+                <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
+                <Ellipse x:Name="Circle5" Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
+                <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
+                <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
+                <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
 
                 <!-- Extra subtiele vormen -->
-                <Rectangle x:Name="Shape1" Width="420" Height="6" Fill="#4ADE80" Opacity="0.07" Canvas.Left="180" Canvas.Top="310"/>
-                <Rectangle x:Name="Shape2" Width="6" Height="380" Fill="#86EFAC" Opacity="0.06" Canvas.Left="980" Canvas.Top="220"/>
+                <Rectangle x:Name="Shape1" Width="420" Height="6" Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
+                <Rectangle x:Name="Shape2" Width="6" Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
 
             <Grid>
@@ -271,7 +271,6 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $sb.Begin()
 }
 
-# Cirkels animeren
 Start-PulseAnimation $c1 5200 1.06
 Start-PulseAnimation $c2 4100 1.08
 Start-PulseAnimation $c3 3400 1.12
@@ -280,8 +279,6 @@ Start-PulseAnimation $c5 2900 1.15
 Start-PulseAnimation $c6 4500 1.07
 Start-PulseAnimation $c7 4900 1.06
 Start-PulseAnimation $c8 3600 1.11
-
-# Extra vormen langzaam pulseren
 Start-PulseAnimation $s1 6000 1.04
 Start-PulseAnimation $s2 5500 1.05
 
