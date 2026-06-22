@@ -2,7 +2,6 @@ Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName System.Xaml
-Add-Type -AssemblyName System.Windows.Media.Animation
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -18,7 +17,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         Opacity="0">
 
     <Window.Resources>
-        <!-- Gradient + Glow Button Style -->
+        <!-- Premium Button Style met Gradient + Glow -->
         <Style x:Key="PremiumButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="15"/>
@@ -31,7 +30,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Root" CornerRadius="14" BorderThickness="0">
-                            <!-- Gradient Background -->
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <GradientStop Color="#1E7A3D" Offset="0"/>
@@ -47,10 +45,9 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         </Border>
                         
                         <ControlTemplate.Triggers>
-                            <!-- Hover met Glow -->
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Glow" Property="Opacity" Value="0.6"/>
-                                <Setter TargetName="Glow" Property="BlurRadius" Value="18"/>
+                                <Setter TargetName="Glow" Property="Opacity" Value="0.65"/>
+                                <Setter TargetName="Glow" Property="BlurRadius" Value="20"/>
                                 <Setter TargetName="Root" Property="RenderTransform">
                                     <Setter.Value>
                                         <ScaleTransform ScaleX="1.03" ScaleY="1.03"/>
@@ -58,9 +55,8 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                                 </Setter>
                             </Trigger>
                             
-                            <!-- Press Effect -->
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Glow" Property="Opacity" Value="0.3"/>
+                                <Setter TargetName="Glow" Property="Opacity" Value="0.35"/>
                                 <Setter TargetName="Root" Property="RenderTransform">
                                     <Setter.Value>
                                         <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
@@ -85,17 +81,21 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Achtergrond + Decoratieve Cirkels -->
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" Fill="#166534" Opacity="0.07" 
-                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-180,-160,0,0"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" Fill="#4ADE80" Opacity="0.055" 
-                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-120,-100"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" Fill="White" Opacity="0.03" 
-                     HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" Fill="White" Opacity="0.025" 
-                     HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40"/>
+            <!-- Decoratieve Cirkels -->
+            <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" 
+                     Fill="#166534" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="-180,-160,0,0"/>
+            <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" 
+                     Fill="#4ADE80" Opacity="0.055" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                     Margin="0,0,-120,-100"/>
+            <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" 
+                     Fill="White" Opacity="0.03" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                     Margin="0,60,0,0"/>
+            <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" 
+                     Fill="White" Opacity="0.025" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                     Margin="40,0,0,40"/>
 
             <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
@@ -191,7 +191,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                     </StackPanel>
                 </Grid>
 
-                <!-- Control Center met Premium Knoppen -->
+                <!-- Control Center -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" Padding="22">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
@@ -200,21 +200,11 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
-                        <!-- Premium Knoppen met Gradient + Glow -->
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" 
-                                Style="{StaticResource PremiumButtonStyle}"/>
-                        
-                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" 
-                                Background="#3A2028" Style="{StaticResource PremiumButtonStyle}"/>
-                        
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" 
-                                Style="{StaticResource PremiumButtonStyle}"/>
-                        
-                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" 
-                                Style="{StaticResource PremiumButtonStyle}"/>
-                        
-                        <Button x:Name="ExitButton" Content="Exit Launcher" 
-                                Style="{StaticResource PremiumButtonStyle}"/>
+                        <Button x:Name="InstallButton" Content="Install / Update Tools" Style="{StaticResource PremiumButtonStyle}"/>
+                        <Button x:Name="DeleteButton" Content="Remove Installed Tools" Background="#3A2028" Style="{StaticResource PremiumButtonStyle}"/>
+                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Style="{StaticResource PremiumButtonStyle}"/>
+                        <Button x:Name="OpenCmdButton" Content="Open CMD Commands" Style="{StaticResource PremiumButtonStyle}"/>
+                        <Button x:Name="ExitButton" Content="Exit Launcher" Style="{StaticResource PremiumButtonStyle}"/>
                     </StackPanel>
                 </Border>
             </Grid>
