@@ -60,26 +60,23 @@ Add-Type -AssemblyName System.Xaml
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: Commands -->
+                <!-- Left: Commands (alfabetisch) -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <!-- Nieuwe knoppen -->
                             <Button x:Name="BtnAnydesk"           Content="Anydesk Install"           Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnPowerShellHistory" Content="Open PowerShell History"   Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnCyemer"            Content="Cyemer Scanner"            Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnDqrkis"            Content="DQRKIS-FUCKER"             Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnGhostFinder"       Content="Ghost Client Finder"       Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnInjector"          Content="Injector Detector"         Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnMeow"              Content="Meow Mod Analyzer"         Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button x:Name="BtnAppData"           Content="Open AppData"              Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnPowerShellHistory" Content="Open PowerShell History"   Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button x:Name="BtnPrefetch"          Content="Open Prefetch"             Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-
-                            <!-- Bestaande knoppen -->
-                            <Button x:Name="BtnPrimeMacro"   Content="Prime Macro Detector"     Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnQuickcheck"   Content="Quickcheck Scanner"       Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnGhostFinder"  Content="Ghost Client Finder"      Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnCyemer"       Content="Cyemer Scanner"           Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnInjector"     Content="Injector Detector"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnMeow"         Content="Meow Mod Analyzer"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
-                            <Button x:Name="BtnDqrkis"       Content="DQRKIS-FUCKER"            Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnPrimeMacro"        Content="Prime Macro Detector"      Height="46" Background="#145C2E" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
+                            <Button x:Name="BtnQuickcheck"        Content="Quickcheck Scanner"        Height="46" Background="#145C2E" Foreground="White" FontSize="14" BorderThickness="0" Cursor="Hand"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -146,32 +143,18 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# === NIEUWE KNOPPEN ===
+# === KNOPPEN (alfabetisch) ===
 
-$window.FindName("BtnAnydesk").Add_Click({
-    Start-Process "https://download.anydesk.com/AnyDesk.exe"
-})
-
-$window.FindName("BtnPowerShellHistory").Add_Click({
-    Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine"
-})
-
-$window.FindName("BtnAppData").Add_Click({
-    Start-Process $env:APPDATA
-})
-
-$window.FindName("BtnPrefetch").Add_Click({
-    Start-Process "$env:SystemRoot\Prefetch"
-})
-
-# === OUDE KNOPPEN ===
-
-$window.FindName("BtnPrimeMacro").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`"" })
-$window.FindName("BtnQuickcheck").Add_Click({ Start-Process cmd -ArgumentList "/k powershell Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)" })
+$window.FindName("BtnAnydesk").Add_Click({ Start-Process "https://download.anydesk.com/AnyDesk.exe" })
+$window.FindName("BtnCyemer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
+$window.FindName("BtnDqrkis").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
 $window.FindName("BtnGhostFinder").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`"" })
-$window.FindName("BtnCyemer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
 $window.FindName("BtnInjector").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`"" })
 $window.FindName("BtnMeow").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`"" })
-$window.FindName("BtnDqrkis").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
+$window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
+$window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
+$window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
+$window.FindName("BtnPrimeMacro").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`"" })
+$window.FindName("BtnQuickcheck").Add_Click({ Start-Process cmd -ArgumentList "/k powershell Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)" })
 
 $window.ShowDialog() | Out-Null
