@@ -6,6 +6,7 @@ Add-Type -AssemblyName System.Xaml
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
+$toolsFolder = Join-Path $dest "GuiSS Tools"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -140,16 +141,16 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-# === Install / Update Tools ===
+# === Install / Update Tools knop ===
 $InstallButton.Add_Click({
     try {
-        if (!(Test-Path $dest)) {
-            New-Item -ItemType Directory -Path $dest -Force | Out-Null
-            $window.FindName("ActivityBox").AppendText("`n[Install] Map aangemaakt: $dest`n")
+        if (!(Test-Path $toolsFolder)) {
+            New-Item -ItemType Directory -Path $toolsFolder -Force | Out-Null
+            $window.FindName("ActivityBox").AppendText("`n[Install] Map aangemaakt: $toolsFolder`n")
+            $window.FindName("ActivityBox").AppendText("`n[Info] Pak de ZIP uit in deze map (GuiSS Tools).`n")
         }
-        Start-Process $dest
-        $window.FindName("ActivityBox").AppendText("`n[Install] Map geopend.`n")
-        $window.FindName("ActivityBox").AppendText("`n[Info] Zet al je .exe bestanden (JournalTrace, WinPrefetchView, etc.) in deze map.`n")
+        Start-Process $toolsFolder
+        $window.FindName("ActivityBox").AppendText("`n[Install] Map geopend: $toolsFolder`n")
     }
     catch {
         $window.FindName("ActivityBox").AppendText("`n[Error] Kon de map niet openen.`n")
@@ -164,10 +165,10 @@ $DeleteButton.Add_Click({
 })
 
 $OpenFolderButton.Add_Click({
-    if (Test-Path $dest) {
-        Start-Process $dest
+    if (Test-Path $toolsFolder) {
+        Start-Process $toolsFolder
     } else {
-        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet. Klik eerst op 'Install / Update Tools'.`n")
+        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet. Klik op 'Install / Update Tools'.`n")
     }
 })
 
