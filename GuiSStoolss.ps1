@@ -18,7 +18,8 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Guiss Launcher" Width="1320" Height="830"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Opacity="0">
 
     <Window.Resources>
         <Style x:Key="MainButtonStyle" TargetType="Button">
@@ -58,23 +59,26 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         </Border.Effect>
 
         <Grid>
-            <!-- DECORATIVE CIRCLES + SHAPES (nu met ZIndex -1) -->
+            <!-- DECORATIVE CIRCLES + SHAPES -->
             <Canvas Panel.ZIndex="-1">
-                <!-- Grote zachte cirkels -->
+                <!-- Boven / Midden -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
-                
-                <!-- Extra cirkels -->
                 <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
                 <Ellipse x:Name="Circle5" Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
                 <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
                 <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
                 <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
 
+                <!-- Extra cirkels LINKSONDER + Floating -->
+                <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
+                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
+                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
+
                 <!-- Extra subtiele vormen -->
-                <Rectangle x:Name="Shape1" Width="420" Height="6" Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
-                <Rectangle x:Name="Shape2" Width="6" Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
+                <Rectangle x:Name="Shape1" Width="420" Height="6"  Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
+                <Rectangle x:Name="Shape2" Width="6"   Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
 
             <Grid>
@@ -87,8 +91,11 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                 <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0">
                     <Grid Margin="25,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <!-- Logo met Breathing Glow -->
+                            <Border x:Name="LogoBorder" Width="42" Height="42" CornerRadius="13" 
+                                    Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" 
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel Margin="14,0,0,0">
                                 <TextBlock Text="Guiss Launcher" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
@@ -103,7 +110,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                 </Border>
 
                 <!-- Main Content -->
-                <Grid Grid.Row="1" Margin="25,20,40,25">
+                <Grid x:Name="MainContent" Grid.Row="1" Margin="25,20,40,25">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="300"/>
@@ -181,6 +188,43 @@ catch {
     exit
 }
 
+# === FADE-IN WINDOW + CONTENT ===
+$MainContent = $window.FindName("MainContent")
+$LogoBorder  = $window.FindName("LogoBorder")
+
+$window.Add_Loaded({
+    # Window fade-in
+    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeIn.From = 0
+    $fadeIn.To = 1
+    $fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+
+    # Content fade-in (iets later)
+    $contentFade = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $contentFade.From = 0
+    $contentFade.To = 1
+    $contentFade.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(600))
+    $contentFade.BeginTime = [TimeSpan]::FromMilliseconds(300)
+    $MainContent.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $contentFade)
+
+    # Breathing Glow op logo "G"
+    $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
+    $glow.Color = "#4ADE80"
+    $glow.BlurRadius = 18
+    $glow.ShadowDepth = 0
+    $glow.Opacity = 0.6
+    $LogoBorder.Effect = $glow
+
+    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $glowAnim.From = 0.4
+    $glowAnim.To = 0.85
+    $glowAnim.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(1800))
+    $glowAnim.AutoReverse = $true
+    $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
+})
+
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
@@ -239,16 +283,13 @@ $window.FindName("OpenCmdButton").Add_Click({
 })
 
 # ====================== ANIMATIES ======================
-$c1 = $window.FindName("Circle1")
-$c2 = $window.FindName("Circle2")
-$c3 = $window.FindName("Circle3")
-$c4 = $window.FindName("Circle4")
-$c5 = $window.FindName("Circle5")
-$c6 = $window.FindName("Circle6")
-$c7 = $window.FindName("Circle7")
-$c8 = $window.FindName("Circle8")
-$s1 = $window.FindName("Shape1")
-$s2 = $window.FindName("Shape2")
+$c1 = $window.FindName("Circle1");  $c2 = $window.FindName("Circle2")
+$c3 = $window.FindName("Circle3");  $c4 = $window.FindName("Circle4")
+$c5 = $window.FindName("Circle5");  $c6 = $window.FindName("Circle6")
+$c7 = $window.FindName("Circle7");  $c8 = $window.FindName("Circle8")
+$c9 = $window.FindName("Circle9");  $c10 = $window.FindName("Circle10")
+$c11 = $window.FindName("Circle11")
+$s1 = $window.FindName("Shape1");   $s2 = $window.FindName("Shape2")
 
 function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $scale = New-Object System.Windows.Media.ScaleTransform
@@ -271,14 +312,37 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $sb.Begin()
 }
 
-Start-PulseAnimation $c1 5200 1.06
-Start-PulseAnimation $c2 4100 1.08
-Start-PulseAnimation $c3 3400 1.12
-Start-PulseAnimation $c4 5800 1.05
-Start-PulseAnimation $c5 2900 1.15
-Start-PulseAnimation $c6 4500 1.07
-Start-PulseAnimation $c7 4900 1.06
-Start-PulseAnimation $c8 3600 1.11
+function Start-FloatAnimation($element, $durationMs, $distance) {
+    $translate = New-Object System.Windows.Media.TranslateTransform
+    $element.RenderTransform = $translate
+
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animY.From = 0
+    $animY.To = $distance
+    $animY.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds($durationMs))
+    $animY.AutoReverse = $true
+    $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
+
+    $sb.Children.Add($animY)
+    $sb.Begin()
+}
+
+# Pulsing circles
+Start-PulseAnimation $c1 5200 1.06; Start-PulseAnimation $c2 4100 1.08
+Start-PulseAnimation $c3 3400 1.12; Start-PulseAnimation $c4 5800 1.05
+Start-PulseAnimation $c5 2900 1.15; Start-PulseAnimation $c6 4500 1.07
+Start-PulseAnimation $c7 4900 1.06; Start-PulseAnimation $c8 3600 1.11
+
+# Floating circles (linksonder)
+Start-FloatAnimation $c9  6800 18
+Start-FloatAnimation $c10 7500 -22
+Start-FloatAnimation $c11 6200 14
+
+# Extra vormen
 Start-PulseAnimation $s1 6000 1.04
 Start-PulseAnimation $s2 5500 1.05
 
