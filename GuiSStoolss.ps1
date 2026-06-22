@@ -2,6 +2,7 @@ Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName System.Xaml
+Add-Type -AssemblyName System.Windows.Media.Animation
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -29,15 +30,22 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
             <!-- Achtergrond -->
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <!-- Decoratieve cirkels (groen + wit) -->
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="480" Height="480" Fill="#166534" Opacity="0.05" 
-                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-160,-140,0,0"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="320" Height="320" Fill="#4ADE80" Opacity="0.035" 
-                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-100,-85"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="200" Height="200" Fill="White" Opacity="0.02" 
-                     HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0"/>
-            <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="150" Height="150" Fill="White" Opacity="0.015" 
-                     HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="60,0,0,50"/>
+            <!-- Decoratieve cirkels met animatie -->
+            <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="480" Height="480" 
+                     Fill="#166534" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="-160,-140,0,0"/>
+            
+            <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="320" Height="320" 
+                     Fill="#4ADE80" Opacity="0.035" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                     Margin="0,0,-100,-85"/>
+            
+            <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="200" Height="200" 
+                     Fill="White" Opacity="0.02" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                     Margin="0,80,0,0"/>
+            
+            <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="150" Height="150" 
+                     Fill="White" Opacity="0.015" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                     Margin="60,0,0,50"/>
 
             <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
@@ -79,7 +87,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock x:Name="StatusText" Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock x:Name="SubStatusText" Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#9DB1C4" Margin="0,8,0,25"/>
 
-                        <!-- Widgets zonder witte rand -->
                         <Grid Margin="0,0,0,25">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -111,7 +118,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
                         </Grid>
 
-                        <!-- Activity Console zonder witte rand -->
                         <Border Background="#0F1A16" CornerRadius="18" Padding="18">
                             <StackPanel>
                                 <TextBlock Text="Activity Console" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80"/>
@@ -144,6 +150,30 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
+
+# === Animaties voor de cirkels ===
+$Circle1 = $window.FindName("Circle1")
+$Circle2 = $window.FindName("Circle2")
+$Circle3 = $window.FindName("Circle3")
+$Circle4 = $window.FindName("Circle4")
+
+function Start-CircleAnimation {
+    param($Ellipse, [double]$FromOpacity, [double]$ToOpacity, [int]$DurationMs)
+
+    $animation = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animation.From = $FromOpacity
+    $animation.To = $ToOpacity
+    $animation.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds($DurationMs))
+    $animation.AutoReverse = $true
+    $animation.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $Ellipse.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $animation)
+}
+
+# Start animaties (zachte pulsing)
+Start-CircleAnimation -Ellipse $Circle1 -FromOpacity 0.03 -ToOpacity 0.08 -DurationMs 4500
+Start-CircleAnimation -Ellipse $Circle2 -FromOpacity 0.02 -ToOpacity 0.06 -DurationMs 3800
+Start-CircleAnimation -Ellipse $Circle3 -FromOpacity 0.015 -ToOpacity 0.04 -DurationMs 5200
+Start-CircleAnimation -Ellipse $Circle4 -FromOpacity 0.01 -ToOpacity 0.03 -DurationMs 4100
 
 $CloseButton      = $window.FindName("CloseButton")
 $MinButton        = $window.FindName("MinButton")
