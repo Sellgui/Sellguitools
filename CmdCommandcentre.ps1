@@ -93,17 +93,20 @@ Add-Type -AssemblyName System.Xaml
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
-                            <Button Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
+                            <!-- Extra tools -->
+                            <Button x:Name="BtnAnydesk"           Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
+                            <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
+                            <Button x:Name="BtnAppData"           Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
+                            <Button x:Name="BtnPrefetch"          Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
+
+                            <!-- Hoofd tools -->
+                            <Button x:Name="BtnPrimeMacro"   Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
+                            <Button x:Name="BtnQuickcheck"   Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
+                            <Button x:Name="BtnGhostFinder"  Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
+                            <Button x:Name="BtnCyemer"       Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
+                            <Button x:Name="BtnInjector"     Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
+                            <Button x:Name="BtnMeow"         Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
+                            <Button x:Name="BtnDqrkis"       Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -132,8 +135,8 @@ Add-Type -AssemblyName System.Xaml
                         <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock Text="QUICK STATS" FontSize="12" Foreground="#4ADE80"/>
-                                <TextBlock Text="22 Commands Available" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                                <TextBlock Text="4 Tools installed • 1 running" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                                <TextBlock Text="11 Tools Available" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                <TextBlock Text="Clean & Focused" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                             </StackPanel>
                         </Border>
 
@@ -173,15 +176,16 @@ $CloseButton.Add_Click({ $window.Close() })
 # === KNOPPEN ===
 
 $window.FindName("BtnAnydesk").Add_Click({ Start-Process "https://download.anydesk.com/AnyDesk.exe" })
-$window.FindName("BtnCyemer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
-$window.FindName("BtnDqrkis").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
-$window.FindName("BtnGhostFinder").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`"" })
-$window.FindName("BtnInjector").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`"" })
-$window.FindName("BtnMeow").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`"" })
-$window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
 $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
+$window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
 $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
+
 $window.FindName("BtnPrimeMacro").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`"" })
 $window.FindName("BtnQuickcheck").Add_Click({ Start-Process cmd -ArgumentList "/k powershell Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)" })
+$window.FindName("BtnGhostFinder").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`"" })
+$window.FindName("BtnCyemer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
+$window.FindName("BtnInjector").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`"" })
+$window.FindName("BtnMeow").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`"" })
+$window.FindName("BtnDqrkis").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
 
 $window.ShowDialog() | Out-Null
