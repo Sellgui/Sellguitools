@@ -2,10 +2,12 @@ Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName System.Xaml
+Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $dest = Join-Path $env:USERPROFILE "Downloads\Guiss-Tools"
+$zipPath = Join-Path $env:USERPROFILE "Downloads\Gui SS Tools.zip"
 $toolsFolder = Join-Path $dest "GuiSS Tools"
 
 [xml]$xaml = @"
@@ -141,19 +143,31 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $ExitButton.Add_Click({ $window.Close() })
 
-# === Install / Update Tools knop ===
+# === Install / Update Tools (ZIP uitpakken) ===
 $InstallButton.Add_Click({
     try {
-        if (!(Test-Path $toolsFolder)) {
-            New-Item -ItemType Directory -Path $toolsFolder -Force | Out-Null
-            $window.FindName("ActivityBox").AppendText("`n[Install] Map aangemaakt: $toolsFolder`n")
-            $window.FindName("ActivityBox").AppendText("`n[Info] Pak de ZIP uit in deze map (GuiSS Tools).`n")
+        if (!(Test-Path $zipPath)) {
+            $window.FindName("ActivityBox").AppendText("`n[Error] ZIP bestand niet gevonden in Downloads.`n")
+            $window.FindName("ActivityBox").AppendText("`nZet 'Gui SS Tools.zip' in je Downloads map en probeer opnieuw.`n")
+            return
         }
+
+        if (!(Test-Path $dest)) {
+            New-Item -ItemType Directory -Path $dest -Force | Out-Null
+        }
+
+        # Uitpakken
+        if (Test-Path $toolsFolder) {
+            Remove-Item $toolsFolder -Recurse -Force
+        }
+
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $dest)
+
         Start-Process $toolsFolder
-        $window.FindName("ActivityBox").AppendText("`n[Install] Map geopend: $toolsFolder`n")
+        $window.FindName("ActivityBox").AppendText("`n[Install] Tools succesvol geïnstalleerd en map geopend.`n")
     }
     catch {
-        $window.FindName("ActivityBox").AppendText("`n[Error] Kon de map niet openen.`n")
+        $window.FindName("ActivityBox").AppendText("`n[Error] Er ging iets mis bij het uitpakken.`n")
     }
 })
 
@@ -168,7 +182,7 @@ $OpenFolderButton.Add_Click({
     if (Test-Path $toolsFolder) {
         Start-Process $toolsFolder
     } else {
-        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet. Klik op 'Install / Update Tools'.`n")
+        $window.FindName("ActivityBox").AppendText("`n[Info] Map bestaat nog niet. Klik eerst op Install / Update Tools.`n")
     }
 })
 
