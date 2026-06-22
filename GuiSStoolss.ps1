@@ -14,11 +14,12 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Guiss Launcher" Width="1320" Height="830"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Opacity="0">
 
     <Window.Resources>
-        <!-- Verbeterde Button Style met Hover + Schaduw -->
-        <Style x:Key="ModernButtonStyle" TargetType="Button">
+        <!-- Gradient + Glow Button Style -->
+        <Style x:Key="PremiumButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -29,33 +30,40 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="Root" 
-                                Background="{TemplateBinding Background}" 
-                                CornerRadius="14"
-                                BorderThickness="0">
+                        <Border x:Name="Root" CornerRadius="14" BorderThickness="0">
+                            <!-- Gradient Background -->
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#1E7A3D" Offset="0"/>
+                                    <GradientStop Color="#166534" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.25"/>
+                                <DropShadowEffect x:Name="Glow" BlurRadius="8" ShadowDepth="0" Opacity="0.0" Color="#4ADE80"/>
                             </Border.Effect>
+                            
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         
                         <ControlTemplate.Triggers>
-                            <!-- Hover Effect -->
+                            <!-- Hover met Glow -->
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Root" Property="Background" Value="#1E7A3D"/>
+                                <Setter TargetName="Glow" Property="Opacity" Value="0.6"/>
+                                <Setter TargetName="Glow" Property="BlurRadius" Value="18"/>
                                 <Setter TargetName="Root" Property="RenderTransform">
                                     <Setter.Value>
-                                        <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+                                        <ScaleTransform ScaleX="1.03" ScaleY="1.03"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             
                             <!-- Press Effect -->
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Root" Property="Background" Value="#145C2E"/>
+                                <Setter TargetName="Glow" Property="Opacity" Value="0.3"/>
                                 <Setter TargetName="Root" Property="RenderTransform">
                                     <Setter.Value>
-                                        <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                        <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -89,7 +97,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
             <Ellipse Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" Fill="White" Opacity="0.025" 
                      HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40"/>
 
-            <!-- Top Bar met subtiele gradient -->
+            <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                 <Grid Margin="20,0,20,0">
                     <Grid.ColumnDefinitions>
@@ -129,7 +137,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock x:Name="StatusText" Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock x:Name="SubStatusText" Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#9DB1C4" Margin="0,8,0,25"/>
 
-                        <!-- Widgets met schaduw -->
                         <Grid Margin="0,0,0,25">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -170,7 +177,6 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                             </Border>
                         </Grid>
 
-                        <!-- Activity Console met schaduw -->
                         <Border Background="#0F1A16" CornerRadius="18" Padding="18">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.25"/>
@@ -185,7 +191,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                     </StackPanel>
                 </Grid>
 
-                <!-- Control Center met moderne knoppen -->
+                <!-- Control Center met Premium Knoppen -->
                 <Border Grid.Column="2" Background="#0F1A16" CornerRadius="20" Padding="22">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
@@ -194,20 +200,21 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
                         <TextBlock Text="Control Center" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80"/>
                         <TextBlock Text="Manage your Guiss Tools" TextWrapping="Wrap" Margin="0,6,0,25" Foreground="#8EA2B6" FontSize="13"/>
 
+                        <!-- Premium Knoppen met Gradient + Glow -->
                         <Button x:Name="InstallButton" Content="Install / Update Tools" 
-                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
+                                Style="{StaticResource PremiumButtonStyle}"/>
                         
                         <Button x:Name="DeleteButton" Content="Remove Installed Tools" 
-                                Background="#3A2028" Style="{StaticResource ModernButtonStyle}"/>
+                                Background="#3A2028" Style="{StaticResource PremiumButtonStyle}"/>
                         
                         <Button x:Name="OpenFolderButton" Content="Open Install Folder" 
-                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
+                                Style="{StaticResource PremiumButtonStyle}"/>
                         
                         <Button x:Name="OpenCmdButton" Content="Open CMD Commands" 
-                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
+                                Style="{StaticResource PremiumButtonStyle}"/>
                         
                         <Button x:Name="ExitButton" Content="Exit Launcher" 
-                                Background="#166534" Style="{StaticResource ModernButtonStyle}"/>
+                                Style="{StaticResource PremiumButtonStyle}"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -218,6 +225,13 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
+
+# === Fade-in animatie bij opstarten ===
+$fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+$fadeIn.From = 0
+$fadeIn.To = 1
+$fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
+$window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 
 # Circle animaties
 $Circle1 = $window.FindName("Circle1")
