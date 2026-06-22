@@ -14,9 +14,8 @@ Add-Type -AssemblyName System.Xaml
         Opacity="0">
 
     <Window.Resources>
-        <!-- Ronde knoppen met emoji links uitgelijnd -->
         <Style x:Key="RoundButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#145C2E"/>
+            <Setter Property="Background" Value="#0D3B24"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="46"/>
