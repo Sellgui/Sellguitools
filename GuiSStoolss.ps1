@@ -30,22 +30,32 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
             <!-- Achtergrond -->
             <Border Grid.Row="0" Grid.RowSpan="2" Background="#0A120F" CornerRadius="24"/>
 
-            <!-- === Decoratieve cirkels (zichtbaar) === -->
+            <!-- === Decoratieve Cirkels (met smooth animatie) === -->
             <Ellipse x:Name="Circle1" Grid.Row="0" Grid.RowSpan="2" Width="520" Height="520" 
-                     Fill="#166534" Opacity="0.08" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Fill="#166534" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Top" 
                      Margin="-180,-160,0,0"/>
             
             <Ellipse x:Name="Circle2" Grid.Row="0" Grid.RowSpan="2" Width="380" Height="380" 
-                     Fill="#4ADE80" Opacity="0.06" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                     Fill="#4ADE80" Opacity="0.055" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                      Margin="0,0,-120,-100"/>
             
             <Ellipse x:Name="Circle3" Grid.Row="0" Grid.RowSpan="2" Width="240" Height="240" 
-                     Fill="White" Opacity="0.035" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                     Fill="White" Opacity="0.03" HorizontalAlignment="Center" VerticalAlignment="Top" 
                      Margin="0,60,0,0"/>
             
             <Ellipse x:Name="Circle4" Grid.Row="0" Grid.RowSpan="2" Width="180" Height="180" 
                      Fill="White" Opacity="0.025" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                      Margin="40,0,0,40"/>
+
+            <!-- === Statische Strepen (groen + wit) === -->
+            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="2" Fill="#4ADE80" Opacity="0.04" 
+                       VerticalAlignment="Top" Margin="0,120,0,0"/>
+            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="1" Fill="#166534" Opacity="0.06" 
+                       VerticalAlignment="Top" Margin="0,280,0,0"/>
+            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="2" Fill="White" Opacity="0.025" 
+                       VerticalAlignment="Bottom" Margin="0,0,0,180"/>
+            <Rectangle Grid.Row="0" Grid.RowSpan="2" Height="1" Fill="#4ADE80" Opacity="0.035" 
+                       VerticalAlignment="Bottom" Margin="0,0,0,320"/>
 
             <!-- Top Bar -->
             <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
@@ -151,7 +161,7 @@ $zipPath = Join-Path $env:USERPROFILE "Downloads\Gui-SS-Tools.zip"
 $reader = New-Object System.Xml.XmlNodeReader $xaml
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
-# === Animaties voor de cirkels ===
+# === Smooth Animaties voor de cirkels ===
 $Circle1 = $window.FindName("Circle1")
 $Circle2 = $window.FindName("Circle2")
 $Circle3 = $window.FindName("Circle3")
@@ -168,10 +178,11 @@ function Start-CircleAnimation {
     $Ellipse.BeginAnimation([System.Windows.UIElement]::OpacityProperty, $animation)
 }
 
-Start-CircleAnimation -Ellipse $Circle1 -FromOpacity 0.05 -ToOpacity 0.12 -DurationMs 4200
-Start-CircleAnimation -Ellipse $Circle2 -FromOpacity 0.04 -ToOpacity 0.10 -DurationMs 3600
-Start-CircleAnimation -Ellipse $Circle3 -FromOpacity 0.025 -ToOpacity 0.06 -DurationMs 4800
-Start-CircleAnimation -Ellipse $Circle4 -FromOpacity 0.02 -ToOpacity 0.05 -DurationMs 3900
+# Langzamere, smoothere animaties
+Start-CircleAnimation -Ellipse $Circle1 -FromOpacity 0.05 -ToOpacity 0.11 -DurationMs 6200
+Start-CircleAnimation -Ellipse $Circle2 -FromOpacity 0.04 -ToOpacity 0.09 -DurationMs 5400
+Start-CircleAnimation -Ellipse $Circle3 -FromOpacity 0.025 -ToOpacity 0.055 -DurationMs 6800
+Start-CircleAnimation -Ellipse $Circle4 -FromOpacity 0.02 -ToOpacity 0.05 -DurationMs 5900
 
 $CloseButton      = $window.FindName("CloseButton")
 $MinButton        = $window.FindName("MinButton")
