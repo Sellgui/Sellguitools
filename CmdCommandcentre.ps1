@@ -13,25 +13,6 @@ Add-Type -AssemblyName System.Xaml
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Opacity="0">
 
-    <Window.Resources>
-        <!-- Tesla-style groene scrollbar -->
-        <Style x:Key="TeslaScrollBar" TargetType="ScrollBar">
-            <Setter Property="Width" Value="8"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ScrollBar">
-                        <Track x:Name="PART_Track" IsDirectionReversed="True">
-                            <Track.Thumb>
-                                <Thumb Background="#166534" CornerRadius="4"/>
-                            </Track.Thumb>
-                        </Track>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
@@ -91,11 +72,10 @@ Add-Type -AssemblyName System.Xaml
 
                 <!-- Left: Commands -->
                 <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#1A2E24" BorderThickness="1" Padding="12">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{StaticResource TeslaScrollBar}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
 
-                            <!-- Knoppen met achtergrondkleur (cleaner look) -->
                             <Button Content="Open Prefetch Folder" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button Content="Start AnyDesk" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
                             <Button Content="Quick Macro Scan" Height="46" Background="#0B1118" Foreground="White" FontSize="14" Margin="0,0,0,4" BorderThickness="0" Cursor="Hand"/>
