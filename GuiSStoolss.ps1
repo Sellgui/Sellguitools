@@ -11,8 +11,8 @@ $downloads = Join-Path $userDir "Downloads"
 $zipPath   = Join-Path $downloads "Guiss-Tools.zip"
 $destPath  = Join-Path $downloads "Guiss-Tools"
 
-# === BELANGRIJK: Nieuwe URL voor v4.0 ===
-$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/Gui-SS-Tools.zip"
+# === CORRECTE URL (v4.0) ===
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/Guiss-Tools-v4.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -61,6 +61,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
+                <!-- Alle cirkels en vormen (zelfde als voorheen) -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -263,13 +264,14 @@ Start-PulseAnimation $s2 5500 1.05
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
+$ActivityBox = $window.FindName("ActivityBox")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# ====================== INSTALL (met v4.0 URL) ======================
+# ====================== INSTALL (met correcte URL) ======================
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
 
@@ -306,7 +308,6 @@ $window.FindName("InstallButton").Add_Click({
     }
     catch {
         $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
-        $ActivityBox.AppendText("[Tip] Controleer of de GitHub release (v4.0) correct is gepubliceerd.`n")
     }
 })
 
