@@ -52,7 +52,6 @@ Add-Type -AssemblyName System.Xaml
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <!-- Decorative circles -->
                 <Ellipse Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -188,7 +187,7 @@ try {
         $window.Close()
     })
 
-    # ====================== CMD COMMANDS (dit is de juiste manier) ======================
+    # ====================== OUDE WERKende CMD COMMANDS ======================
     $window.FindName("BtnAnydesk").Add_Click({
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Anydesk.ps1 | iex"
     })
