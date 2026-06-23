@@ -11,7 +11,8 @@ $downloads = Join-Path $userDir "Downloads"
 $zipPath   = Join-Path $downloads "Guiss-Tools.zip"
 $destPath  = Join-Path $downloads "Guiss-Tools"
 
-$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Gui-SS-Tools.zip"
+# === BELANGRIJK: Nieuwe URL voor v4.0 ===
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/Gui-SS-Tools.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -262,15 +263,16 @@ Start-PulseAnimation $s2 5500 1.05
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
-$ActivityBox = $window.FindName("ActivityBox")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
+# ====================== INSTALL (met v4.0 URL) ======================
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
+
     try {
         $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
         $principal = New-Object Security.Principal.WindowsPrincipal($identity)
@@ -278,12 +280,16 @@ $window.FindName("InstallButton").Add_Click({
             $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
             return
         }
-        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
+
+        $ActivityBox.AppendText("[Install] Bezig met downloaden van GitHub (v4.0)...`n")
         $ProgressPreference = 'SilentlyContinue'
+
         Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
 
         $zipFile = Get-Item $zipPath
-        if ($zipFile.Length -lt 50000) { throw "Download mislukt (bestand te klein)." }
+        if ($zipFile.Length -lt 50000) {
+            throw "Download mislukt. Bestand is te klein of corrupt."
+        }
 
         $ActivityBox.AppendText("[Install] Download succesvol!`n")
 
@@ -296,12 +302,15 @@ $window.FindName("InstallButton").Add_Click({
         $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
 
         Start-Process $destPath
+
     }
     catch {
         $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
+        $ActivityBox.AppendText("[Tip] Controleer of de GitHub release (v4.0) correct is gepubliceerd.`n")
     }
 })
 
+# ====================== REMOVE ======================
 $window.FindName("RemoveButton").Add_Click({
     if (Test-Path $destPath) {
         Remove-Item $destPath -Recurse -Force
@@ -311,6 +320,7 @@ $window.FindName("RemoveButton").Add_Click({
     }
 })
 
+# ====================== OPEN FOLDER ======================
 $window.FindName("OpenFolderButton").Add_Click({
     if (Test-Path $destPath) {
         Start-Process $destPath
@@ -319,6 +329,7 @@ $window.FindName("OpenFolderButton").Add_Click({
     }
 })
 
+# ====================== CMD COMMANDS ======================
 $window.FindName("OpenCmdButton").Add_Click({
     Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
 })
