@@ -167,17 +167,136 @@ try {
     $reader = New-Object System.Xml.XmlNodeReader $xaml
     $window = [Windows.Markup.XamlReader]::Load($reader)
 
-    # Forceer zichtbaarheid
     $window.Opacity = 1
     $window.Visibility = "Visible"
 
     $LogoBorder = $window.FindName("LogoBorder")
     $ActivityBox = $window.FindName("ActivityBox")
 
-    $window.Add_Loaded({
-        $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
-        $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
-        $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+    # ====================== SNELLERE CIRKEL ANIMATIES ======================
+    $c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
+    $c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
+    $c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
+    $c7 = $window.FindName("Circle7"); $c8 = $window.FindName("Circle8")
+    $c9 = $window.FindName("Circle9"); $c10 = $window.FindName("Circle10")
+    $c11 = $window.FindName("Circle11")
+
+    function Start-PulseAnimation($element, $durationMs, $scaleTo) {
+        $scale = New-Object System.Windows.Media.ScaleTransform
+        $element.RenderTransform = $scale
+        $element.RenderTransformOrigin = "0.5,0.5"
+
+        $sb = New-Object System.Windows.Media.Animation.Storyboard
+        $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+        $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+        $animY = $animX.Clone()
+
+        [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
+        [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+        [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+        [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+
+        $sb.Children.Add($animX)
+        $sb.Children.Add($animY)
+        $sb.Begin()
+    }
+
+    function Start-FloatAnimation($element, $durationMs, $distance) {
+        $translate = New-Object System.Windows.Media.TranslateTransform
+        $element.RenderTransform = $translate
+        $sb = New-Object System.Windows.Media.Animation.Storyboard
+        $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $animY.From = 0; $animY.To = $distance; $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+        $animY.AutoReverse = $true; $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+        [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+        [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
+        $sb.Children.Add($animY)
+        $sb.Begin()
+    }
+
+    # Snellere animaties (kortere duur)
+    Start-PulseAnimation $c1 3200 1.07
+    Start-PulseAnimation $c2 2800 1.09
+    Start-PulseAnimation $c3 2400 1.11
+    Start-PulseAnimation $c4 3500 1.06
+    Start-PulseAnimation $c5 2100 1.13
+    Start-PulseAnimation $c6 2900 1.08
+    Start-PulseAnimation $c7 3100 1.07
+    Start-PulseAnimation $c8 2500 1.10
+    Start-FloatAnimation $c9 4200 22
+    Start-FloatAnimation $c10 4800 -26
+    Start-FloatAnimation $c11 3900 18
+
+    # ====================== NOTIFICATIE POPUP (v4.0) ======================
+    function Show-v4UpdateNotification {
+        [xml]$notifXaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Update v4.0" Width="680" Height="420"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+
+    <Border Background="#0A120F" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="24">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
+
+        <Grid>
+            <Canvas Panel.ZIndex="-1">
+                <Ellipse Width="180" Height="180" Fill="#052E16" Opacity="0.25" Canvas.Left="-30" Canvas.Top="-20"/>
+                <Ellipse Width="120" Height="120" Fill="#166534" Opacity="0.20" Canvas.Right="-20" Canvas.Bottom="-15"/>
+                <Ellipse Width="90" Height="90" Fill="#4ADE80" Opacity="0.15" Canvas.Left="520" Canvas.Top="60"/>
+            </Canvas>
+
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <Border Width="48" Height="48" CornerRadius="12" Background="#0F2A1F" BorderBrush="#2A4738" BorderThickness="1.5">
+                        <TextBlock Text="⬆" FontSize="24" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Margin="14,0,0,0">
+                        <TextBlock Text="Update v4.0 is beschikbaar!" FontSize="22" FontWeight="SemiBold" Foreground="White"/>
+                        <TextBlock Text="Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Border Background="#0F1A16" CornerRadius="14" BorderBrush="#2A4738" BorderThickness="1" Padding="18">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap" Foreground="#D1E8D9" FontSize="14" LineHeight="20">
+Nieuwe tools toegevoegd in deze update:
+
+• MeowClientFucker
+• MeowDoomsdayFucker  
+• MeowNovowareFucker
+• JournalTrace
+
+Druk op "Install / Update Tools" om alles bij te werken.
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <Button x:Name="CloseNotifButton" Content="Got it!" Width="140" Height="42" 
+                        Background="#166534" Foreground="White" FontWeight="SemiBold"
+                        BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
+"@
+
+        $notifReader = New-Object System.Xml.XmlNodeReader $notifXaml
+        $notif = [Windows.Markup.XamlReader]::Load($notifReader)
+        $notif.Owner = $window
+
+        $notif.FindName("CloseNotifButton").Add_Click({ $notif.Close() })
+
+        $notif.ShowDialog() | Out-Null
+    }
+
+    # Toon notificatie na openen
+    $window.Add_ContentRendered({
+        Start-Sleep -Milliseconds 600
+        Show-v4UpdateNotification
     })
 
     $CloseButton = $window.FindName("CloseButton")
@@ -187,7 +306,6 @@ try {
     $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
     $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 
-    # Fade-out bij sluiten
     $CloseButton.Add_Click({
         $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
         $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
@@ -273,6 +391,6 @@ try {
     $window.ShowDialog() | Out-Null
 
 } catch {
-    Write-Host "Er is een fout opgetreden: $($_.Exception.Message)" -ForegroundColor Red
-    Read-Host "Druk op Enter om af te sluiten..."
+    Write-Host "Fout: $($_.Exception.Message)" -ForegroundColor Red
+    Read-Host
 }
