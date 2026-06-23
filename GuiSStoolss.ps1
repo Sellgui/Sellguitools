@@ -22,7 +22,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
         Opacity="0">
 
     <Window.Resources>
-        <!-- GEUPGRADEDE BUTTON STYLE (stabiel) -->
+        <!-- SIMPELE & STABIELE BUTTON STYLE -->
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#0F2A1F"/>
             <Setter Property="Foreground" Value="White"/>
@@ -35,11 +35,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border" CornerRadius="14" 
-                                Background="{TemplateBinding Background}">
-                            <Border.Effect>
-                                <DropShadowEffect x:Name="Shadow" BlurRadius="12" ShadowDepth="0" Opacity="0.3"/>
-                            </Border.Effect>
+                        <Border x:Name="Border" CornerRadius="14" Background="{TemplateBinding Background}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -49,14 +45,12 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
                                 <ContentPresenter Grid.Column="1" VerticalAlignment="Center" Margin="0,0,14,0"/>
                             </Grid>
                         </Border>
-                        
                         <ControlTemplate.Triggers>
-                            <!-- Hover effect: Groter + Glow + Kleur -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#1E7A3E"/>
-                                <Setter TargetName="Shadow" Property="BlurRadius" Value="22"/>
-                                <Setter TargetName="Shadow" Property="Opacity" Value="0.6"/>
-                                <Setter TargetName="Shadow" Property="Color" Value="#22D3EE"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#145C2E"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -72,7 +66,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <!-- Decorative circles -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -181,8 +174,8 @@ try {
     $window = [Windows.Markup.XamlReader]::Load($reader)
 }
 catch {
-    Write-Host "FOUT bij laden van de GUI:" $_.Exception.Message -ForegroundColor Red
-    Read-Host "Druk op Enter om af te sluiten..."
+    Write-Host "FOUT bij laden GUI: $($_.Exception.Message)" -ForegroundColor Red
+    Read-Host
     exit
 }
 
@@ -207,7 +200,7 @@ $window.Add_Loaded({
     $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
 })
 
-# ====================== ANIMATIES (cirkels) ======================
+# ====================== ANIMATIES ======================
 $c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
 $c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
 $c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
