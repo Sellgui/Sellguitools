@@ -185,37 +185,37 @@ try {
         $window.Close()
     })
 
-    # ====================== CMD COMMANDS (zichtbaar venster) ======================
+    # ====================== STABIELE CMD COMMANDS (zichtbaar zwart venster) ======================
     $window.FindName("BtnAnydesk").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Anydesk.ps1 | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Anydesk.ps1 | iex"
     })
 
     $window.FindName("BtnCyemer").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Cyemer.ps1 | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Cyemer.ps1 | iex"
     })
 
     $window.FindName("BtnDqrkis").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Dqrkis.ps1 | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Dqrkis.ps1 | iex"
     })
 
     $window.FindName("BtnGhostFinder").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Ghostclientfinder.ps1 | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Ghostclientfinder.ps1 | iex"
     })
 
     $window.FindName("BtnInjector").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Injector.ps1 | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Injector.ps1 | iex"
     })
 
     $window.FindName("BtnMeow").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/MeowModAnalyzer.ps1 | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/MeowModAnalyzer.ps1 | iex"
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/PrimeMacro.ps1 | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/PrimeMacro.ps1 | iex"
     })
 
     $window.FindName("BtnQuickcheck").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://pastebin.com/raw/HGLwy7XA | iex`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://pastebin.com/raw/HGLwy7XA | iex"
     })
 
     # Map openen
@@ -225,7 +225,7 @@ try {
 
     # Nieuwe knop: Prefetch Bypass Finder
     $window.FindName("BtnPrefetchBypass").Add_Click({
-        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)`""
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
     })
 
     $window.ShowDialog() | Out-Null
