@@ -55,7 +55,6 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
         </Border.Effect>
 
         <Grid>
-            <!-- Decorative Circles -->
             <Canvas Panel.ZIndex="-1">
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
@@ -113,17 +112,17 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
                             <StackPanel>
                                 <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
                                 
-                                <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
-                                <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
-                                <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
-                                <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
-                                <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
-                                <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
-                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
-                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
-                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
-                                <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
-                                <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
+                                <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install" ToolTip="Installeer Anydesk"/>
+                                <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner" ToolTip="Scan op Cyemer client"/>
+                                <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER" ToolTip="Scan op DQRKIS client"/>
+                                <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder" ToolTip="Zoek ghost clients"/>
+                                <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector" ToolTip="Detecteer DLL injecties"/>
+                                <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer" ToolTip="Analyseer mods"/>
+                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData" ToolTip="Open AppData map"/>
+                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History" ToolTip="Bekijk PowerShell commando geschiedenis"/>
+                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch" ToolTip="Open Prefetch map (belangrijk!)"/>
+                                <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector" ToolTip="Detecteer muis macros"/>
+                                <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner" ToolTip="Snelcheck op verdachte dingen"/>
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
@@ -182,19 +181,32 @@ $MainBorder  = $window.FindName("MainBorder")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
-$CloseButton.Add_Click({ $window.Close() })
+
+# ====================== FADE-OUT BIJ SLUITEN ======================
+$CloseButton.Add_Click({
+    $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
+    Start-Sleep -Milliseconds 280
+    $window.Close()
+})
+
+# ====================== CLICK SOUND ======================
+function Play-ClickSound {
+    [System.Media.SystemSounds]::Asterisk.Play()
+}
 
 # ====================== BUTTON ACTIES ======================
-$window.FindName("BtnAnydesk").Add_Click({ Start-Process "$destPath\AnyDesk.exe" })
-$window.FindName("BtnCyemer").Add_Click({ Start-Process "$destPath\CyemerScanner.exe" })
-$window.FindName("BtnDqrkis").Add_Click({ Start-Process "$destPath\DQRKIS-FUCKER.exe" })
-$window.FindName("BtnGhostFinder").Add_Click({ Start-Process "$destPath\Ghostclientfinder.exe" })
-$window.FindName("BtnInjector").Add_Click({ Start-Process "$destPath\Injector Scanner.exe" })
-$window.FindName("BtnMeow").Add_Click({ Start-Process "$destPath\MeowModAnalyzer.exe" })
-$window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
-$window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
-$window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
-$window.FindName("BtnPrimeMacro").Add_Click({ Start-Process "$destPath\PrimeMacroDetector.exe" })
-$window.FindName("BtnQuickcheck").Add_Click({ Start-Process "$destPath\Quickcheck.exe" })
+$window.FindName("BtnAnydesk").Add_Click({ Play-ClickSound; Start-Process "$destPath\AnyDesk.exe" })
+$window.FindName("BtnCyemer").Add_Click({ Play-ClickSound; Start-Process "$destPath\CyemerScanner.exe" })
+$window.FindName("BtnDqrkis").Add_Click({ Play-ClickSound; Start-Process "$destPath\DQRKIS-FUCKER.exe" })
+$window.FindName("BtnGhostFinder").Add_Click({ Play-ClickSound; Start-Process "$destPath\Ghostclientfinder.exe" })
+$window.FindName("BtnInjector").Add_Click({ Play-ClickSound; Start-Process "$destPath\Injector Scanner.exe" })
+$window.FindName("BtnMeow").Add_Click({ Play-ClickSound; Start-Process "$destPath\MeowModAnalyzer.exe" })
+$window.FindName("BtnAppData").Add_Click({ Play-ClickSound; Start-Process $env:APPDATA })
+$window.FindName("BtnPowerShellHistory").Add_Click({ Play-ClickSound; Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
+$window.FindName("BtnPrefetch").Add_Click({ Play-ClickSound; Start-Process "$env:SystemRoot\Prefetch" })
+$window.FindName("BtnPrimeMacro").Add_Click({ Play-ClickSound; Start-Process "$destPath\PrimeMacroDetector.exe" })
+$window.FindName("BtnQuickcheck").Add_Click({ Play-ClickSound; Start-Process "$destPath\Quickcheck.exe" })
 
 $window.ShowDialog() | Out-Null
