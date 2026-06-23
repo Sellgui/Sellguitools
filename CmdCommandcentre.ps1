@@ -5,10 +5,6 @@ Add-Type -AssemblyName System.Xaml
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$userDir   = [Environment]::GetFolderPath("UserProfile")
-$downloads = Join-Path $userDir "Downloads"
-$destPath  = Join-Path $downloads "Guiss-Tools"
-
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -56,17 +52,15 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
-                <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
-                <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
-                <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
-                <Ellipse x:Name="Circle5" Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
-                <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
-                <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
-                <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
-                <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
-                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
-                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
+                <!-- Decorative circles -->
+                <Ellipse Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
+                <Ellipse Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
+                <Ellipse Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
+                <Ellipse Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
+                <Ellipse Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
+                <Ellipse Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
+                <Ellipse Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
+                <Ellipse Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
             </Canvas>
 
             <Grid>
@@ -194,24 +188,40 @@ try {
         $window.Close()
     })
 
-    # ====================== BUTTONS (veilige versie) ======================
-    function Start-Tool($exeName) {
-        $file = Join-Path $destPath $exeName
-        if (Test-Path $file) {
-            Start-Process $file
-        }
-    }
+    # ====================== CMD COMMANDS (dit is de juiste manier) ======================
+    $window.FindName("BtnAnydesk").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Anydesk.ps1 | iex"
+    })
 
-    $window.FindName("BtnAnydesk").Add_Click({ Start-Tool "AnyDesk.exe" })
-    $window.FindName("BtnCyemer").Add_Click({ Start-Tool "CyemerScanner.exe" })
-    $window.FindName("BtnDqrkis").Add_Click({ Start-Tool "DQRKIS-FUCKER.exe" })
-    $window.FindName("BtnGhostFinder").Add_Click({ Start-Tool "Ghostclientfinder.exe" })
-    $window.FindName("BtnInjector").Add_Click({ Start-Tool "Injector Scanner.exe" })
-    $window.FindName("BtnMeow").Add_Click({ Start-Tool "MeowModAnalyzer.exe" })
-    $window.FindName("BtnPrimeMacro").Add_Click({ Start-Tool "PrimeMacroDetector.exe" })
-    $window.FindName("BtnQuickcheck").Add_Click({ Start-Tool "Quickcheck.exe" })
+    $window.FindName("BtnCyemer").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Cyemer.ps1 | iex"
+    })
 
-    # Map openen (altijd veilig)
+    $window.FindName("BtnDqrkis").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Dqrkis.ps1 | iex"
+    })
+
+    $window.FindName("BtnGhostFinder").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Ghostclientfinder.ps1 | iex"
+    })
+
+    $window.FindName("BtnInjector").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Injector.ps1 | iex"
+    })
+
+    $window.FindName("BtnMeow").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/MeowModAnalyzer.ps1 | iex"
+    })
+
+    $window.FindName("BtnPrimeMacro").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/PrimeMacro.ps1 | iex"
+    })
+
+    $window.FindName("BtnQuickcheck").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://pastebin.com/raw/HGLwy7XA | iex"
+    })
+
+    # Map openen
     $window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
     $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
     $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
