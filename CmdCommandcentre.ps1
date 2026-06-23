@@ -185,37 +185,37 @@ try {
         $window.Close()
     })
 
-    # ====================== FIX: Direct via PowerShell (werkt betrouwbaar) ======================
+    # ====================== FIX: Zwart CMD venster + werkend command ======================
     $window.FindName("BtnDqrkis").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex`""
     })
 
     $window.FindName("BtnGhostFinder").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' | iex`""
     })
 
     $window.FindName("BtnInjector").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' | iex`""
     })
 
     $window.FindName("BtnMeow").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex`""
     })
 
     $window.FindName("BtnShadowClicker").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/ShadowClicker/refs/heads/main/ShadowClicker.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/MeowTonynoh/ShadowClicker/refs/heads/main/ShadowClicker.ps1' | iex`""
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1' | iex`""
     })
 
     $window.FindName("BtnQuickcheck").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)`""
     })
 
     $window.FindName("BtnPrefetchBypass").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
+        Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)`""
     })
 
     # Map openen
