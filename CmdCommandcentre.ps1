@@ -52,14 +52,18 @@ Add-Type -AssemblyName System.Xaml
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <Ellipse Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
-                <Ellipse Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
-                <Ellipse Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
-                <Ellipse Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
-                <Ellipse Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
-                <Ellipse Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
-                <Ellipse Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
-                <Ellipse Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
+                <!-- Decorative Circles -->
+                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
+                <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
+                <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
+                <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
+                <Ellipse x:Name="Circle5" Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
+                <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
+                <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
+                <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
+                <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
+                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
+                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
             </Canvas>
 
             <Grid>
@@ -171,6 +175,61 @@ try {
     $window.Opacity = 1
     $window.Visibility = "Visible"
 
+    # ====================== ANIMATIES VOOR CIRKELS ======================
+    $c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
+    $c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
+    $c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
+    $c7 = $window.FindName("Circle7"); $c8 = $window.FindName("Circle8")
+    $c9 = $window.FindName("Circle9"); $c10 = $window.FindName("Circle10")
+    $c11 = $window.FindName("Circle11")
+
+    function Start-PulseAnimation($element, $durationMs, $scaleTo) {
+        $scale = New-Object System.Windows.Media.ScaleTransform
+        $element.RenderTransform = $scale
+        $element.RenderTransformOrigin = "0.5,0.5"
+
+        $sb = New-Object System.Windows.Media.Animation.Storyboard
+        $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+        $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+        $animY = $animX.Clone()
+
+        [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
+        [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+        [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+        [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+
+        $sb.Children.Add($animX)
+        $sb.Children.Add($animY)
+        $sb.Begin()
+    }
+
+    function Start-FloatAnimation($element, $durationMs, $distance) {
+        $translate = New-Object System.Windows.Media.TranslateTransform
+        $element.RenderTransform = $translate
+        $sb = New-Object System.Windows.Media.Animation.Storyboard
+        $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $animY.From = 0; $animY.To = $distance; $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+        $animY.AutoReverse = $true; $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+        [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+        [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
+        $sb.Children.Add($animY)
+        $sb.Begin()
+    }
+
+    # Start animations
+    Start-PulseAnimation $c1 5200 1.06
+    Start-PulseAnimation $c2 4100 1.08
+    Start-PulseAnimation $c3 3400 1.12
+    Start-PulseAnimation $c4 5800 1.05
+    Start-PulseAnimation $c5 2900 1.15
+    Start-PulseAnimation $c6 4500 1.07
+    Start-PulseAnimation $c7 4900 1.06
+    Start-PulseAnimation $c8 3600 1.11
+    Start-FloatAnimation $c9 6800 18
+    Start-FloatAnimation $c10 7500 -22
+    Start-FloatAnimation $c11 6200 14
+
     $CloseButton = $window.FindName("CloseButton")
     $MinButton   = $window.FindName("MinButton")
     $MainBorder  = $window.FindName("MainBorder")
@@ -186,33 +245,33 @@ try {
         $window.Close()
     })
 
-    # ====================== FIX: Direct via PowerShell (werkt) ======================
+    # ====================== BUTTONS ======================
     $window.FindName("BtnDqrkis").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex"
     })
 
     $window.FindName("BtnGhostFinder").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' | iex"
     })
 
     $window.FindName("BtnInjector").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' | iex"
     })
 
     $window.FindName("BtnMeow").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1' | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1' | iex"
     })
 
     $window.FindName("BtnQuickcheck").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
     })
 
     $window.FindName("BtnPrefetchBypass").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
     })
 
     # Map openen
