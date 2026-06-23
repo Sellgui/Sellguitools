@@ -215,7 +215,6 @@ try {
         $sb.Begin()
     }
 
-    # Snellere animaties (kortere duur)
     Start-PulseAnimation $c1 3200 1.07
     Start-PulseAnimation $c2 2800 1.09
     Start-PulseAnimation $c3 2400 1.11
@@ -228,56 +227,64 @@ try {
     Start-FloatAnimation $c10 4800 -26
     Start-FloatAnimation $c11 3900 18
 
-    # ====================== NOTIFICATIE POPUP (v4.0) ======================
+    # ====================== NIEUWE NOTIFICATIE (v4.0) ======================
     function Show-v4UpdateNotification {
         [xml]$notifXaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Update v4.0" Width="680" Height="420"
+        Title="Update v4.0" Width="720" Height="480"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
-    <Border Background="#0A120F" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="24">
+    <Border Background="#0A120F" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="28">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect BlurRadius="35" ShadowDepth="0" Opacity="0.55"/>
         </Border.Effect>
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <Ellipse Width="180" Height="180" Fill="#052E16" Opacity="0.25" Canvas.Left="-30" Canvas.Top="-20"/>
-                <Ellipse Width="120" Height="120" Fill="#166534" Opacity="0.20" Canvas.Right="-20" Canvas.Bottom="-15"/>
-                <Ellipse Width="90" Height="90" Fill="#4ADE80" Opacity="0.15" Canvas.Left="520" Canvas.Top="60"/>
+                <Ellipse Width="200" Height="200" Fill="#052E16" Opacity="0.22" Canvas.Left="-40" Canvas.Top="-30"/>
+                <Ellipse Width="140" Height="140" Fill="#166534" Opacity="0.18" Canvas.Right="-25" Canvas.Bottom="-20"/>
+                <Ellipse Width="100" Height="100" Fill="#4ADE80" Opacity="0.15" Canvas.Left="540" Canvas.Top="80"/>
             </Canvas>
 
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                    <Border Width="48" Height="48" CornerRadius="12" Background="#0F2A1F" BorderBrush="#2A4738" BorderThickness="1.5">
-                        <TextBlock Text="⬆" FontSize="24" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
+                    <Border Width="52" Height="52" CornerRadius="14" Background="#0F2A1F" BorderBrush="#2A4738" BorderThickness="1.5">
+                        <TextBlock Text="⬆" FontSize="26" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
-                    <StackPanel Margin="14,0,0,0">
-                        <TextBlock Text="Update v4.0 is beschikbaar!" FontSize="22" FontWeight="SemiBold" Foreground="White"/>
-                        <TextBlock Text="Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,0"/>
+                    <StackPanel Margin="16,0,0,0">
+                        <TextBlock Text="Update v4.0 is beschikbaar!" FontSize="24" FontWeight="SemiBold" Foreground="White"/>
+                        <TextBlock Text="Guiss Tools" FontSize="14" Foreground="#7E92A6" Margin="0,4,0,0"/>
                     </StackPanel>
                 </StackPanel>
 
-                <Border Background="#0F1A16" CornerRadius="14" BorderBrush="#2A4738" BorderThickness="1" Padding="18">
+                <!-- Main Text -->
+                <Border Background="#0F1A16" CornerRadius="14" BorderBrush="#2A4738" BorderThickness="1" Padding="20" Margin="0,0,0,20">
                     <StackPanel>
-                        <TextBlock TextWrapping="Wrap" Foreground="#D1E8D9" FontSize="14" LineHeight="20">
-Nieuwe tools toegevoegd in deze update:
-
-• MeowClientFucker
-• MeowDoomsdayFucker  
-• MeowNovowareFucker
-• JournalTrace
-
-Druk op "Install / Update Tools" om alles bij te werken.
-                        </TextBlock>
+                        <TextBlock Text="What's new in v4.0:" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,10"/>
+                        
+                        <TextBlock Text="• MeowClientFucker" FontSize="14" Foreground="#D1E8D9" Margin="0,3,0,0"/>
+                        <TextBlock Text="• MeowDoomsdayFucker" FontSize="14" Foreground="#D1E8D9" Margin="0,3,0,0"/>
+                        <TextBlock Text="• MeowNovowareFucker" FontSize="14" Foreground="#D1E8D9" Margin="0,3,0,0"/>
+                        <TextBlock Text="• JournalTrace" FontSize="14" Foreground="#D1E8D9" Margin="0,3,0,0"/>
+                        
+                        <TextBlock Text="" FontSize="8"/>
+                        
+                        <TextBlock Text="These tools are meant for forensic and security analysis purposes only." FontSize="13" Foreground="#A0B8C8" Margin="0,8,0,0"/>
+                        <TextBlock Text="By using these tools, you acknowledge that any damage or issues caused to any PC is at your own risk." FontSize="13" Foreground="#A0B8C8" Margin="0,4,0,0"/>
+                        
+                        <TextBlock Text="" FontSize="8"/>
+                        
+                        <TextBlock Text="For issues or questions, contact: SellguiSS on Discord" FontSize="13" Foreground="#7E92A6" Margin="0,6,0,0"/>
                     </StackPanel>
                 </Border>
 
-                <Button x:Name="CloseNotifButton" Content="Got it!" Width="140" Height="42" 
-                        Background="#166534" Foreground="White" FontWeight="SemiBold"
-                        BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" Margin="0,20,0,0"/>
+                <!-- Button at the bottom -->
+                <Button x:Name="CloseNotifButton" Content="Got it" Width="160" Height="44" 
+                        Background="#166534" Foreground="White" FontWeight="SemiBold" FontSize="15"
+                        BorderThickness="0" Cursor="Hand" HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
     </Border>
@@ -295,7 +302,7 @@ Druk op "Install / Update Tools" om alles bij te werken.
 
     # Toon notificatie na openen
     $window.Add_ContentRendered({
-        Start-Sleep -Milliseconds 600
+        Start-Sleep -Milliseconds 700
         Show-v4UpdateNotification
     })
 
@@ -330,31 +337,31 @@ Druk op "Install / Update Tools" om alles bij te werken.
         $InstallButton.Content = "Installing..."
         $InstallButton.IsEnabled = $false
 
-        $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
+        $ActivityBox.AppendText("`n[Install] Installation started...`n")
 
         try {
             $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
             $principal = New-Object Security.Principal.WindowsPrincipal($identity)
             if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-                $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
+                $ActivityBox.AppendText("[Error] Please run this script as Administrator!`n")
                 $InstallButton.Content = $originalContent
                 $InstallButton.IsEnabled = $true
                 return
             }
 
-            $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
+            $ActivityBox.AppendText("[Install] Downloading from GitHub...`n")
             $ProgressPreference = 'SilentlyContinue'
             Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
 
             $zipFile = Get-Item $zipPath
-            if ($zipFile.Length -lt 50000) { throw "Download mislukt." }
+            if ($zipFile.Length -lt 50000) { throw "Download failed." }
 
-            $ActivityBox.AppendText("[Install] Download succesvol!`n")
+            $ActivityBox.AppendText("[Install] Download successful!`n")
 
             if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue }
             Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
 
-            $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
+            $ActivityBox.AppendText("[Install] Extraction completed!`n")
             Start-Process $destPath
 
         }
@@ -370,9 +377,9 @@ Druk op "Install / Update Tools" om alles bij te werken.
     $window.FindName("RemoveButton").Add_Click({
         if (Test-Path $destPath) {
             Remove-Item $destPath -Recurse -Force
-            $ActivityBox.AppendText("`n[Remove] Tools verwijderd.`n")
+            $ActivityBox.AppendText("`n[Remove] Tools have been removed.`n")
         } else {
-            $ActivityBox.AppendText("`n[Remove] Geen installatie gevonden.`n")
+            $ActivityBox.AppendText("`n[Remove] No installation found.`n")
         }
     })
 
@@ -380,7 +387,7 @@ Druk op "Install / Update Tools" om alles bij te werken.
         if (Test-Path $destPath) {
             Start-Process $destPath
         } else {
-            $ActivityBox.AppendText("`n[Error] Map niet gevonden.`n")
+            $ActivityBox.AppendText("`n[Error] Folder not found.`n")
         }
     })
 
@@ -391,6 +398,6 @@ Druk op "Install / Update Tools" om alles bij te werken.
     $window.ShowDialog() | Out-Null
 
 } catch {
-    Write-Host "Fout: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Red
     Read-Host
 }
