@@ -9,13 +9,14 @@ $userDir   = [Environment]::GetFolderPath("UserProfile")
 $downloads = Join-Path $userDir "Downloads"
 $destPath  = Join-Path $downloads "Guiss-Tools"
 
-[xml]$xaml = @"
+try {
+    [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Guiss Command Center" Width="1320" Height="830"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Opacity="0">
+        Opacity="1">
 
     <Window.Resources>
         <Style x:Key="RoundButtonStyle" TargetType="Button">
@@ -75,7 +76,6 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Top Bar -->
                 <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0" BorderBrush="#162232" BorderThickness="0,0,0,1">
                     <Grid Margin="20,0,20,0">
                         <Grid.ColumnDefinitions>
@@ -106,7 +106,6 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Left: Commands -->
                     <Border Grid.Column="0" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
@@ -127,7 +126,6 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
                         </ScrollViewer>
                     </Border>
 
-                    <!-- Right: Dashboard -->
                     <Grid Grid.Column="2">
                         <StackPanel>
                             <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
@@ -172,41 +170,47 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
 </Window>
 "@
 
-$reader = New-Object System.Xml.XmlNodeReader $xaml
-$window = [Windows.Markup.XamlReader]::Load($reader)
+    $reader = New-Object System.Xml.XmlNodeReader $xaml
+    $window = [Windows.Markup.XamlReader]::Load($reader)
 
-$CloseButton = $window.FindName("CloseButton")
-$MinButton   = $window.FindName("MinButton")
-$MainBorder  = $window.FindName("MainBorder")
+    # Forceer zichtbaarheid (belangrijk voor iex)
+    $window.Opacity = 1
+    $window.Visibility = "Visible"
 
-$MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
-$MinButton.Add_Click({ $window.WindowState = "Minimized" })
+    $CloseButton = $window.FindName("CloseButton")
+    $MinButton   = $window.FindName("MinButton")
+    $MainBorder  = $window.FindName("MainBorder")
 
-# ====================== FADE-OUT BIJ SLUITEN ======================
-$CloseButton.Add_Click({
-    $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
-    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
-    Start-Sleep -Milliseconds 280
-    $window.Close()
-})
+    $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
+    $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 
-# ====================== CLICK SOUND ======================
-function Play-ClickSound {
-    [System.Media.SystemSounds]::Asterisk.Play()
+    $CloseButton.Add_Click({
+        $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
+        $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
+        Start-Sleep -Milliseconds 280
+        $window.Close()
+    })
+
+    function Play-ClickSound {
+        [System.Media.SystemSounds]::Asterisk.Play()
+    }
+
+    $window.FindName("BtnAnydesk").Add_Click({ Play-ClickSound; Start-Process "$destPath\AnyDesk.exe" })
+    $window.FindName("BtnCyemer").Add_Click({ Play-ClickSound; Start-Process "$destPath\CyemerScanner.exe" })
+    $window.FindName("BtnDqrkis").Add_Click({ Play-ClickSound; Start-Process "$destPath\DQRKIS-FUCKER.exe" })
+    $window.FindName("BtnGhostFinder").Add_Click({ Play-ClickSound; Start-Process "$destPath\Ghostclientfinder.exe" })
+    $window.FindName("BtnInjector").Add_Click({ Play-ClickSound; Start-Process "$destPath\Injector Scanner.exe" })
+    $window.FindName("BtnMeow").Add_Click({ Play-ClickSound; Start-Process "$destPath\MeowModAnalyzer.exe" })
+    $window.FindName("BtnAppData").Add_Click({ Play-ClickSound; Start-Process $env:APPDATA })
+    $window.FindName("BtnPowerShellHistory").Add_Click({ Play-ClickSound; Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
+    $window.FindName("BtnPrefetch").Add_Click({ Play-ClickSound; Start-Process "$env:SystemRoot\Prefetch" })
+    $window.FindName("BtnPrimeMacro").Add_Click({ Play-ClickSound; Start-Process "$destPath\PrimeMacroDetector.exe" })
+    $window.FindName("BtnQuickcheck").Add_Click({ Play-ClickSound; Start-Process "$destPath\Quickcheck.exe" })
+
+    $window.ShowDialog() | Out-Null
+
+} catch {
+    Write-Host "Er is een fout opgetreden: $($_.Exception.Message)" -ForegroundColor Red
+    Read-Host "Druk op Enter om af te sluiten..."
 }
-
-# ====================== BUTTON ACTIES ======================
-$window.FindName("BtnAnydesk").Add_Click({ Play-ClickSound; Start-Process "$destPath\AnyDesk.exe" })
-$window.FindName("BtnCyemer").Add_Click({ Play-ClickSound; Start-Process "$destPath\CyemerScanner.exe" })
-$window.FindName("BtnDqrkis").Add_Click({ Play-ClickSound; Start-Process "$destPath\DQRKIS-FUCKER.exe" })
-$window.FindName("BtnGhostFinder").Add_Click({ Play-ClickSound; Start-Process "$destPath\Ghostclientfinder.exe" })
-$window.FindName("BtnInjector").Add_Click({ Play-ClickSound; Start-Process "$destPath\Injector Scanner.exe" })
-$window.FindName("BtnMeow").Add_Click({ Play-ClickSound; Start-Process "$destPath\MeowModAnalyzer.exe" })
-$window.FindName("BtnAppData").Add_Click({ Play-ClickSound; Start-Process $env:APPDATA })
-$window.FindName("BtnPowerShellHistory").Add_Click({ Play-ClickSound; Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
-$window.FindName("BtnPrefetch").Add_Click({ Play-ClickSound; Start-Process "$env:SystemRoot\Prefetch" })
-$window.FindName("BtnPrimeMacro").Add_Click({ Play-ClickSound; Start-Process "$destPath\PrimeMacroDetector.exe" })
-$window.FindName("BtnQuickcheck").Add_Click({ Play-ClickSound; Start-Process "$destPath\Quickcheck.exe" })
-
-$window.ShowDialog() | Out-Null
