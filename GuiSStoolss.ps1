@@ -204,15 +204,10 @@ try {
         $window.Close()
     })
 
-    function Play-ClickSound {
-        [System.Media.SystemSounds]::Asterisk.Play()
-    }
-
     # ====================== INSTALL ======================
     $InstallButton = $window.FindName("InstallButton")
 
     $InstallButton.Add_Click({
-        Play-ClickSound
         $originalContent = $InstallButton.Content
         $InstallButton.Content = "Installing..."
         $InstallButton.IsEnabled = $false
@@ -254,9 +249,26 @@ try {
         }
     })
 
-    $window.FindName("RemoveButton").Add_Click({ Play-ClickSound; ... })
-    $window.FindName("OpenFolderButton").Add_Click({ Play-ClickSound; ... })
-    $window.FindName("OpenCmdButton").Add_Click({ Play-ClickSound; ... })
+    $window.FindName("RemoveButton").Add_Click({
+        if (Test-Path $destPath) {
+            Remove-Item $destPath -Recurse -Force
+            $ActivityBox.AppendText("`n[Remove] Tools verwijderd.`n")
+        } else {
+            $ActivityBox.AppendText("`n[Remove] Geen installatie gevonden.`n")
+        }
+    })
+
+    $window.FindName("OpenFolderButton").Add_Click({
+        if (Test-Path $destPath) {
+            Start-Process $destPath
+        } else {
+            $ActivityBox.AppendText("`n[Error] Map niet gevonden.`n")
+        }
+    })
+
+    $window.FindName("OpenCmdButton").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
+    })
 
     $window.ShowDialog() | Out-Null
 
