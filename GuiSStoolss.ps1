@@ -22,7 +22,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
         Opacity="0">
 
     <Window.Resources>
-        <!-- SIMPELE & STABIELE BUTTON STYLE -->
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#0F2A1F"/>
             <Setter Property="Foreground" Value="White"/>
@@ -36,18 +35,13 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Border" CornerRadius="14" Background="{TemplateBinding Background}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{TemplateBinding Tag}" FontSize="18" Margin="14,0,8,0" VerticalAlignment="Center"/>
-                                <ContentPresenter Grid.Column="1" VerticalAlignment="Center" Margin="0,0,14,0"/>
-                            </Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#1E7A3E"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#22D3EE"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#145C2E"/>
@@ -66,6 +60,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
+                <!-- Decorative circles -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -155,11 +150,11 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
                             <TextBlock Text="Control Center" FontSize="18" FontWeight="SemiBold" Foreground="#4ADE80"/>
                             <TextBlock Text="Manage your Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,20"/>
 
-                            <Button x:Name="InstallButton" Tag="⬇" Content="Install / Update Tools"   Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="RemoveButton"  Tag="🗑" Content="Remove Installed Tools"   Background="#3F1F1F" Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="OpenFolderButton" Tag="📁" Content="Open Install Folder"      Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="OpenCmdButton"    Tag="💻" Content="CMD Commands"             Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="ExitButton"       Tag="✕" Content="Exit Launcher"            Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="InstallButton" Content="Install / Update Tools"   Style="{StaticResource MainButtonStyle}" ToolTip="Download en installeer de nieuwste tools"/>
+                            <Button x:Name="RemoveButton"  Content="Remove Installed Tools"   Background="#3F1F1F" Style="{StaticResource MainButtonStyle}" ToolTip="Verwijder alle geïnstalleerde tools"/>
+                            <Button x:Name="OpenFolderButton" Content="Open Install Folder"      Style="{StaticResource MainButtonStyle}" ToolTip="Open de map met tools"/>
+                            <Button x:Name="OpenCmdButton"    Content="CMD Commands"             Style="{StaticResource MainButtonStyle}" ToolTip="Open het Command Center"/>
+                            <Button x:Name="ExitButton"       Content="Exit Launcher"            Style="{StaticResource MainButtonStyle}" ToolTip="Sluit de launcher"/>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -169,15 +164,8 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
 </Window>
 "@
 
-try {
-    $reader = New-Object System.Xml.XmlNodeReader $xaml
-    $window = [Windows.Markup.XamlReader]::Load($reader)
-}
-catch {
-    Write-Host "FOUT bij laden GUI: $($_.Exception.Message)" -ForegroundColor Red
-    Read-Host
-    exit
-}
+$reader = New-Object System.Xml.XmlNodeReader $xaml
+$window = [Windows.Markup.XamlReader]::Load($reader)
 
 $LogoBorder = $window.FindName("LogoBorder")
 $ActivityBox = $window.FindName("ActivityBox")
@@ -261,13 +249,34 @@ $MainBorder  = $window.FindName("MainBorder")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
-$CloseButton.Add_Click({ $window.Close() })
-$window.FindName("ExitButton").Add_Click({ $window.Close() })
+
+# Fade-out bij sluiten
+$CloseButton.Add_Click({
+    $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
+    Start-Sleep -Milliseconds 280
+    $window.Close()
+})
+
+$window.FindName("ExitButton").Add_Click({
+    $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
+    Start-Sleep -Milliseconds 280
+    $window.Close()
+})
+
+# ====================== CLICK SOUND ======================
+function Play-ClickSound {
+    [System.Media.SystemSounds]::Asterisk.Play()
+}
 
 # ====================== INSTALL ======================
 $InstallButton = $window.FindName("InstallButton")
 
 $InstallButton.Add_Click({
+    Play-ClickSound
     $originalContent = $InstallButton.Content
     $InstallButton.Content = "Installing..."
     $InstallButton.IsEnabled = $false
@@ -309,25 +318,8 @@ $InstallButton.Add_Click({
     }
 })
 
-$window.FindName("RemoveButton").Add_Click({
-    if (Test-Path $destPath) {
-        Remove-Item $destPath -Recurse -Force
-        $ActivityBox.AppendText("`n[Remove] Tools verwijderd.`n")
-    } else {
-        $ActivityBox.AppendText("`n[Remove] Geen installatie gevonden.`n")
-    }
-})
-
-$window.FindName("OpenFolderButton").Add_Click({
-    if (Test-Path $destPath) {
-        Start-Process $destPath
-    } else {
-        $ActivityBox.AppendText("`n[Error] Map niet gevonden.`n")
-    }
-})
-
-$window.FindName("OpenCmdButton").Add_Click({
-    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
-})
+$window.FindName("RemoveButton").Add_Click({ Play-ClickSound; ... })
+$window.FindName("OpenFolderButton").Add_Click({ Play-ClickSound; ... })
+$window.FindName("OpenCmdButton").Add_Click({ Play-ClickSound; ... })
 
 $window.ShowDialog() | Out-Null
