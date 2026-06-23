@@ -105,6 +105,7 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Left: Commands -->
                     <Border Grid.Column="0" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
@@ -121,10 +122,12 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
                                 <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch" ToolTip="Open Prefetch map (belangrijk!)"/>
                                 <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector" ToolTip="Detecteer muis macros"/>
                                 <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner" ToolTip="Snelcheck op verdachte dingen"/>
+                                <Button x:Name="BtnPrefetchBypass" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prefetch Bypass Finder" ToolTip="Run Prefetch Bypass Finder"/>
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
 
+                    <!-- Right: Dashboard -->
                     <Grid Grid.Column="2">
                         <StackPanel>
                             <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
@@ -191,21 +194,27 @@ try {
         $window.Close()
     })
 
-    $window.FindName("BtnAnydesk").Add_Click({ Start-Process "$destPath\AnyDesk.exe" })
-    $window.FindName("BtnCyemer").Add_Click({ Start-Process "$destPath\CyemerScanner.exe" })
-    $window.FindName("BtnDqrkis").Add_Click({ Start-Process "$destPath\DQRKIS-FUCKER.exe" })
-    $window.FindName("BtnGhostFinder").Add_Click({ Start-Process "$destPath\Ghostclientfinder.exe" })
-    $window.FindName("BtnInjector").Add_Click({ Start-Process "$destPath\Injector Scanner.exe" })
-    $window.FindName("BtnMeow").Add_Click({ Start-Process "$destPath\MeowModAnalyzer.exe" })
+    # ====================== BUTTONS (met try/catch voor stabiliteit) ======================
+    $window.FindName("BtnAnydesk").Add_Click({ try { Start-Process "$destPath\AnyDesk.exe" } catch {} })
+    $window.FindName("BtnCyemer").Add_Click({ try { Start-Process "$destPath\CyemerScanner.exe" } catch {} })
+    $window.FindName("BtnDqrkis").Add_Click({ try { Start-Process "$destPath\DQRKIS-FUCKER.exe" } catch {} })
+    $window.FindName("BtnGhostFinder").Add_Click({ try { Start-Process "$destPath\Ghostclientfinder.exe" } catch {} })
+    $window.FindName("BtnInjector").Add_Click({ try { Start-Process "$destPath\Injector Scanner.exe" } catch {} })
+    $window.FindName("BtnMeow").Add_Click({ try { Start-Process "$destPath\MeowModAnalyzer.exe" } catch {} })
     $window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
     $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
     $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
-    $window.FindName("BtnPrimeMacro").Add_Click({ Start-Process "$destPath\PrimeMacroDetector.exe" })
-    $window.FindName("BtnQuickcheck").Add_Click({ Start-Process "$destPath\Quickcheck.exe" })
+    $window.FindName("BtnPrimeMacro").Add_Click({ try { Start-Process "$destPath\PrimeMacroDetector.exe" } catch {} })
+    $window.FindName("BtnQuickcheck").Add_Click({ try { Start-Process "$destPath\Quickcheck.exe" } catch {} })
+
+    # Nieuwe knop: Prefetch Bypass Finder
+    $window.FindName("BtnPrefetchBypass").Add_Click({
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
+    })
 
     $window.ShowDialog() | Out-Null
 
 } catch {
-    Write-Host "Fout: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Fout bij laden GUI: $($_.Exception.Message)" -ForegroundColor Red
     Read-Host
 }
