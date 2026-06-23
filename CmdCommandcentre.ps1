@@ -98,27 +98,29 @@ Add-Type -AssemblyName System.Xaml
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Commands -->
                     <Border Grid.Column="0" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
                                 <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
                                 
-                                <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
-                                <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
                                 <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
                                 <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
                                 <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
                                 <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
-                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
-                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
-                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
+                                <Button x:Name="BtnShadowClicker" Style="{StaticResource RoundButtonStyle}" Content="👁️ ShadowClicker Finder"/>
                                 <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
                                 <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
                                 <Button x:Name="BtnPrefetchBypass" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prefetch Bypass Finder"/>
+                                
+                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
+                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
+                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
 
+                    <!-- Dashboard -->
                     <Grid Grid.Column="2">
                         <StackPanel>
                             <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
@@ -185,48 +187,44 @@ try {
         $window.Close()
     })
 
-    # ====================== STABIELE CMD COMMANDS (zichtbaar zwart venster) ======================
-    $window.FindName("BtnAnydesk").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Anydesk.ps1 | iex"
-    })
-
-    $window.FindName("BtnCyemer").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Cyemer.ps1 | iex"
-    })
-
+    # ====================== BUTTONS MET JOUW EXACTE COMMANDS ======================
     $window.FindName("BtnDqrkis").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Dqrkis.ps1 | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex"
     })
 
     $window.FindName("BtnGhostFinder").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Ghostclientfinder.ps1 | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' | iex"
     })
 
     $window.FindName("BtnInjector").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Injector.ps1 | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' | iex"
     })
 
     $window.FindName("BtnMeow").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/MeowModAnalyzer.ps1 | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
+    })
+
+    $window.FindName("BtnShadowClicker").Add_Click({
+        Start-Process cmd -ArgumentList "/k", "powershell", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/ShadowClicker/refs/heads/main/ShadowClicker.ps1' | iex"
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/PrimeMacro.ps1 | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1' | iex"
     })
 
     $window.FindName("BtnQuickcheck").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://pastebin.com/raw/HGLwy7XA | iex"
+        Start-Process cmd -ArgumentList "/k", "powershell", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
+    })
+
+    # Nieuwe Prefetch Bypass Finder knop
+    $window.FindName("BtnPrefetchBypass").Add_Click({
+        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
     })
 
     # Map openen
     $window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
     $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
     $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
-
-    # Nieuwe knop: Prefetch Bypass Finder
-    $window.FindName("BtnPrefetchBypass").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
-    })
 
     $window.ShowDialog() | Out-Null
 
