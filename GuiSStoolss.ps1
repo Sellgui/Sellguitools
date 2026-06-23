@@ -227,14 +227,15 @@ try {
     Start-FloatAnimation $c10 4800 -26
     Start-FloatAnimation $c11 3900 18
 
-    # ====================== NIEUWE NOTIFICATIE (v4.0) ======================
+    # ====================== NOTIFICATIE MET FADE-IN ======================
     function Show-v4UpdateNotification {
         [xml]$notifXaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Update v4.0" Width="720" Height="480"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Opacity="0">
 
     <Border Background="#0A120F" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="28">
         <Border.Effect>
@@ -249,7 +250,6 @@ try {
             </Canvas>
 
             <StackPanel>
-                <!-- Header -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
                     <Border Width="52" Height="52" CornerRadius="14" Background="#0F2A1F" BorderBrush="#2A4738" BorderThickness="1.5">
                         <TextBlock Text="⬆" FontSize="26" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -260,7 +260,6 @@ try {
                     </StackPanel>
                 </StackPanel>
 
-                <!-- Main Text -->
                 <Border Background="#0F1A16" CornerRadius="14" BorderBrush="#2A4738" BorderThickness="1" Padding="20" Margin="0,0,0,20">
                     <StackPanel>
                         <TextBlock Text="What's new in v4.0:" FontSize="16" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,10"/>
@@ -281,7 +280,6 @@ try {
                     </StackPanel>
                 </Border>
 
-                <!-- Button at the bottom -->
                 <Button x:Name="CloseNotifButton" Content="Got it" Width="160" Height="44" 
                         Background="#166534" Foreground="White" FontWeight="SemiBold" FontSize="15"
                         BorderThickness="0" Cursor="Hand" HorizontalAlignment="Center"/>
@@ -294,6 +292,15 @@ try {
         $notifReader = New-Object System.Xml.XmlNodeReader $notifXaml
         $notif = [Windows.Markup.XamlReader]::Load($notifReader)
         $notif.Owner = $window
+
+        # Fade-in animatie voor de notificatie
+        $notif.Add_Loaded({
+            $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+            $fadeIn.From = 0
+            $fadeIn.To = 1
+            $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
+            $notif.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+        })
 
         $notif.FindName("CloseNotifButton").Add_Click({ $notif.Close() })
 
