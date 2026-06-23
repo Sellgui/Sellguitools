@@ -13,13 +13,14 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
 
 $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/Guiss-Tools-v4.zip"
 
-[xml]$xaml = @"
+try {
+    [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Guiss Launcher" Width="1320" Height="830"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Opacity="0">
+        Opacity="1">
 
     <Window.Resources>
         <Style x:Key="MainButtonStyle" TargetType="Button">
@@ -60,7 +61,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <!-- Decorative circles -->
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
                 <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
@@ -164,162 +164,103 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
 </Window>
 "@
 
-$reader = New-Object System.Xml.XmlNodeReader $xaml
-$window = [Windows.Markup.XamlReader]::Load($reader)
+    $reader = New-Object System.Xml.XmlNodeReader $xaml
+    $window = [Windows.Markup.XamlReader]::Load($reader)
 
-$LogoBorder = $window.FindName("LogoBorder")
-$ActivityBox = $window.FindName("ActivityBox")
+    # Forceer zichtbaarheid
+    $window.Opacity = 1
+    $window.Visibility = "Visible"
 
-$window.Add_Loaded({
-    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
-    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+    $LogoBorder = $window.FindName("LogoBorder")
+    $ActivityBox = $window.FindName("ActivityBox")
 
-    $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
-    $glow.Color = "#4ADE80"
-    $glow.BlurRadius = 18
-    $glow.ShadowDepth = 0
-    $glow.Opacity = 0.6
-    $LogoBorder.Effect = $glow
+    $window.Add_Loaded({
+        $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
+        $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+    })
 
-    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $glowAnim.From = 0.4; $glowAnim.To = 0.85; $glowAnim.Duration = [TimeSpan]::FromMilliseconds(1800)
-    $glowAnim.AutoReverse = $true; $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
-})
+    $CloseButton = $window.FindName("CloseButton")
+    $MinButton   = $window.FindName("MinButton")
+    $MainBorder  = $window.FindName("MainBorder")
 
-# ====================== ANIMATIES ======================
-$c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
-$c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
-$c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
-$c7 = $window.FindName("Circle7"); $c8 = $window.FindName("Circle8")
-$c9 = $window.FindName("Circle9"); $c10 = $window.FindName("Circle10")
-$c11 = $window.FindName("Circle11")
+    $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
+    $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 
-function Start-PulseAnimation($element, $durationMs, $scaleTo) {
-    $scale = New-Object System.Windows.Media.ScaleTransform
-    $element.RenderTransform = $scale
-    $element.RenderTransformOrigin = "0.5,0.5"
+    # Fade-out bij sluiten
+    $CloseButton.Add_Click({
+        $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
+        $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
+        Start-Sleep -Milliseconds 280
+        $window.Close()
+    })
 
-    $sb = New-Object System.Windows.Media.Animation.Storyboard
-    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $animY = $animX.Clone()
+    $window.FindName("ExitButton").Add_Click({
+        $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
+        $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
+        $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
+        Start-Sleep -Milliseconds 280
+        $window.Close()
+    })
 
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+    function Play-ClickSound {
+        [System.Media.SystemSounds]::Asterisk.Play()
+    }
 
-    $sb.Children.Add($animX)
-    $sb.Children.Add($animY)
-    $sb.Begin()
-}
+    # ====================== INSTALL ======================
+    $InstallButton = $window.FindName("InstallButton")
 
-function Start-FloatAnimation($element, $durationMs, $distance) {
-    $translate = New-Object System.Windows.Media.TranslateTransform
-    $element.RenderTransform = $translate
-    $sb = New-Object System.Windows.Media.Animation.Storyboard
-    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animY.From = 0; $animY.To = $distance; $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animY.AutoReverse = $true; $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
-    $sb.Children.Add($animY)
-    $sb.Begin()
-}
+    $InstallButton.Add_Click({
+        Play-ClickSound
+        $originalContent = $InstallButton.Content
+        $InstallButton.Content = "Installing..."
+        $InstallButton.IsEnabled = $false
 
-Start-PulseAnimation $c1 5200 1.06
-Start-PulseAnimation $c2 4100 1.08
-Start-PulseAnimation $c3 3400 1.12
-Start-PulseAnimation $c4 5800 1.05
-Start-PulseAnimation $c5 2900 1.15
-Start-PulseAnimation $c6 4500 1.07
-Start-PulseAnimation $c7 4900 1.06
-Start-PulseAnimation $c8 3600 1.11
-Start-FloatAnimation $c9 6800 18
-Start-FloatAnimation $c10 7500 -22
-Start-FloatAnimation $c11 6200 14
+        $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
 
-# ====================== BUTTONS ======================
-$CloseButton = $window.FindName("CloseButton")
-$MinButton   = $window.FindName("MinButton")
-$MainBorder  = $window.FindName("MainBorder")
+        try {
+            $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+            $principal = New-Object Security.Principal.WindowsPrincipal($identity)
+            if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+                $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
+                $InstallButton.Content = $originalContent
+                $InstallButton.IsEnabled = $true
+                return
+            }
 
-$MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
-$MinButton.Add_Click({ $window.WindowState = "Minimized" })
+            $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
+            $ProgressPreference = 'SilentlyContinue'
+            Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
 
-# Fade-out bij sluiten
-$CloseButton.Add_Click({
-    $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
-    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
-    Start-Sleep -Milliseconds 280
-    $window.Close()
-})
+            $zipFile = Get-Item $zipPath
+            if ($zipFile.Length -lt 50000) { throw "Download mislukt." }
 
-$window.FindName("ExitButton").Add_Click({
-    $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
-    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
-    Start-Sleep -Milliseconds 280
-    $window.Close()
-})
+            $ActivityBox.AppendText("[Install] Download succesvol!`n")
 
-# ====================== CLICK SOUND ======================
-function Play-ClickSound {
-    [System.Media.SystemSounds]::Asterisk.Play()
-}
+            if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue }
+            Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
 
-# ====================== INSTALL ======================
-$InstallButton = $window.FindName("InstallButton")
+            $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
+            Start-Process $destPath
 
-$InstallButton.Add_Click({
-    Play-ClickSound
-    $originalContent = $InstallButton.Content
-    $InstallButton.Content = "Installing..."
-    $InstallButton.IsEnabled = $false
-
-    $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
-
-    try {
-        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-        $principal = New-Object Security.Principal.WindowsPrincipal($identity)
-        if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-            $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
+        }
+        catch {
+            $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
+        }
+        finally {
             $InstallButton.Content = $originalContent
             $InstallButton.IsEnabled = $true
-            return
         }
+    })
 
-        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
-        $ProgressPreference = 'SilentlyContinue'
-        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
+    $window.FindName("RemoveButton").Add_Click({ Play-ClickSound; ... })
+    $window.FindName("OpenFolderButton").Add_Click({ Play-ClickSound; ... })
+    $window.FindName("OpenCmdButton").Add_Click({ Play-ClickSound; ... })
 
-        $zipFile = Get-Item $zipPath
-        if ($zipFile.Length -lt 50000) { throw "Download mislukt." }
+    $window.ShowDialog() | Out-Null
 
-        $ActivityBox.AppendText("[Install] Download succesvol!`n")
-
-        if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue }
-        Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
-
-        $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
-        Start-Process $destPath
-
-    }
-    catch {
-        $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
-    }
-    finally {
-        $InstallButton.Content = $originalContent
-        $InstallButton.IsEnabled = $true
-    }
-})
-
-$window.FindName("RemoveButton").Add_Click({ Play-ClickSound; ... })
-$window.FindName("OpenFolderButton").Add_Click({ Play-ClickSound; ... })
-$window.FindName("OpenCmdButton").Add_Click({ Play-ClickSound; ... })
-
-$window.ShowDialog() | Out-Null
+} catch {
+    Write-Host "Er is een fout opgetreden: $($_.Exception.Message)" -ForegroundColor Red
+    Read-Host "Druk op Enter om af te sluiten..."
+}
