@@ -22,7 +22,7 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
         Opacity="0">
 
     <Window.Resources>
-        <!-- UPGEGRADE BUTTON STYLE -->
+        <!-- GEUPGRADEDE BUTTON STYLE (stabiel) -->
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#0F2A1F"/>
             <Setter Property="Foreground" Value="White"/>
@@ -36,36 +36,27 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Border" CornerRadius="14" 
-                                Background="{TemplateBinding Background}"
-                                BorderThickness="0">
+                                Background="{TemplateBinding Background}">
                             <Border.Effect>
-                                <DropShadowEffect x:Name="Shadow" BlurRadius="12" ShadowDepth="0" Opacity="0.3" Color="#000000"/>
+                                <DropShadowEffect x:Name="Shadow" BlurRadius="12" ShadowDepth="0" Opacity="0.3"/>
                             </Border.Effect>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="Icon" Text="{TemplateBinding Tag}" 
-                                           FontSize="18" Margin="14,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{TemplateBinding Tag}" FontSize="18" Margin="14,0,8,0" VerticalAlignment="Center"/>
                                 <ContentPresenter Grid.Column="1" VerticalAlignment="Center" Margin="0,0,14,0"/>
                             </Grid>
                         </Border>
+                        
                         <ControlTemplate.Triggers>
-                            <!-- Hover: Scale + Glow + Kleur -->
+                            <!-- Hover effect: Groter + Glow + Kleur -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#1E7A3E"/>
-                                <Setter TargetName="Shadow" Property="BlurRadius" Value="20"/>
-                                <Setter TargetName="Shadow" Property="Opacity" Value="0.5"/>
+                                <Setter TargetName="Shadow" Property="BlurRadius" Value="22"/>
+                                <Setter TargetName="Shadow" Property="Opacity" Value="0.6"/>
                                 <Setter TargetName="Shadow" Property="Color" Value="#22D3EE"/>
-                            </Trigger>
-                            <!-- Click: Drukt in -->
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Border" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                    </Setter.Value>
-                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -185,8 +176,15 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v4.0/G
 </Window>
 "@
 
-$reader = New-Object System.Xml.XmlNodeReader $xaml
-$window = [Windows.Markup.XamlReader]::Load($reader)
+try {
+    $reader = New-Object System.Xml.XmlNodeReader $xaml
+    $window = [Windows.Markup.XamlReader]::Load($reader)
+}
+catch {
+    Write-Host "FOUT bij laden van de GUI:" $_.Exception.Message -ForegroundColor Red
+    Read-Host "Druk op Enter om af te sluiten..."
+    exit
+}
 
 $LogoBorder = $window.FindName("LogoBorder")
 $ActivityBox = $window.FindName("ActivityBox")
@@ -209,8 +207,59 @@ $window.Add_Loaded({
     $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
 })
 
-# ====================== ANIMATIES ======================
-# (Cirkels + floating - hetzelfde als vorige versie, ik laat het kort voor de duidelijkheid)
+# ====================== ANIMATIES (cirkels) ======================
+$c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
+$c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
+$c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
+$c7 = $window.FindName("Circle7"); $c8 = $window.FindName("Circle8")
+$c9 = $window.FindName("Circle9"); $c10 = $window.FindName("Circle10")
+$c11 = $window.FindName("Circle11")
+
+function Start-PulseAnimation($element, $durationMs, $scaleTo) {
+    $scale = New-Object System.Windows.Media.ScaleTransform
+    $element.RenderTransform = $scale
+    $element.RenderTransformOrigin = "0.5,0.5"
+
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $animY = $animX.Clone()
+
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+
+    $sb.Children.Add($animX)
+    $sb.Children.Add($animY)
+    $sb.Begin()
+}
+
+function Start-FloatAnimation($element, $durationMs, $distance) {
+    $translate = New-Object System.Windows.Media.TranslateTransform
+    $element.RenderTransform = $translate
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animY.From = 0; $animY.To = $distance; $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animY.AutoReverse = $true; $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
+    $sb.Children.Add($animY)
+    $sb.Begin()
+}
+
+Start-PulseAnimation $c1 5200 1.06
+Start-PulseAnimation $c2 4100 1.08
+Start-PulseAnimation $c3 3400 1.12
+Start-PulseAnimation $c4 5800 1.05
+Start-PulseAnimation $c5 2900 1.15
+Start-PulseAnimation $c6 4500 1.07
+Start-PulseAnimation $c7 4900 1.06
+Start-PulseAnimation $c8 3600 1.11
+Start-FloatAnimation $c9 6800 18
+Start-FloatAnimation $c10 7500 -22
+Start-FloatAnimation $c11 6200 14
 
 # ====================== BUTTONS ======================
 $CloseButton = $window.FindName("CloseButton")
@@ -222,7 +271,7 @@ $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
-# ====================== INSTALL MET LOADING ======================
+# ====================== INSTALL ======================
 $InstallButton = $window.FindName("InstallButton")
 
 $InstallButton.Add_Click({
@@ -233,7 +282,6 @@ $InstallButton.Add_Click({
     $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
 
     try {
-        # Admin check + download logica (zelfde als vorige versie)
         $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
         $principal = New-Object Security.Principal.WindowsPrincipal($identity)
         if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -268,78 +316,25 @@ $InstallButton.Add_Click({
     }
 })
 
-# ====================== ANDERE BUTTONS ======================
-$window.FindName("RemoveButton").Add_Click({ ... })      # (zelfde als vorige)
-$window.FindName("OpenFolderButton").Add_Click({ ... })
-$window.FindName("OpenCmdButton").Add_Click({ ... })
+$window.FindName("RemoveButton").Add_Click({
+    if (Test-Path $destPath) {
+        Remove-Item $destPath -Recurse -Force
+        $ActivityBox.AppendText("`n[Remove] Tools verwijderd.`n")
+    } else {
+        $ActivityBox.AppendText("`n[Remove] Geen installatie gevonden.`n")
+    }
+})
 
-# ====================== UPDATE NOTIFICATIE (v4.0) ======================
-function Show-v4UpdateNotification {
-    [xml]$notifXaml = @"
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Update v4.0" Width="680" Height="420"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+$window.FindName("OpenFolderButton").Add_Click({
+    if (Test-Path $destPath) {
+        Start-Process $destPath
+    } else {
+        $ActivityBox.AppendText("`n[Error] Map niet gevonden.`n")
+    }
+})
 
-    <Border Background="#0A120F" CornerRadius="20" BorderBrush="#1A2E24" BorderThickness="1" Padding="24">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
-        </Border.Effect>
-
-        <Grid>
-            <Canvas Panel.ZIndex="-1">
-                <Ellipse Width="180" Height="180" Fill="#052E16" Opacity="0.25" Canvas.Left="-30" Canvas.Top="-20"/>
-                <Ellipse Width="120" Height="120" Fill="#166534" Opacity="0.20" Canvas.Right="-20" Canvas.Bottom="-15"/>
-            </Canvas>
-
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                    <Border Width="48" Height="48" CornerRadius="12" Background="#0F2A1F" BorderBrush="#2A4738" BorderThickness="1.5">
-                        <TextBlock Text="⬆" FontSize="24" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <StackPanel Margin="14,0,0,0">
-                        <TextBlock Text="Update v4.0 is beschikbaar!" FontSize="22" FontWeight="SemiBold" Foreground="White"/>
-                        <TextBlock Text="Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,0"/>
-                    </StackPanel>
-                </StackPanel>
-
-                <Border Background="#0F1A16" CornerRadius="14" BorderBrush="#2A4738" BorderThickness="1" Padding="18">
-                    <StackPanel>
-                        <TextBlock TextWrapping="Wrap" Foreground="#D1E8D9" FontSize="14" LineHeight="20">
-Nieuwe tools toegevoegd in deze update:
-
-• MeowClientFucker
-• MeowDoomsdayFucker  
-• MeowNovowareFucker
-• JournalTrace
-
-Druk op "Install / Update Tools" om alles bij te werken.
-                        </TextBlock>
-                    </StackPanel>
-                </Border>
-
-                <Button x:Name="CloseNotifButton" Content="Got it!" Width="140" Height="42" 
-                        Background="#166534" Foreground="White" FontWeight="SemiBold"
-                        BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" Margin="0,20,0,0"/>
-            </StackPanel>
-        </Grid>
-    </Border>
-</Window>
-"@
-
-    $notifReader = New-Object System.Xml.XmlNodeReader $notifXaml
-    $notif = [Windows.Markup.XamlReader]::Load($notifReader)
-    $notif.Owner = $window
-
-    $notif.FindName("CloseNotifButton").Add_Click({ $notif.Close() })
-
-    $notif.ShowDialog() | Out-Null
-}
-
-# Toon notificatie bij opstarten
-$window.Add_ContentRendered({
-    Show-v4UpdateNotification
+$window.FindName("OpenCmdButton").Add_Click({
+    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
 })
 
 $window.ShowDialog() | Out-Null
