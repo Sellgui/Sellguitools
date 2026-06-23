@@ -105,29 +105,29 @@ $destPath  = Join-Path $downloads "Guiss-Tools"
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Left: Commands -->
+                    <!-- Commands -->
                     <Border Grid.Column="0" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
                                 <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
                                 
-                                <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install" ToolTip="Installeer Anydesk"/>
-                                <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner" ToolTip="Scan op Cyemer client"/>
-                                <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER" ToolTip="Scan op DQRKIS client"/>
-                                <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder" ToolTip="Zoek ghost clients"/>
-                                <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector" ToolTip="Detecteer DLL injecties"/>
-                                <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer" ToolTip="Analyseer mods"/>
-                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData" ToolTip="Open AppData map"/>
-                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History" ToolTip="Bekijk PowerShell commando geschiedenis"/>
-                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch" ToolTip="Open Prefetch map (belangrijk!)"/>
-                                <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector" ToolTip="Detecteer muis macros"/>
-                                <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner" ToolTip="Snelcheck op verdachte dingen"/>
-                                <Button x:Name="BtnPrefetchBypass" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prefetch Bypass Finder" ToolTip="Run Prefetch Bypass Finder"/>
+                                <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
+                                <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
+                                <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
+                                <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
+                                <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
+                                <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
+                                <Button x:Name="BtnAppData" Style="{StaticResource RoundButtonStyle}" Content="📁 Open AppData"/>
+                                <Button x:Name="BtnPowerShellHistory" Style="{StaticResource RoundButtonStyle}" Content="📜 Open PowerShell History"/>
+                                <Button x:Name="BtnPrefetch" Style="{StaticResource RoundButtonStyle}" Content="🗂️ Open Prefetch"/>
+                                <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
+                                <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
+                                <Button x:Name="BtnPrefetchBypass" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prefetch Bypass Finder"/>
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
 
-                    <!-- Right: Dashboard -->
+                    <!-- Dashboard -->
                     <Grid Grid.Column="2">
                         <StackPanel>
                             <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,0,0,18"/>
@@ -194,27 +194,37 @@ try {
         $window.Close()
     })
 
-    # ====================== BUTTONS (met try/catch voor stabiliteit) ======================
-    $window.FindName("BtnAnydesk").Add_Click({ try { Start-Process "$destPath\AnyDesk.exe" } catch {} })
-    $window.FindName("BtnCyemer").Add_Click({ try { Start-Process "$destPath\CyemerScanner.exe" } catch {} })
-    $window.FindName("BtnDqrkis").Add_Click({ try { Start-Process "$destPath\DQRKIS-FUCKER.exe" } catch {} })
-    $window.FindName("BtnGhostFinder").Add_Click({ try { Start-Process "$destPath\Ghostclientfinder.exe" } catch {} })
-    $window.FindName("BtnInjector").Add_Click({ try { Start-Process "$destPath\Injector Scanner.exe" } catch {} })
-    $window.FindName("BtnMeow").Add_Click({ try { Start-Process "$destPath\MeowModAnalyzer.exe" } catch {} })
+    # ====================== BUTTONS (veilige versie) ======================
+    function Start-Tool($exeName) {
+        $file = Join-Path $destPath $exeName
+        if (Test-Path $file) {
+            Start-Process $file
+        }
+    }
+
+    $window.FindName("BtnAnydesk").Add_Click({ Start-Tool "AnyDesk.exe" })
+    $window.FindName("BtnCyemer").Add_Click({ Start-Tool "CyemerScanner.exe" })
+    $window.FindName("BtnDqrkis").Add_Click({ Start-Tool "DQRKIS-FUCKER.exe" })
+    $window.FindName("BtnGhostFinder").Add_Click({ Start-Tool "Ghostclientfinder.exe" })
+    $window.FindName("BtnInjector").Add_Click({ Start-Tool "Injector Scanner.exe" })
+    $window.FindName("BtnMeow").Add_Click({ Start-Tool "MeowModAnalyzer.exe" })
+    $window.FindName("BtnPrimeMacro").Add_Click({ Start-Tool "PrimeMacroDetector.exe" })
+    $window.FindName("BtnQuickcheck").Add_Click({ Start-Tool "Quickcheck.exe" })
+
+    # Map openen (altijd veilig)
     $window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
     $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
     $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
-    $window.FindName("BtnPrimeMacro").Add_Click({ try { Start-Process "$destPath\PrimeMacroDetector.exe" } catch {} })
-    $window.FindName("BtnQuickcheck").Add_Click({ try { Start-Process "$destPath\Quickcheck.exe" } catch {} })
 
     # Nieuwe knop: Prefetch Bypass Finder
     $window.FindName("BtnPrefetchBypass").Add_Click({
-        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", 
+        "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
     })
 
     $window.ShowDialog() | Out-Null
 
 } catch {
-    Write-Host "Fout bij laden GUI: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Fout: $($_.Exception.Message)" -ForegroundColor Red
     Read-Host
 }
