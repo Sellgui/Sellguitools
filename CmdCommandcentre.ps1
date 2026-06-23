@@ -9,8 +9,7 @@ $userDir   = [Environment]::GetFolderPath("UserProfile")
 $downloads = Join-Path $userDir "Downloads"
 $destPath  = Join-Path $downloads "Guiss-Tools"
 
-try {
-    [xml]$xaml = @"
+[xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Guiss Command Center" Width="1320" Height="830"
@@ -170,10 +169,10 @@ try {
 </Window>
 "@
 
+try {
     $reader = New-Object System.Xml.XmlNodeReader $xaml
     $window = [Windows.Markup.XamlReader]::Load($reader)
 
-    # Forceer zichtbaarheid (belangrijk voor iex)
     $window.Opacity = 1
     $window.Visibility = "Visible"
 
@@ -192,25 +191,21 @@ try {
         $window.Close()
     })
 
-    function Play-ClickSound {
-        [System.Media.SystemSounds]::Asterisk.Play()
-    }
-
-    $window.FindName("BtnAnydesk").Add_Click({ Play-ClickSound; Start-Process "$destPath\AnyDesk.exe" })
-    $window.FindName("BtnCyemer").Add_Click({ Play-ClickSound; Start-Process "$destPath\CyemerScanner.exe" })
-    $window.FindName("BtnDqrkis").Add_Click({ Play-ClickSound; Start-Process "$destPath\DQRKIS-FUCKER.exe" })
-    $window.FindName("BtnGhostFinder").Add_Click({ Play-ClickSound; Start-Process "$destPath\Ghostclientfinder.exe" })
-    $window.FindName("BtnInjector").Add_Click({ Play-ClickSound; Start-Process "$destPath\Injector Scanner.exe" })
-    $window.FindName("BtnMeow").Add_Click({ Play-ClickSound; Start-Process "$destPath\MeowModAnalyzer.exe" })
-    $window.FindName("BtnAppData").Add_Click({ Play-ClickSound; Start-Process $env:APPDATA })
-    $window.FindName("BtnPowerShellHistory").Add_Click({ Play-ClickSound; Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
-    $window.FindName("BtnPrefetch").Add_Click({ Play-ClickSound; Start-Process "$env:SystemRoot\Prefetch" })
-    $window.FindName("BtnPrimeMacro").Add_Click({ Play-ClickSound; Start-Process "$destPath\PrimeMacroDetector.exe" })
-    $window.FindName("BtnQuickcheck").Add_Click({ Play-ClickSound; Start-Process "$destPath\Quickcheck.exe" })
+    $window.FindName("BtnAnydesk").Add_Click({ Start-Process "$destPath\AnyDesk.exe" })
+    $window.FindName("BtnCyemer").Add_Click({ Start-Process "$destPath\CyemerScanner.exe" })
+    $window.FindName("BtnDqrkis").Add_Click({ Start-Process "$destPath\DQRKIS-FUCKER.exe" })
+    $window.FindName("BtnGhostFinder").Add_Click({ Start-Process "$destPath\Ghostclientfinder.exe" })
+    $window.FindName("BtnInjector").Add_Click({ Start-Process "$destPath\Injector Scanner.exe" })
+    $window.FindName("BtnMeow").Add_Click({ Start-Process "$destPath\MeowModAnalyzer.exe" })
+    $window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
+    $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
+    $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
+    $window.FindName("BtnPrimeMacro").Add_Click({ Start-Process "$destPath\PrimeMacroDetector.exe" })
+    $window.FindName("BtnQuickcheck").Add_Click({ Start-Process "$destPath\Quickcheck.exe" })
 
     $window.ShowDialog() | Out-Null
 
 } catch {
-    Write-Host "Er is een fout opgetreden: $($_.Exception.Message)" -ForegroundColor Red
-    Read-Host "Druk op Enter om af te sluiten..."
+    Write-Host "Fout: $($_.Exception.Message)" -ForegroundColor Red
+    Read-Host
 }
