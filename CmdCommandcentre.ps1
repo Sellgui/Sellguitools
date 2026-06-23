@@ -5,6 +5,10 @@ Add-Type -AssemblyName System.Xaml
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+$userDir   = [Environment]::GetFolderPath("UserProfile")
+$downloads = Join-Path $userDir "Downloads"
+$destPath  = Join-Path $downloads "Guiss-Tools"
+
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,14 +19,14 @@ Add-Type -AssemblyName System.Xaml
 
     <Window.Resources>
         <Style x:Key="RoundButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#0F2A1F"/>
+            <Setter Property="Background" Value="#0F1A16"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Height" Value="46"/>
-            <Setter Property="Margin" Value="0,0,0,6"/>
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
             <Setter Property="BorderThickness" Value="1.5"/>
-            <Setter Property="BorderBrush" Value="#1A4738"/>
+            <Setter Property="BorderBrush" Value="#2A4738"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -31,7 +35,7 @@ Add-Type -AssemblyName System.Xaml
                                 Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="14,0,0,0"/>
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="16,0,0,0"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -51,7 +55,7 @@ Add-Type -AssemblyName System.Xaml
         </Border.Effect>
 
         <Grid>
-            <!-- === DECORATIVE CIRCLES + SHAPES === -->
+            <!-- Decorative Circles -->
             <Canvas Panel.ZIndex="-1">
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
                 <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
@@ -61,15 +65,9 @@ Add-Type -AssemblyName System.Xaml
                 <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
                 <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
                 <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
-
-                <!-- Extra cirkels LINKSONDER -->
                 <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
                 <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
                 <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
-
-                <!-- Extra vormen -->
-                <Rectangle x:Name="Shape1" Width="420" Height="6"  Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
-                <Rectangle x:Name="Shape2" Width="6"   Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
 
             <Grid>
@@ -87,11 +85,8 @@ Add-Type -AssemblyName System.Xaml
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <!-- Logo met Breathing Glow -->
-                            <Border x:Name="LogoBorder" Width="42" Height="42" CornerRadius="13" 
-                                    Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" 
-                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel Margin="14,0,0,0">
                                 <TextBlock Text="Guiss Command Center" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
@@ -105,7 +100,6 @@ Add-Type -AssemblyName System.Xaml
                     </Grid>
                 </Border>
 
-                <!-- Main Content -->
                 <Grid Grid.Row="1" Margin="20,15,20,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="420"/>
@@ -114,10 +108,11 @@ Add-Type -AssemblyName System.Xaml
                     </Grid.ColumnDefinitions>
 
                     <!-- Left: Commands -->
-                    <Border Grid.Column="0" Background="#0B1118" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
+                    <Border Grid.Column="0" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="12">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
                                 <TextBlock Text="Commands" FontSize="17" FontWeight="SemiBold" Foreground="#4ADE80" Margin="8,0,0,12"/>
+                                
                                 <Button x:Name="BtnAnydesk" Style="{StaticResource RoundButtonStyle}" Content="💻 Anydesk Install"/>
                                 <Button x:Name="BtnCyemer" Style="{StaticResource RoundButtonStyle}" Content="🔍 Cyemer Scanner"/>
                                 <Button x:Name="BtnDqrkis" Style="{StaticResource RoundButtonStyle}" Content="💀 DQRKIS-FUCKER"/>
@@ -178,45 +173,9 @@ Add-Type -AssemblyName System.Xaml
 </Window>
 "@
 
-try {
-    $reader = New-Object System.Xml.XmlNodeReader $xaml
-    $window = [Windows.Markup.XamlReader]::Load($reader)
-}
-catch {
-    Write-Host "FOUT bij laden GUI:" $_.Exception.Message -ForegroundColor Red
-    Read-Host
-    exit
-}
+$reader = New-Object System.Xml.XmlNodeReader $xaml
+$window = [Windows.Markup.XamlReader]::Load($reader)
 
-$LogoBorder = $window.FindName("LogoBorder")
-
-# === FADE-IN + BREATHING GLOW OP LOGO ===
-$window.Add_Loaded({
-    # Window fade-in
-    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fadeIn.From = 0
-    $fadeIn.To = 1
-    $fadeIn.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(450))
-    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
-
-    # Breathing Glow op de "G"
-    $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
-    $glow.Color = "#4ADE80"
-    $glow.BlurRadius = 18
-    $glow.ShadowDepth = 0
-    $glow.Opacity = 0.6
-    $LogoBorder.Effect = $glow
-
-    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $glowAnim.From = 0.4
-    $glowAnim.To = 0.85
-    $glowAnim.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(1800))
-    $glowAnim.AutoReverse = $true
-    $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
-})
-
-# Controls
 $CloseButton = $window.FindName("CloseButton")
 $MinButton   = $window.FindName("MinButton")
 $MainBorder  = $window.FindName("MainBorder")
@@ -225,81 +184,17 @@ $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 $CloseButton.Add_Click({ $window.Close() })
 
-# Knoppen
-$window.FindName("BtnAnydesk").Add_Click({ Start-Process "https://download.anydesk.com/AnyDesk.exe" })
-$window.FindName("BtnCyemer").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/main/Cyemerscanner.ps1' | iex`"" })
-$window.FindName("BtnDqrkis").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | Invoke-Expression`"" })
-$window.FindName("BtnGhostFinder").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' -UseBasicParsing).Content`"" })
-$window.FindName("BtnInjector").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' -UseBasicParsing | iex`"" })
-$window.FindName("BtnMeow").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -ExecutionPolicy Bypass -NoProfile -Command `"Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | Invoke-Expression`"" })
+# ====================== BUTTON ACTIES ======================
+$window.FindName("BtnAnydesk").Add_Click({ Start-Process "$destPath\AnyDesk.exe" })
+$window.FindName("BtnCyemer").Add_Click({ Start-Process "$destPath\CyemerScanner.exe" })
+$window.FindName("BtnDqrkis").Add_Click({ Start-Process "$destPath\DQRKIS-FUCKER.exe" })
+$window.FindName("BtnGhostFinder").Add_Click({ Start-Process "$destPath\Ghostclientfinder.exe" })
+$window.FindName("BtnInjector").Add_Click({ Start-Process "$destPath\Injector Scanner.exe" })
+$window.FindName("BtnMeow").Add_Click({ Start-Process "$destPath\MeowModAnalyzer.exe" })
 $window.FindName("BtnAppData").Add_Click({ Start-Process $env:APPDATA })
 $window.FindName("BtnPowerShellHistory").Add_Click({ Start-Process "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine" })
 $window.FindName("BtnPrefetch").Add_Click({ Start-Process "$env:SystemRoot\Prefetch" })
-$window.FindName("BtnPrimeMacro").Add_Click({ Start-Process cmd -ArgumentList "/k powershell -NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1 | iex`"" })
-$window.FindName("BtnQuickcheck").Add_Click({ Start-Process cmd -ArgumentList "/k powershell Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)" })
-
-# ====================== ANIMATIES ======================
-$c1 = $window.FindName("Circle1");  $c2 = $window.FindName("Circle2")
-$c3 = $window.FindName("Circle3");  $c4 = $window.FindName("Circle4")
-$c5 = $window.FindName("Circle5");  $c6 = $window.FindName("Circle6")
-$c7 = $window.FindName("Circle7");  $c8 = $window.FindName("Circle8")
-$c9 = $window.FindName("Circle9");  $c10 = $window.FindName("Circle10")
-$c11 = $window.FindName("Circle11")
-$s1 = $window.FindName("Shape1");   $s2 = $window.FindName("Shape2")
-
-function Start-PulseAnimation($element, $durationMs, $scaleTo) {
-    $scale = New-Object System.Windows.Media.ScaleTransform
-    $element.RenderTransform = $scale
-    $element.RenderTransformOrigin = "0.5,0.5"
-
-    $sb = New-Object System.Windows.Media.Animation.Storyboard
-    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $animY = $animX.Clone()
-
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
-
-    $sb.Children.Add($animX)
-    $sb.Children.Add($animY)
-    $sb.Begin()
-}
-
-function Start-FloatAnimation($element, $durationMs, $distance) {
-    $translate = New-Object System.Windows.Media.TranslateTransform
-    $element.RenderTransform = $translate
-
-    $sb = New-Object System.Windows.Media.Animation.Storyboard
-    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animY.From = 0
-    $animY.To = $distance
-    $animY.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds($durationMs))
-    $animY.AutoReverse = $true
-    $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
-
-    $sb.Children.Add($animY)
-    $sb.Begin()
-}
-
-# Pulsing circles
-Start-PulseAnimation $c1 5200 1.06; Start-PulseAnimation $c2 4100 1.08
-Start-PulseAnimation $c3 3400 1.12; Start-PulseAnimation $c4 5800 1.05
-Start-PulseAnimation $c5 2900 1.15; Start-PulseAnimation $c6 4500 1.07
-Start-PulseAnimation $c7 4900 1.06; Start-PulseAnimation $c8 3600 1.11
-
-# Floating circles (linksonder)
-Start-FloatAnimation $c9  6800 18
-Start-FloatAnimation $c10 7500 -22
-Start-FloatAnimation $c11 6200 14
-
-# Extra vormen
-Start-PulseAnimation $s1 6000 1.04
-Start-PulseAnimation $s2 5500 1.05
+$window.FindName("BtnPrimeMacro").Add_Click({ Start-Process "$destPath\PrimeMacroDetector.exe" })
+$window.FindName("BtnQuickcheck").Add_Click({ Start-Process "$destPath\Quickcheck.exe" })
 
 $window.ShowDialog() | Out-Null
