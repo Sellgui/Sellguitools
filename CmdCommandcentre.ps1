@@ -187,7 +187,7 @@ try {
         $window.Close()
     })
 
-    # ====================== OUDE WERKende CMD COMMANDS ======================
+    # ====================== CMD COMMANDS (oude werkende stijl) ======================
     $window.FindName("BtnAnydesk").Add_Click({
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/Anydesk.ps1 | iex"
     })
