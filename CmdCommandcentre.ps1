@@ -185,7 +185,7 @@ try {
         $window.Close()
     })
 
-    # ====================== Knoppen met commands ======================
+    # ====================== Knoppen ======================
     $window.FindName("BtnDqrkis").Add_Click({
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex"
     })
@@ -202,23 +202,26 @@ try {
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
     })
 
-    # Nieuwe knop: MeowClientFucker (download + run .exe)
+    # Nieuwe knop: MeowClientFucker (download + run)
     $window.FindName("BtnMeowClientFucker").Add_Click({
         $url = "https://github.com/MeowTonynoh/MeowClientFucker/releases/download/v1.0/MeowClientFucker.exe"
         $downloadPath = Join-Path $env:TEMP "MeowClientFucker.exe"
 
         try {
-            $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe...`n")
+            $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe (11.4 MB)...`n")
             
-            Invoke-WebRequest -Uri $url -OutFile $downloadPath -UseBasicParsing
+            Invoke-WebRequest -Uri $url -OutFile $downloadPath -UseBasicParsing -TimeoutSec 60
             
             $ActivityBox.AppendText("[Download] Succesvol gedownload!`n")
             $ActivityBox.AppendText("[Run] Starten van MeowClientFucker...`n")
             
-            Start-Process $downloadPath
+            Start-Process $downloadPath -ErrorAction Stop
+            
+            $ActivityBox.AppendText("[Success] MeowClientFucker gestart.`n")
             
         } catch {
             $ActivityBox.AppendText("[Error] Download of run mislukt: $($_.Exception.Message)`n")
+            [System.Windows.MessageBox]::Show("Download of starten mislukt.`nFout: $($_.Exception.Message)", "MeowClientFucker", "OK", "Error")
         }
     })
 
