@@ -202,22 +202,33 @@ try {
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
     })
 
-    # MeowClientFucker - zelfde methode als in je grote script
+    # MeowClientFucker - slimme aanpak (check of bestand al bestaat)
     $window.FindName("BtnMeowClientFucker").Add_Click({
         $url = "https://github.com/MeowTonynoh/MeowClientFucker/releases/download/v1.0/MeowClientFucker.exe"
         $downloadPath = Join-Path $env:TEMP "MeowClientFucker.exe"
 
-        $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe...`n")
-
-        try {
-            Invoke-WebRequest -Uri $url -OutFile $downloadPath -UseBasicParsing -TimeoutSec 120
-            $ActivityBox.AppendText("[Download] Succesvol gedownload!`n")
-            $ActivityBox.AppendText("[Run] Starten van MeowClientFucker...`n")
+        if (Test-Path $downloadPath) {
+            $ActivityBox.AppendText("`n[Run] Bestand bestaat al → MeowClientFucker direct starten...`n")
             Start-Process $downloadPath
             $ActivityBox.AppendText("[Success] MeowClientFucker gestart.`n")
-        } catch {
-            $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
+            return
         }
+
+        $ActivityBox.AppendText("`n[Download] Bestand niet gevonden → downloaden...`n")
+
+        $command = @"
+            try {
+                Invoke-WebRequest -Uri '$url' -OutFile '$downloadPath' -UseBasicParsing -TimeoutSec 120
+                Write-Host '[Download] Succesvol gedownload!'
+                Start-Process '$downloadPath'
+                Write-Host '[Success] MeowClientFucker gestart.'
+            } catch {
+                Write-Host '[Error] ' + `$_.Exception.Message
+            }
+"@
+
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", $command -WindowStyle Hidden
+        $ActivityBox.AppendText("[Info] Download gestart in achtergrond.`n")
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
