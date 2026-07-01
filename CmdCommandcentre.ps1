@@ -202,27 +202,40 @@ try {
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
     })
 
-    # MeowClientFucker knop (download + run)
+    # MeowClientFucker - stabiele download + run
     $window.FindName("BtnMeowClientFucker").Add_Click({
         $url = "https://github.com/MeowTonynoh/MeowClientFucker/releases/download/v1.0/MeowClientFucker.exe"
         $downloadPath = Join-Path $env:TEMP "MeowClientFucker.exe"
 
-        try {
-            $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe...`n")
-            
-            Invoke-WebRequest -Uri $url -OutFile $downloadPath -UseBasicParsing -TimeoutSec 60
-            
-            $ActivityBox.AppendText("[Download] Succesvol gedownload!`n")
-            $ActivityBox.AppendText("[Run] Starten van MeowClientFucker...`n")
-            
-            Start-Process $downloadPath -ErrorAction Stop
-            
-            $ActivityBox.AppendText("[Success] MeowClientFucker gestart.`n")
-            
-        } catch {
-            $ActivityBox.AppendText("[Error] Download of run mislukt: $($_.Exception.Message)`n")
-            [System.Windows.MessageBox]::Show("Download of starten mislukt.`nFout: $($_.Exception.Message)", "MeowClientFucker", "OK", "Error")
-        }
+        $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe...`n")
+
+        $runspace = [runspacefactory]::CreateRunspace()
+        $runspace.Open()
+        $runspace.SessionStateProxy.SetVariable("url", $url)
+        $runspace.SessionStateProxy.SetVariable("downloadPath", $downloadPath)
+        $runspace.SessionStateProxy.SetVariable("ActivityBox", $ActivityBox)
+
+        $powershell = [powershell]::Create()
+        $powershell.Runspace = $runspace
+        $powershell.AddScript({
+            try {
+                $ActivityBox.AppendText("[Download] Downloading (11.4 MB)...`n")
+                
+                Invoke-WebRequest -Uri $url -OutFile $downloadPath -UseBasicParsing -TimeoutSec 90
+                
+                $ActivityBox.AppendText("[Download] Succesvol gedownload!`n")
+                $ActivityBox.AppendText("[Run] Starten van MeowClientFucker...`n")
+                
+                Start-Process $downloadPath -ErrorAction Stop
+                
+                $ActivityBox.AppendText("[Success] MeowClientFucker gestart.`n")
+            } catch {
+                $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
+            }
+        }).BeginInvoke()
+
+        $powershell.Dispose()
+        $runspace.Close()
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
