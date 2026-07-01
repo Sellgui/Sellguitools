@@ -107,6 +107,7 @@ Add-Type -AssemblyName System.Xaml
                                 <Button x:Name="BtnGhostFinder" Style="{StaticResource RoundButtonStyle}" Content="👻 Ghost Client Finder"/>
                                 <Button x:Name="BtnInjector" Style="{StaticResource RoundButtonStyle}" Content="💉 Injector Detector"/>
                                 <Button x:Name="BtnMeow" Style="{StaticResource RoundButtonStyle}" Content="🐱 Meow Mod Analyzer"/>
+                                <Button x:Name="BtnMeowClientFucker" Style="{StaticResource RoundButtonStyle}" Content="🐱 MeowClientFucker"/>
                                 <Button x:Name="BtnPrimeMacro" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prime Macro Detector"/>
                                 <Button x:Name="BtnQuickcheck" Style="{StaticResource RoundButtonStyle}" Content="⚡ Quickcheck Scanner"/>
                                 <Button x:Name="BtnPrefetchBypass" Style="{StaticResource RoundButtonStyle}" Content="🛡️ Prefetch Bypass Finder"/>
@@ -184,33 +185,53 @@ try {
         $window.Close()
     })
 
-    # ====================== 100% FIX: ZWART CMD VENSTER ======================
+    # ====================== Knoppen met commands ======================
     $window.FindName("BtnDqrkis").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex"
     })
 
     $window.FindName("BtnGhostFinder").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' | iex"
     })
 
     $window.FindName("BtnInjector").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' | iex"
     })
 
     $window.FindName("BtnMeow").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
+    })
+
+    # Nieuwe knop: MeowClientFucker (download + run .exe)
+    $window.FindName("BtnMeowClientFucker").Add_Click({
+        $url = "https://github.com/MeowTonynoh/MeowClientFucker/releases/download/v1.0/MeowClientFucker.exe"
+        $downloadPath = Join-Path $env:TEMP "MeowClientFucker.exe"
+
+        try {
+            $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe...`n")
+            
+            Invoke-WebRequest -Uri $url -OutFile $downloadPath -UseBasicParsing
+            
+            $ActivityBox.AppendText("[Download] Succesvol gedownload!`n")
+            $ActivityBox.AppendText("[Run] Starten van MeowClientFucker...`n")
+            
+            Start-Process $downloadPath
+            
+        } catch {
+            $ActivityBox.AppendText("[Error] Download of run mislukt: $($_.Exception.Message)`n")
+        }
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1' | iex"
     })
 
     $window.FindName("BtnQuickcheck").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; Invoke-Expression (Invoke-RestMethod 'https://pastebin.com/raw/HGLwy7XA')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
     })
 
     $window.FindName("BtnPrefetchBypass").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
     })
 
     # Map openen
