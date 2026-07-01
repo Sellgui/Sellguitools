@@ -202,19 +202,12 @@ try {
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
     })
 
-    # MeowClientFucker - slimme aanpak (check of bestand al bestaat)
+    # MeowClientFucker knop (download + run)
     $window.FindName("BtnMeowClientFucker").Add_Click({
         $url = "https://github.com/MeowTonynoh/MeowClientFucker/releases/download/v1.0/MeowClientFucker.exe"
         $downloadPath = Join-Path $env:TEMP "MeowClientFucker.exe"
 
-        if (Test-Path $downloadPath) {
-            $ActivityBox.AppendText("`n[Run] Bestand bestaat al → MeowClientFucker direct starten...`n")
-            Start-Process $downloadPath
-            $ActivityBox.AppendText("[Success] MeowClientFucker gestart.`n")
-            return
-        }
-
-        $ActivityBox.AppendText("`n[Download] Bestand niet gevonden → downloaden...`n")
+        $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe...`n")
 
         $command = @"
             try {
