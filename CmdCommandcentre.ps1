@@ -202,22 +202,26 @@ try {
         Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
     })
 
-    # MeowClientFucker - eenvoudige en stabiele download + run
+    # MeowClientFucker - stabiele download + run (aparte process)
     $window.FindName("BtnMeowClientFucker").Add_Click({
         $url = "https://github.com/MeowTonynoh/MeowClientFucker/releases/download/v1.0/MeowClientFucker.exe"
         $downloadPath = Join-Path $env:TEMP "MeowClientFucker.exe"
 
         $ActivityBox.AppendText("`n[Download] Bezig met downloaden van MeowClientFucker.exe...`n")
 
-        try {
-            Invoke-WebRequest -Uri $url -OutFile $downloadPath -UseBasicParsing -TimeoutSec 90
-            $ActivityBox.AppendText("[Download] Succesvol gedownload!`n")
-            $ActivityBox.AppendText("[Run] Starten van MeowClientFucker...`n")
-            Start-Process $downloadPath
-            $ActivityBox.AppendText("[Success] MeowClientFucker gestart.`n")
-        } catch {
-            $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
-        }
+        $command = @"
+            try {
+                Invoke-WebRequest -Uri '$url' -OutFile '$downloadPath' -UseBasicParsing -TimeoutSec 120
+                Write-Host '[Download] Succesvol gedownload!'
+                Start-Process '$downloadPath'
+                Write-Host '[Success] MeowClientFucker gestart.'
+            } catch {
+                Write-Host '[Error] ' + `$_.Exception.Message
+            }
+"@
+
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", $command -WindowStyle Hidden
+        $ActivityBox.AppendText("[Info] Download gestart in achtergrond.`n")
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
