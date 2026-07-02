@@ -6,12 +6,12 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$userDir   = [Environment]::GetFolderPath("UserProfile")
+$userDir = [Environment]::GetFolderPath("UserProfile")
 $downloads = Join-Path $userDir "Downloads"
-$zipPath   = Join-Path $downloads "Guiss-Tools.zip"
-$destPath  = Join-Path $downloads "Guiss-Tools"
+$zipPath = Join-Path $downloads "Guiss-Tools.zip"
+$destPath = Join-Path $downloads "Guiss-Tools"
 
-$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Gui-SS-Tools.zip"
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v1.0/Guiss-Tools.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -20,7 +20,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Opacity="0">
-
     <Window.Resources>
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#0F2A1F"/>
@@ -35,9 +34,9 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border" CornerRadius="12" 
-                                Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
+                        <Border x:Name="Border" CornerRadius="12"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -52,12 +51,10 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
             </Setter>
         </Style>
     </Window.Resources>
-
     <Border x:Name="MainBorder" Background="#0A120F" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
         </Border.Effect>
-
         <Grid>
             <Canvas Panel.ZIndex="-1">
                 <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
@@ -68,19 +65,17 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                 <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
                 <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
                 <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
-                <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
-                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
-                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
-                <Rectangle x:Name="Shape1" Width="420" Height="6"  Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
-                <Rectangle x:Name="Shape2" Width="6"   Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
+                <Ellipse x:Name="Circle9" Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60" Canvas.Bottom="-40"/>
+                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80" Canvas.Bottom="-80"/>
+                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40" Canvas.Bottom="120"/>
+                <Rectangle x:Name="Shape1" Width="420" Height="6" Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
+                <Rectangle x:Name="Shape2" Width="6" Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="68"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
                 <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0">
                     <Grid Margin="25,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -98,38 +93,32 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                         </StackPanel>
                     </Grid>
                 </Border>
-
                 <Grid Grid.Row="1" Margin="25,20,40,25">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
-
                     <StackPanel>
                         <TextBlock Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
                         <TextBlock Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#7E92A6" Margin="0,8,0,25"/>
-
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-
                             <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
                                 <StackPanel>
                                     <TextBlock Text="SYSTEM STATUS" FontSize="12" Foreground="#4ADE80"/>
                                     <TextBlock Text="All Systems OK" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
                                 </StackPanel>
                             </Border>
-
                             <Border Grid.Column="1" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="12,0">
                                 <StackPanel>
                                     <TextBlock Text="LAST SCAN" FontSize="12" Foreground="#4ADE80"/>
                                     <TextBlock Text="Today 19:14" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
                                 </StackPanel>
                             </Border>
-
                             <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
                                 <StackPanel>
                                     <TextBlock Text="TOOLS" FontSize="12" Foreground="#4ADE80"/>
@@ -137,7 +126,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                                 </StackPanel>
                             </Border>
                         </Grid>
-
                         <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,25,0,8"/>
                         <Border Background="#0A120F" CornerRadius="12" BorderBrush="#2A4738" BorderThickness="1" Padding="10">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -145,17 +133,15 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
                             </ScrollViewer>
                         </Border>
                     </StackPanel>
-
                     <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" Padding="20" Margin="20,0,0,0">
                         <StackPanel>
                             <TextBlock Text="Control Center" FontSize="18" FontWeight="SemiBold" Foreground="#4ADE80"/>
                             <TextBlock Text="Manage your Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,20"/>
-
-                            <Button x:Name="InstallButton"    Content="Install / Update Tools"   Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="RemoveButton"     Content="Remove Installed Tools"   Background="#3F1F1F" Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="OpenFolderButton" Content="Open Install Folder"      Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="OpenCmdButton"    Content="CMD Commands"             Style="{StaticResource MainButtonStyle}"/>
-                            <Button x:Name="ExitButton"       Content="Exit Launcher"            Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="InstallButton" Content="Install / Update Tools" Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="RemoveButton" Content="Remove Installed Tools" Background="#3F1F1F" Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="OpenFolderButton" Content="Open Install Folder" Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="OpenCmdButton" Content="CMD Commands" Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="ExitButton" Content="Exit Launcher" Style="{StaticResource MainButtonStyle}"/>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -170,26 +156,23 @@ $window = [Windows.Markup.XamlReader]::Load($reader)
 
 $LogoBorder = $window.FindName("LogoBorder")
 $ActivityBox = $window.FindName("ActivityBox")
-
 $window.Add_Loaded({
     $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
-
     $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
     $glow.Color = "#4ADE80"
     $glow.BlurRadius = 18
     $glow.ShadowDepth = 0
     $glow.Opacity = 0.6
     $LogoBorder.Effect = $glow
-
     $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
     $glowAnim.From = 0.4; $glowAnim.To = 0.85; $glowAnim.Duration = [TimeSpan]::FromMilliseconds(1800)
     $glowAnim.AutoReverse = $true; $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
     $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
 })
 
-# ====================== ANIMATIES ======================
+# Animaties (cirkels)
 $c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
 $c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
 $c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
@@ -202,24 +185,15 @@ function Start-PulseAnimation($element, $durationMs, $scaleTo) {
     $scale = New-Object System.Windows.Media.ScaleTransform
     $element.RenderTransform = $scale
     $element.RenderTransformOrigin = "0.5,0.5"
-
     $sb = New-Object System.Windows.Media.Animation.Storyboard
-    
     $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animX.From = 1
-    $animX.To = $scaleTo
-    $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animX.AutoReverse = $true
-    $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-
+    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
     $animY = $animX.Clone()
-
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
     [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
-
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
     [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
-
     $sb.Children.Add($animX)
     $sb.Children.Add($animY)
     $sb.Begin()
@@ -230,11 +204,8 @@ function Start-FloatAnimation($element, $durationMs, $distance) {
     $element.RenderTransform = $translate
     $sb = New-Object System.Windows.Media.Animation.Storyboard
     $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animY.From = 0
-    $animY.To = $distance
-    $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animY.AutoReverse = $true
-    $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $animY.From = 0; $animY.To = $distance; $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animY.AutoReverse = $true; $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
     [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
     [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
     $sb.Children.Add($animY)
@@ -257,8 +228,8 @@ Start-PulseAnimation $s2 5500 1.05
 
 # ====================== BUTTONS ======================
 $CloseButton = $window.FindName("CloseButton")
-$MinButton   = $window.FindName("MinButton")
-$MainBorder  = $window.FindName("MainBorder")
+$MinButton = $window.FindName("MinButton")
+$MainBorder = $window.FindName("MainBorder")
 $ActivityBox = $window.FindName("ActivityBox")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
@@ -267,7 +238,7 @@ $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
 $window.FindName("InstallButton").Add_Click({
-    $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
+    $ActivityBox.AppendText("`n[Install] Bezig met downloaden van v1.0...`n")
     try {
         $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
         $principal = New-Object Security.Principal.WindowsPrincipal($identity)
@@ -275,26 +246,17 @@ $window.FindName("InstallButton").Add_Click({
             $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
             return
         }
-        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
-        $ProgressPreference = 'SilentlyContinue'
-        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
-
-        $zipFile = Get-Item $zipPath
-        if ($zipFile.Length -lt 50000) { throw "Download mislukt (bestand te klein)." }
-
+        if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath
         $ActivityBox.AppendText("[Install] Download succesvol!`n")
-
         if (Test-Path $destPath) {
-            Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item $destPath -Recurse -Force
         }
-
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
         $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
         $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
-
         Start-Process $destPath
-    }
-    catch {
+    } catch {
         $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
     }
 })
