@@ -21,116 +21,77 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Opacity="0">
 
-    <Window.Resources>
-        <Style x:Key="MainButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#166534"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Height" Value="52"/>
-            <Setter Property="Margin" Value="0,8,0,0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border" CornerRadius="12" Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#4ADE80"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
-    <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1" Background="#0A120F">
+    <Border x:Name="MainBorder" CornerRadius="22" BorderBrush="#1A2E24" BorderThickness="1" Background="#0A120F">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="50" ShadowDepth="0" Opacity="0.7" Color="#4ADE80"/>
+            <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.65"/>
         </Border.Effect>
 
         <Grid>
-            <Canvas Panel.ZIndex="-1">
-                <Ellipse Width="520" Height="520" Fill="#052E16" Opacity="0.22" Canvas.Left="-140" Canvas.Top="-100" x:Name="Circle1"/>
-                <Ellipse Width="380" Height="380" Fill="#166534" Opacity="0.18" Canvas.Right="-80" Canvas.Bottom="40" x:Name="Circle2"/>
-                <Ellipse Width="240" Height="240" Fill="#4ADE80" Opacity="0.15" Canvas.Left="280" Canvas.Top="160" x:Name="Circle3"/>
-                <Ellipse Width="680" Height="680" Fill="#0F2A1F" Opacity="0.12" Canvas.Right="-220" Canvas.Top="-180" x:Name="Circle4"/>
-                <Ellipse Width="150" Height="150" Fill="#86EFAC" Opacity="0.25" Canvas.Left="920" Canvas.Top="380" x:Name="Circle5"/>
-            </Canvas>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="70"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <!-- Header -->
-                <Grid>
+            <!-- Header -->
+            <Border Background="#08100D" CornerRadius="22,22,0,0">
+                <Grid Margin="25,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="52" Height="52" CornerRadius="14" Background="#0F1A16" BorderBrush="#4ADE80" BorderThickness="3" x:Name="LogoBorder">
-                            <Border.Effect>
-                                <DropShadowEffect x:Name="LogoGlow" Color="#4ADE80" BlurRadius="30" ShadowDepth="0" Opacity="0.95"/>
-                            </Border.Effect>
-                            <TextBlock Text="G" FontSize="32" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#0F1A16" BorderBrush="#4ADE80" BorderThickness="2">
+                            <TextBlock Text="G" FontSize="28" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <StackPanel Margin="18,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Text="Guiss Launcher" FontSize="24" FontWeight="SemiBold" Foreground="White"/>
+                        <StackPanel Margin="16,0,0,0">
+                            <TextBlock Text="Guiss Launcher" FontSize="22" FontWeight="SemiBold" Foreground="White"/>
                             <TextBlock Text="Guiss Tools" FontSize="13" Foreground="#7E92A6"/>
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="MinButton" Content="—" Width="44" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="22"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="44" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="18" Margin="8,0,0,0"/>
+                        <Button x:Name="MinButton" Content="—" Width="44" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                        <Button x:Name="CloseButton" Content="✕" Width="44" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="18" Margin="10,0,0,0"/>
                     </StackPanel>
                 </Grid>
+            </Border>
 
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="420"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Margin="25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <!-- Left Panel -->
-                    <Border Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
-                        <StackPanel>
-                            <TextBlock Text="SYSTEM STATUS" FontSize="13" Foreground="#4ADE80" FontWeight="SemiBold"/>
-                            <TextBlock Text="All Systems OK" FontSize="22" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
-                            <Border Background="#1A2E24" CornerRadius="10" Padding="12" Margin="0,20,0,0">
-                                <TextBlock Text="Ready for use" FontSize="14" Foreground="#86EFAC"/>
-                            </Border>
-                        </StackPanel>
-                    </Border>
+                <!-- Left Status -->
+                <Border Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="SYSTEM STATUS" FontSize="13" Foreground="#4ADE80" FontWeight="SemiBold"/>
+                        <TextBlock Text="All Systems OK" FontSize="26" FontWeight="SemiBold" Foreground="White" Margin="0,12,0,0"/>
+                        <Border Background="#1A2E24" CornerRadius="10" Padding="12" Margin="0,20,0,0">
+                            <TextBlock Text="Ready for use" FontSize="14" Foreground="#86EFAC"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Activity Console -->
-                    <Border Grid.Column="2" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
-                        <StackPanel>
-                            <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80"/>
-                            <TextBox x:Name="ActivityBox" Height="420" Background="#0A120F" Foreground="#86EFAC" BorderThickness="0" FontFamily="Consolas" FontSize="13" VerticalScrollBarVisibility="Auto" IsReadOnly="True" Margin="0,12,0,0" Padding="12"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-                <!-- Control Panel -->
-                <Border Grid.Row="2" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="20" Margin="0,20,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="InstallButton" Content="Install / Update Tools" Style="{StaticResource MainButtonStyle}" Margin="0,0,10,0"/>
-                        <Button x:Name="RemoveButton" Content="Remove Installed Tools" Style="{StaticResource MainButtonStyle}" Background="#7F1D1D" Margin="10,0,10,0"/>
-                        <Button x:Name="OpenFolderButton" Content="Open Install Folder" Style="{StaticResource MainButtonStyle}" Margin="10,0,0,0"/>
-                    </Grid>
+                <!-- Activity Console -->
+                <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80"/>
+                        <TextBox x:Name="ActivityBox" Height="380" Background="#0A120F" Foreground="#86EFAC" BorderThickness="0" FontFamily="Consolas" FontSize="13" VerticalScrollBarVisibility="Auto" IsReadOnly="True" Margin="0,12,0,0" Padding="12"/>
+                    </StackPanel>
                 </Border>
             </Grid>
+
+            <!-- Control Panel -->
+            <Border Grid.Row="1" Margin="25,0,25,25" Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="25" VerticalAlignment="Bottom">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="InstallButton" Content="Install / Update Tools" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Height="58" CornerRadius="12" Margin="0,0,10,0"/>
+                    <Button x:Name="RemoveButton" Content="Remove Installed Tools" Background="#7F1D1D" Foreground="White" FontSize="15" FontWeight="SemiBold" Height="58" CornerRadius="12" Margin="10,0,10,0"/>
+                    <Button x:Name="OpenFolderButton" Content="Open Install Folder" Background="#1F3A2A" Foreground="White" FontSize="15" FontWeight="SemiBold" Height="58" CornerRadius="12" Margin="10,0,0,0"/>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </Window>
@@ -141,8 +102,6 @@ try {
     $window = [Windows.Markup.XamlReader]::Load($reader)
 
     $window.Opacity = 1
-
-    $LogoBorder = $window.FindName("LogoBorder")
     $ActivityBox = $window.FindName("ActivityBox")
     $CloseButton = $window.FindName("CloseButton")
     $MinButton = $window.FindName("MinButton")
@@ -150,9 +109,7 @@ try {
     $RemoveButton = $window.FindName("RemoveButton")
     $OpenFolderButton = $window.FindName("OpenFolderButton")
 
-    $MainBorder = $window.FindName("MainBorder")
-
-    $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
+    $window.Add_MouseLeftButtonDown({ $window.DragMove() })
     $MinButton.Add_Click({ $window.WindowState = "Minimized" })
 
     $CloseButton.Add_Click({
@@ -163,19 +120,7 @@ try {
         $window.Close()
     })
 
-    # Groene glow pulse op logo
-    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $glowAnim.From = 20; $glowAnim.To = 40; $glowAnim.Duration = [TimeSpan]::FromMilliseconds(1600)
-    $glowAnim.AutoReverse = $true
-    $glowAnim.RepeatBehavior = "Forever"
-    $LogoBorder.Effect.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::BlurRadiusProperty, $glowAnim)
-
-    # Fade-in venster
-    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(700)
-    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
-
-    # Install / Update Tools
+    # Install / Update
     $InstallButton.Add_Click({
         $ActivityBox.AppendText("[Install] Installatie gestart...`n")
         try {
@@ -190,11 +135,11 @@ try {
             $ActivityBox.AppendText("[Install] Tools installed in: $destPath`n")
             Start-Process $destPath
         } catch {
-            $ActivityBox.AppendText("[Error] Something went wrong: $($_.Exception.Message)`n")
+            $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
         }
     })
 
-    # Remove Tools
+    # Remove
     $RemoveButton.Add_Click({
         if (Test-Path $destPath) {
             Remove-Item $destPath -Recurse -Force
