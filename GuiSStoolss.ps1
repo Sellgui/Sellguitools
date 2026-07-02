@@ -11,7 +11,7 @@ $downloads = Join-Path $userDir "Downloads"
 $zipPath = Join-Path $downloads "Guiss-Tools-v1.0.zip"
 $destPath = Join-Path $downloads "Guiss-Tools-v1.0"
 
-# v1.0 Source Code Zip
+# Correcte v1.0 Source Code Zip link
 $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/archive/refs/tags/v1.0.zip"
 
 [xml]$xaml = @"
