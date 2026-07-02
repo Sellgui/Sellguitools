@@ -8,10 +8,11 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 $userDir = [Environment]::GetFolderPath("UserProfile")
 $downloads = Join-Path $userDir "Downloads"
-$zipPath = Join-Path $downloads "Guiss-Tools.zip"
-$destPath = Join-Path $downloads "Guiss-Tools"
+$zipPath = Join-Path $downloads "Guiss-Tools-v1.0.zip"
+$destPath = Join-Path $downloads "Guiss-Tools-v1.0"
 
-$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v1.0/Guiss-Tools.zip"
+# v1.0 Source Code Zip
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/archive/refs/tags/v1.0.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -65,11 +66,6 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v1.0/G
                 <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
                 <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
                 <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
-                <Ellipse x:Name="Circle9" Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60" Canvas.Bottom="-40"/>
-                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80" Canvas.Bottom="-80"/>
-                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40" Canvas.Bottom="120"/>
-                <Rectangle x:Name="Shape1" Width="420" Height="6" Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
-                <Rectangle x:Name="Shape2" Width="6" Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
             </Canvas>
             <Grid>
                 <Grid.RowDefinitions>
@@ -156,81 +152,16 @@ $window = [Windows.Markup.XamlReader]::Load($reader)
 
 $LogoBorder = $window.FindName("LogoBorder")
 $ActivityBox = $window.FindName("ActivityBox")
+
 $window.Add_Loaded({
     $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
     $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
     $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
-    $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
-    $glow.Color = "#4ADE80"
-    $glow.BlurRadius = 18
-    $glow.ShadowDepth = 0
-    $glow.Opacity = 0.6
-    $LogoBorder.Effect = $glow
-    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $glowAnim.From = 0.4; $glowAnim.To = 0.85; $glowAnim.Duration = [TimeSpan]::FromMilliseconds(1800)
-    $glowAnim.AutoReverse = $true; $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
 })
 
-# Animaties (cirkels)
-$c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
-$c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
-$c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
-$c7 = $window.FindName("Circle7"); $c8 = $window.FindName("Circle8")
-$c9 = $window.FindName("Circle9"); $c10 = $window.FindName("Circle10")
-$c11 = $window.FindName("Circle11")
-$s1 = $window.FindName("Shape1"); $s2 = $window.FindName("Shape2")
-
-function Start-PulseAnimation($element, $durationMs, $scaleTo) {
-    $scale = New-Object System.Windows.Media.ScaleTransform
-    $element.RenderTransform = $scale
-    $element.RenderTransformOrigin = "0.5,0.5"
-    $sb = New-Object System.Windows.Media.Animation.Storyboard
-    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animX.From = 1; $animX.To = $scaleTo; $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animX.AutoReverse = $true; $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    $animY = $animX.Clone()
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
-    $sb.Children.Add($animX)
-    $sb.Children.Add($animY)
-    $sb.Begin()
-}
-
-function Start-FloatAnimation($element, $durationMs, $distance) {
-    $translate = New-Object System.Windows.Media.TranslateTransform
-    $element.RenderTransform = $translate
-    $sb = New-Object System.Windows.Media.Animation.Storyboard
-    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
-    $animY.From = 0; $animY.To = $distance; $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
-    $animY.AutoReverse = $true; $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
-    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
-    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
-    $sb.Children.Add($animY)
-    $sb.Begin()
-}
-
-Start-PulseAnimation $c1 5200 1.06
-Start-PulseAnimation $c2 4100 1.08
-Start-PulseAnimation $c3 3400 1.12
-Start-PulseAnimation $c4 5800 1.05
-Start-PulseAnimation $c5 2900 1.15
-Start-PulseAnimation $c6 4500 1.07
-Start-PulseAnimation $c7 4900 1.06
-Start-PulseAnimation $c8 3600 1.11
-Start-FloatAnimation $c9 6800 18
-Start-FloatAnimation $c10 7500 -22
-Start-FloatAnimation $c11 6200 14
-Start-PulseAnimation $s1 6000 1.04
-Start-PulseAnimation $s2 5500 1.05
-
-# ====================== BUTTONS ======================
 $CloseButton = $window.FindName("CloseButton")
 $MinButton = $window.FindName("MinButton")
 $MainBorder = $window.FindName("MainBorder")
-$ActivityBox = $window.FindName("ActivityBox")
 
 $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
 $MinButton.Add_Click({ $window.WindowState = "Minimized" })
@@ -240,15 +171,9 @@ $window.FindName("ExitButton").Add_Click({ $window.Close() })
 $window.FindName("InstallButton").Add_Click({
     $ActivityBox.AppendText("`n[Install] Bezig met downloaden van v1.0...`n")
     try {
-        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-        $principal = New-Object Security.Principal.WindowsPrincipal($identity)
-        if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-            $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
-            return
-        }
         if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
         Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath
-        $ActivityBox.AppendText("[Install] Download succesvol!`n")
+        $ActivityBox.AppendText("[Install] Download voltooid.`n")
         if (Test-Path $destPath) {
             Remove-Item $destPath -Recurse -Force
         }
