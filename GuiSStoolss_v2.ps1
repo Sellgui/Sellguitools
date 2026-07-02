@@ -6,12 +6,12 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$userDir = [Environment]::GetFolderPath("UserProfile")
+$userDir   = [Environment]::GetFolderPath("UserProfile")
 $downloads = Join-Path $userDir "Downloads"
-$zipPath = Join-Path $downloads "Guiss-Tools.zip"
-$destPath = Join-Path $downloads "Guiss-Tools"
+$zipPath   = Join-Path $downloads "Guiss-Tools.zip"
+$destPath  = Join-Path $downloads "Guiss-Tools"
 
-$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Guiss-Tools.zip"
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download/Gui-SS-Tools.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -21,141 +21,303 @@ $toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/latest/download
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Opacity="0">
 
-    <Border x:Name="MainBorder" CornerRadius="22" BorderBrush="#1A2E24" BorderThickness="1" Background="#0A120F">
+    <Window.Resources>
+        <Style x:Key="MainButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#0F2A1F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="#1A4738"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" CornerRadius="12" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#22D3EE"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border x:Name="MainBorder" Background="#0A120F" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.6"/>
+            <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
         </Border.Effect>
 
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Canvas Panel.ZIndex="-1">
+                <Ellipse x:Name="Circle1" Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
+                <Ellipse x:Name="Circle2" Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
+                <Ellipse x:Name="Circle3" Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
+                <Ellipse x:Name="Circle4" Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
+                <Ellipse x:Name="Circle5" Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
+                <Ellipse x:Name="Circle6" Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
+                <Ellipse x:Name="Circle7" Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
+                <Ellipse x:Name="Circle8" Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
+                <Ellipse x:Name="Circle9"  Width="260" Height="260" Fill="#166534" Opacity="0.12" Canvas.Left="-60"  Canvas.Bottom="-40"/>
+                <Ellipse x:Name="Circle10" Width="340" Height="340" Fill="#052E16" Opacity="0.14" Canvas.Left="80"   Canvas.Bottom="-80"/>
+                <Ellipse x:Name="Circle11" Width="160" Height="160" Fill="#4ADE80" Opacity="0.10" Canvas.Left="40"   Canvas.Bottom="120"/>
+                <Rectangle x:Name="Shape1" Width="420" Height="6"  Fill="#4ADE80" Opacity="0.08" Canvas.Left="180" Canvas.Top="310"/>
+                <Rectangle x:Name="Shape2" Width="6"   Height="380" Fill="#86EFAC" Opacity="0.07" Canvas.Left="980" Canvas.Top="220"/>
+            </Canvas>
 
-            <!-- Header -->
-            <Border Background="#08100D" CornerRadius="22,22,0,0">
-                <Grid Margin="25,0">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#0F1A16" BorderBrush="#4ADE80" BorderThickness="2">
-                            <TextBlock Text="G" FontSize="28" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <StackPanel Margin="16,0,0,0">
-                            <TextBlock Text="Guiss Launcher" FontSize="22" FontWeight="SemiBold" Foreground="White"/>
-                            <TextBlock Text="Guiss Tools" FontSize="13" Foreground="#7E92A6"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="68"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="#08100D" CornerRadius="24,24,0,0">
+                    <Grid Margin="25,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Border x:Name="LogoBorder" Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
+                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Margin="14,0,0,0">
+                                <TextBlock Text="Guiss Launcher" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                                <TextBlock Text="Guiss Tools" FontSize="12" Foreground="#7E92A6" Margin="0,2,0,0"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="MinButton" Content="—" Width="44" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
-                        <Button x:Name="CloseButton" Content="✕" Width="44" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="18" Margin="10,0,0,0"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-            <Grid Grid.Row="1" Margin="25">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="380"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Left Status -->
-                <Border Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
-                    <StackPanel>
-                        <TextBlock Text="SYSTEM STATUS" FontSize="13" Foreground="#4ADE80" FontWeight="SemiBold"/>
-                        <TextBlock Text="All Systems OK" FontSize="26" FontWeight="SemiBold" Foreground="White" Margin="0,12,0,0"/>
-                        <Border Background="#1A2E24" CornerRadius="10" Padding="12" Margin="0,20,0,0">
-                            <TextBlock Text="Ready for use" FontSize="14" Foreground="#86EFAC"/>
-                        </Border>
-                    </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button x:Name="MinButton" Content="—" Width="40" Height="36" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="20"/>
+                            <Button x:Name="CloseButton" Content="✕" Width="40" Height="36" Background="Transparent" Foreground="#FF6B6B" BorderThickness="0" FontSize="17" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
 
-                <!-- Activity Console -->
-                <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" BorderBrush="#2A4738" BorderThickness="1" Padding="20">
-                    <StackPanel>
-                        <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80"/>
-                        <TextBox x:Name="ActivityBox" Height="380" Background="#0A120F" Foreground="#86EFAC" BorderThickness="0" FontFamily="Consolas" FontSize="13" VerticalScrollBarVisibility="Auto" IsReadOnly="True" Margin="0,12,0,0" Padding="12"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-            <!-- Control Panel -->
-            <Border Grid.Row="1" Margin="25,0,25,25" Background="#0F1A16" CornerRadius="18" BorderBrush="#2A4738" BorderThickness="1" Padding="25" VerticalAlignment="Bottom">
-                <Grid>
+                <Grid Grid.Row="1" Margin="25,20,40,25">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="InstallButton" Content="Install / Update Tools" Background="#166534" Foreground="White" FontSize="15" FontWeight="SemiBold" Height="58" CornerRadius="12" Margin="0,0,10,0"/>
-                    <Button x:Name="RemoveButton" Content="Remove Installed Tools" Background="#7F1D1D" Foreground="White" FontSize="15" FontWeight="SemiBold" Height="58" CornerRadius="12" Margin="10,0,10,0"/>
-                    <Button x:Name="OpenFolderButton" Content="Open Install Folder" Background="#1F3A2A" Foreground="White" FontSize="15" FontWeight="SemiBold" Height="58" CornerRadius="12" Margin="10,0,0,0"/>
+
+                    <StackPanel>
+                        <TextBlock Text="Ready" FontSize="32" FontWeight="SemiBold" Foreground="White"/>
+                        <TextBlock Text="Everything is ready. Select an action on the right." FontSize="15" Foreground="#7E92A6" Margin="0,8,0,25"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="SYSTEM STATUS" FontSize="12" Foreground="#4ADE80"/>
+                                    <TextBlock Text="All Systems OK" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1" Margin="12,0">
+                                <StackPanel>
+                                    <TextBlock Text="LAST SCAN" FontSize="12" Foreground="#4ADE80"/>
+                                    <TextBlock Text="Today 19:14" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="2" Background="#0F1A16" CornerRadius="16" Padding="18" BorderBrush="#2A4738" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="TOOLS" FontSize="12" Foreground="#4ADE80"/>
+                                    <TextBlock Text="12" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <TextBlock Text="Activity Console" FontSize="15" FontWeight="SemiBold" Foreground="#4ADE80" Margin="0,25,0,8"/>
+                        <Border Background="#0A120F" CornerRadius="12" BorderBrush="#2A4738" BorderThickness="1" Padding="10">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <TextBox x:Name="ActivityBox" Background="Transparent" Foreground="#A0B8C8" BorderThickness="0" FontSize="13" IsReadOnly="True" TextWrapping="Wrap"/>
+                            </ScrollViewer>
+                        </Border>
+                    </StackPanel>
+
+                    <Border Grid.Column="1" Background="#0F1A16" CornerRadius="20" BorderBrush="#2A4738" BorderThickness="1" Padding="20" Margin="20,0,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Control Center" FontSize="18" FontWeight="SemiBold" Foreground="#4ADE80"/>
+                            <TextBlock Text="Manage your Guiss Tools" FontSize="13" Foreground="#7E92A6" Margin="0,4,0,20"/>
+
+                            <Button x:Name="InstallButton"    Content="Install / Update Tools"   Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="RemoveButton"     Content="Remove Installed Tools"   Background="#3F1F1F" Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="OpenFolderButton" Content="Open Install Folder"      Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="OpenCmdButton"    Content="CMD Commands"             Style="{StaticResource MainButtonStyle}"/>
+                            <Button x:Name="ExitButton"       Content="Exit Launcher"            Style="{StaticResource MainButtonStyle}"/>
+                        </StackPanel>
+                    </Border>
                 </Grid>
-            </Border>
+            </Grid>
         </Grid>
     </Border>
 </Window>
 "@
 
-try {
-    $reader = New-Object System.Xml.XmlNodeReader $xaml
-    $window = [Windows.Markup.XamlReader]::Load($reader)
+$reader = New-Object System.Xml.XmlNodeReader $xaml
+$window = [Windows.Markup.XamlReader]::Load($reader)
 
-    $window.Opacity = 1
-    $ActivityBox = $window.FindName("ActivityBox")
-    $CloseButton = $window.FindName("CloseButton")
-    $MinButton = $window.FindName("MinButton")
-    $InstallButton = $window.FindName("InstallButton")
-    $RemoveButton = $window.FindName("RemoveButton")
-    $OpenFolderButton = $window.FindName("OpenFolderButton")
+$LogoBorder = $window.FindName("LogoBorder")
+$ActivityBox = $window.FindName("ActivityBox")
 
-    $window.Add_MouseLeftButtonDown({ $window.DragMove() })
-    $MinButton.Add_Click({ $window.WindowState = "Minimized" })
+$window.Add_Loaded({
+    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(450)
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
 
-    $CloseButton.Add_Click({
-        $fadeOut = New-Object System.Windows.Media.Animation.DoubleAnimation
-        $fadeOut.From = 1; $fadeOut.To = 0; $fadeOut.Duration = [TimeSpan]::FromMilliseconds(250)
-        $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeOut)
-        Start-Sleep -Milliseconds 280
-        $window.Close()
-    })
+    $glow = New-Object System.Windows.Media.Effects.DropShadowEffect
+    $glow.Color = "#4ADE80"
+    $glow.BlurRadius = 18
+    $glow.ShadowDepth = 0
+    $glow.Opacity = 0.6
+    $LogoBorder.Effect = $glow
 
-    $InstallButton.Add_Click({
-        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
-        try {
-            if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
-            Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath
-            $ActivityBox.AppendText("[Install] Download completed.`n")
-            if (Test-Path $destPath) { Remove-Item $destPath -Recurse -Force }
-            Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
-            $ActivityBox.AppendText("[Install] Extraction successful!`n")
-            $ActivityBox.AppendText("[Install] Tools installed in: $destPath`n")
-            Start-Process $destPath
-        } catch {
-            $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
-        }
-    })
+    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $glowAnim.From = 0.4; $glowAnim.To = 0.85; $glowAnim.Duration = [TimeSpan]::FromMilliseconds(1800)
+    $glowAnim.AutoReverse = $true; $glowAnim.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    $glow.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::OpacityProperty, $glowAnim)
+})
 
-    $RemoveButton.Add_Click({
-        if (Test-Path $destPath) {
-            Remove-Item $destPath -Recurse -Force
-            $ActivityBox.AppendText("`n[Remove] Tools removed.`n")
-        } else {
-            $ActivityBox.AppendText("`n[Remove] No tools found.`n")
-        }
-    })
+# ====================== ANIMATIES ======================
+$c1 = $window.FindName("Circle1"); $c2 = $window.FindName("Circle2")
+$c3 = $window.FindName("Circle3"); $c4 = $window.FindName("Circle4")
+$c5 = $window.FindName("Circle5"); $c6 = $window.FindName("Circle6")
+$c7 = $window.FindName("Circle7"); $c8 = $window.FindName("Circle8")
+$c9 = $window.FindName("Circle9"); $c10 = $window.FindName("Circle10")
+$c11 = $window.FindName("Circle11")
+$s1 = $window.FindName("Shape1"); $s2 = $window.FindName("Shape2")
 
-    $OpenFolderButton.Add_Click({
-        if (Test-Path $destPath) {
-            Start-Process $destPath
-        } else {
-            $ActivityBox.AppendText("`n[Error] Install folder not found.`n")
-        }
-    })
+function Start-PulseAnimation($element, $durationMs, $scaleTo) {
+    $scale = New-Object System.Windows.Media.ScaleTransform
+    $element.RenderTransform = $scale
+    $element.RenderTransformOrigin = "0.5,0.5"
 
-    $window.ShowDialog() | Out-Null
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    
+    $animX = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animX.From = 1
+    $animX.To = $scaleTo
+    $animX.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animX.AutoReverse = $true
+    $animX.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
 
-} catch {
-    Write-Host "Fout: $($_.Exception.Message)" -ForegroundColor Red
-    Read-Host
+    $animY = $animX.Clone()
+
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animX, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animX, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)")
+
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)")
+
+    $sb.Children.Add($animX)
+    $sb.Children.Add($animY)
+    $sb.Begin()
 }
+
+function Start-FloatAnimation($element, $durationMs, $distance) {
+    $translate = New-Object System.Windows.Media.TranslateTransform
+    $element.RenderTransform = $translate
+    $sb = New-Object System.Windows.Media.Animation.Storyboard
+    $animY = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $animY.From = 0
+    $animY.To = $distance
+    $animY.Duration = [TimeSpan]::FromMilliseconds($durationMs)
+    $animY.AutoReverse = $true
+    $animY.RepeatBehavior = [System.Windows.Media.Animation.RepeatBehavior]::Forever
+    [System.Windows.Media.Animation.Storyboard]::SetTarget($animY, $element)
+    [System.Windows.Media.Animation.Storyboard]::SetTargetProperty($animY, "(UIElement.RenderTransform).(TranslateTransform.Y)")
+    $sb.Children.Add($animY)
+    $sb.Begin()
+}
+
+Start-PulseAnimation $c1 5200 1.06
+Start-PulseAnimation $c2 4100 1.08
+Start-PulseAnimation $c3 3400 1.12
+Start-PulseAnimation $c4 5800 1.05
+Start-PulseAnimation $c5 2900 1.15
+Start-PulseAnimation $c6 4500 1.07
+Start-PulseAnimation $c7 4900 1.06
+Start-PulseAnimation $c8 3600 1.11
+Start-FloatAnimation $c9 6800 18
+Start-FloatAnimation $c10 7500 -22
+Start-FloatAnimation $c11 6200 14
+Start-PulseAnimation $s1 6000 1.04
+Start-PulseAnimation $s2 5500 1.05
+
+# ====================== BUTTONS ======================
+$CloseButton = $window.FindName("CloseButton")
+$MinButton   = $window.FindName("MinButton")
+$MainBorder  = $window.FindName("MainBorder")
+$ActivityBox = $window.FindName("ActivityBox")
+
+$MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
+$MinButton.Add_Click({ $window.WindowState = "Minimized" })
+$CloseButton.Add_Click({ $window.Close() })
+$window.FindName("ExitButton").Add_Click({ $window.Close() })
+
+$window.FindName("InstallButton").Add_Click({
+    $ActivityBox.AppendText("`n[Install] Installatie gestart...`n")
+    try {
+        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $principal = New-Object Security.Principal.WindowsPrincipal($identity)
+        if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            $ActivityBox.AppendText("[Error] Run dit script als Administrator!`n")
+            return
+        }
+        $ActivityBox.AppendText("[Install] Bezig met downloaden...`n")
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
+
+        $zipFile = Get-Item $zipPath
+        if ($zipFile.Length -lt 50000) { throw "Download mislukt (bestand te klein)." }
+
+        $ActivityBox.AppendText("[Install] Download succesvol!`n")
+
+        if (Test-Path $destPath) {
+            Remove-Item $destPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
+
+        Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
+        $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
+        $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
+
+        Start-Process $destPath
+    }
+    catch {
+        $ActivityBox.AppendText("[Error] $($_.Exception.Message)`n")
+    }
+})
+
+$window.FindName("RemoveButton").Add_Click({
+    if (Test-Path $destPath) {
+        Remove-Item $destPath -Recurse -Force
+        $ActivityBox.AppendText("`n[Remove] Tools verwijderd.`n")
+    } else {
+        $ActivityBox.AppendText("`n[Remove] Geen installatie gevonden.`n")
+    }
+})
+
+$window.FindName("OpenFolderButton").Add_Click({
+    if (Test-Path $destPath) {
+        Start-Process $destPath
+    } else {
+        $ActivityBox.AppendText("`n[Error] Map niet gevonden.`n")
+    }
+})
+
+$window.FindName("OpenCmdButton").Add_Click({
+    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Sellguitools/refs/heads/main/CmdCommandcentre.ps1' | iex"
+})
+
+$window.ShowDialog() | Out-Null
