@@ -11,7 +11,7 @@ Add-Type -AssemblyName System.Xaml
         Title="Guiss Command Center" Width="1320" Height="830"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Opacity="1">
+        Opacity="0">
 
     <Window.Resources>
         <Style x:Key="RoundButtonStyle" TargetType="Button">
@@ -36,7 +36,7 @@ Add-Type -AssemblyName System.Xaml
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#22D3EE"/>
-                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2.5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -47,19 +47,16 @@ Add-Type -AssemblyName System.Xaml
 
     <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#1A2E24" BorderThickness="1" Background="#0A120F">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="45" ShadowDepth="0" Opacity="0.6"/>
+            <DropShadowEffect BlurRadius="50" ShadowDepth="0" Opacity="0.7" Color="#4ADE80"/>
         </Border.Effect>
 
         <Grid>
             <Canvas Panel.ZIndex="-1">
-                <Ellipse Width="520" Height="520" Fill="#052E16" Opacity="0.20" Canvas.Left="-140" Canvas.Top="-100"/>
-                <Ellipse Width="380" Height="380" Fill="#166534" Opacity="0.16" Canvas.Right="-80" Canvas.Bottom="40"/>
-                <Ellipse Width="240" Height="240" Fill="#4ADE80" Opacity="0.13" Canvas.Left="280" Canvas.Top="160"/>
-                <Ellipse Width="680" Height="680" Fill="#0F2A1F" Opacity="0.11" Canvas.Right="-220" Canvas.Top="-180"/>
-                <Ellipse Width="150" Height="150" Fill="#86EFAC" Opacity="0.24" Canvas.Left="920" Canvas.Top="380"/>
-                <Ellipse Width="320" Height="320" Fill="#166534" Opacity="0.10" Canvas.Left="1100" Canvas.Bottom="60"/>
-                <Ellipse Width="420" Height="420" Fill="#052E16" Opacity="0.13" Canvas.Left="750" Canvas.Top="-80"/>
-                <Ellipse Width="180" Height="180" Fill="#67E8F9" Opacity="0.09" Canvas.Left="1050" Canvas.Top="520"/>
+                <Ellipse Width="520" Height="520" Fill="#052E16" Opacity="0.22" Canvas.Left="-140" Canvas.Top="-100" x:Name="Circle1"/>
+                <Ellipse Width="380" Height="380" Fill="#166534" Opacity="0.18" Canvas.Right="-80" Canvas.Bottom="40" x:Name="Circle2"/>
+                <Ellipse Width="240" Height="240" Fill="#4ADE80" Opacity="0.15" Canvas.Left="280" Canvas.Top="160" x:Name="Circle3"/>
+                <Ellipse Width="680" Height="680" Fill="#0F2A1F" Opacity="0.12" Canvas.Right="-220" Canvas.Top="-180" x:Name="Circle4"/>
+                <Ellipse Width="150" Height="150" Fill="#86EFAC" Opacity="0.25" Canvas.Left="920" Canvas.Top="380" x:Name="Circle5"/>
             </Canvas>
 
             <Grid>
@@ -76,8 +73,12 @@ Add-Type -AssemblyName System.Xaml
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Width="42" Height="42" CornerRadius="13" Background="#0F1A16" BorderBrush="#2A4738" BorderThickness="1">
-                                <TextBlock Text="G" FontSize="22" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <!-- Groene G met glow -->
+                            <Border Width="46" Height="46" CornerRadius="14" Background="#0F1A16" BorderBrush="#4ADE80" BorderThickness="2" x:Name="LogoBorder">
+                                <Border.Effect>
+                                    <DropShadowEffect x:Name="LogoGlow" Color="#4ADE80" BlurRadius="25" ShadowDepth="0" Opacity="0.9"/>
+                                </Border.Effect>
+                                <TextBlock Text="G" FontSize="26" FontWeight="Bold" Foreground="#4ADE80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel Margin="14,0,0,0">
                                 <TextBlock Text="Guiss Command Center" FontSize="19" FontWeight="SemiBold" Foreground="White"/>
@@ -172,6 +173,7 @@ try {
     $CloseButton = $window.FindName("CloseButton")
     $MinButton   = $window.FindName("MinButton")
     $MainBorder  = $window.FindName("MainBorder")
+    $LogoBorder  = $window.FindName("LogoBorder")
 
     $MainBorder.Add_MouseLeftButtonDown({ $window.DragMove() })
     $MinButton.Add_Click({ $window.WindowState = "Minimized" })
@@ -184,33 +186,45 @@ try {
         $window.Close()
     })
 
-    # ====================== Knoppen met zwart CMD venster ======================
+    # Groene glow pulse op logo
+    $glowAnim = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $glowAnim.From = 15; $glowAnim.To = 35; $glowAnim.Duration = [TimeSpan]::FromMilliseconds(1800)
+    $glowAnim.AutoReverse = $true
+    $glowAnim.RepeatBehavior = "Forever"
+    $LogoBorder.Effect.BeginAnimation([System.Windows.Media.Effects.DropShadowEffect]::BlurRadiusProperty, $glowAnim)
+
+    # Fade-in venster
+    $fadeIn = New-Object System.Windows.Media.Animation.DoubleAnimation
+    $fadeIn.From = 0; $fadeIn.To = 1; $fadeIn.Duration = [TimeSpan]::FromMilliseconds(600)
+    $window.BeginAnimation([System.Windows.Window]::OpacityProperty, $fadeIn)
+
+    # Knoppen
     $window.FindName("BtnDqrkis").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1' | iex"
     })
 
     $window.FindName("BtnGhostFinder").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Ghostclientfinder/refs/heads/main/Ghostclientfinder.ps1' | iex"
     })
 
     $window.FindName("BtnInjector").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Injectdetect/refs/heads/main/Injector%20Scanner.ps1' | iex"
     })
 
     $window.FindName("BtnMeow").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/refs/heads/main/MeowModAnalyzer.ps1' | iex"
     })
 
     $window.FindName("BtnPrimeMacro").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "irm 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/main/Macro%20Detector.ps1' | iex"
     })
 
     $window.FindName("BtnQuickcheck").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; Invoke-Expression (Invoke-RestMethod 'https://pastebin.com/raw/HGLwy7XA')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy Bypass -Scope Process; iex (irm https://pastebin.com/raw/HGLwy7XA)"
     })
 
     $window.FindName("BtnPrefetchBypass").Add_Click({
-        Start-Process cmd -ArgumentList "/k", "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1')"
+        Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; Invoke-Expression (Invoke-RestMethod https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1)"
     })
 
     # Map openen
