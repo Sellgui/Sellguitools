@@ -168,14 +168,24 @@ $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
 $window.FindName("InstallButton").Add_Click({
-    $ActivityBox.AppendText("`n[Install] Bezig met downloaden van GuiSStoolsV2.zip...`n")
+    $ActivityBox.AppendText("`n[Install] Snelle download gestart...`n")
     try {
         if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
-        Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath
+
+        # Snelle download met BitsTransfer
+        $bitsJob = Start-BitsTransfer -Source $toolsZipUrl -Destination $zipPath -DisplayName "GuiSStools Download" -Priority High -Asynchronous
+
+        while ($bitsJob.JobState -eq "Connecting" -or $bitsJob.JobState -eq "Transferring") {
+            Start-Sleep -Milliseconds 200
+        }
+        Complete-BitsTransfer -BitsJob $bitsJob
+
         $ActivityBox.AppendText("[Install] Download voltooid.`n")
+
         if (Test-Path $destPath) {
             Remove-Item $destPath -Recurse -Force
         }
+
         Expand-Archive -Path $zipPath -DestinationPath $destPath -Force
         $ActivityBox.AppendText("[Install] Uitpakken voltooid!`n")
         $ActivityBox.AppendText("[Install] Tools geïnstalleerd in: $destPath`n")
