@@ -8,10 +8,10 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 $userDir = [Environment]::GetFolderPath("UserProfile")
 $downloads = Join-Path $userDir "Downloads"
-$zipPath = Join-Path $downloads "GuiSStools.exes.zip"
+$zipPath = Join-Path $downloads "GuiSStoolsV2.zip"
 $destPath = Join-Path $downloads "GuiSStools.exes"
 
-$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/archive/refs/tags/v1.0.zip"
+$toolsZipUrl = "https://github.com/Sellgui/Sellguitools/releases/download/v1.0/GuiSStoolsV2.zip"
 
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -168,7 +168,7 @@ $CloseButton.Add_Click({ $window.Close() })
 $window.FindName("ExitButton").Add_Click({ $window.Close() })
 
 $window.FindName("InstallButton").Add_Click({
-    $ActivityBox.AppendText("`n[Install] Bezig met downloaden van GuiSStools.exes.zip...`n")
+    $ActivityBox.AppendText("`n[Install] Bezig met downloaden van GuiSStoolsV2.zip...`n")
     try {
         if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
         Invoke-WebRequest -Uri $toolsZipUrl -OutFile $zipPath
